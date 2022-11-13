@@ -1,0 +1,2641 @@
+#pragma mode( separator(.,;) integer(h32) )
+hgeometric();
+formulario();
+VIEW "GEOMTRIC",START()
+BEGIN
+startview(6,1);
+hgeometric();
+END;
+polig();
+mainscreen();
+p_area();
+sup_volumen();
+cg_inercia();
+touch();
+touch_dat();
+touch_select();
+cuadrado();
+rectangulo();
+triangulo();
+triangulo2();
+paralelogramo();
+trapecio();
+circulo();
+sectorcircular();
+coronacircular();
+elipsoide();
+irectangulo();
+itriangulo1();
+itriangulo2();
+itriangulo3();
+icirculo();
+isemicirculo();
+icuartocirculo();
+icuartoelipse();
+iparabola();
+imediaparabola();
+isectcircular();
+ortoedro();
+cubo();
+piramide();
+tronco_piramide();
+esfera();
+cilindro();
+cono();
+tronco_cono();
+casquete_esferico();
+cuna_esferico();
+zona_esferica();
+select();
+tecla();
+touch2;
+toque8();
+inputb;
+code;
+text;
+texteditor;
+mod_select;
+x0;
+y0;
+in;
+inp;
+inps;
+ndato;
+a;
+b;
+c;
+d;
+Area:={"●Cuadrado","●Rectángulo","●Triángulo Rect.","●Triángulo","●Paralelogramo","●Trapecio","●Círculo","●Sector Circular","●Corona Circular","●Elipsoide","●Poligono x coord"};
+volumen:={"●Cubo","●Paralelepípedo","●Pirámide","●Tronco de Pirámide","●Esfera","●Cilindro","●Cono","●Tronco de Cono","●Cuña Esférica","●Casquete Esferico","●Zona Esférica"};
+volumen2:={"►Cubo","►Paralelepípedo","►Pirámide","►Tronco de Pirámide","►Esfera","►Cilindro","►Cono","►Tronco de Cono","►Cuña Esférica","►Casquete Esferico","►Zona Esférica"};
+inercia:={"●Rectángulo","●Triángulo R.","●Triángulo Isoc","●Triángulo","●Círculo","●Semicírculo","●Cuarto de Círculo","●Cuarto de Elipse","●Parábola","●Media Parábola","●Sector Circular"};
+inercia2:={"►Rectángulo","►Triángulo R.","►Triángulo Isoc","►Triángulo","►Círculo","►Semicírculo","►Cuarto de Círculo","►Cuarto de Elipse","►Parábola","►Media Parábola","►Sector Circular"};
+
+//========================================================================================
+EXPORT hgeometric()
+BEGIN
+  1▶AAngle;
+  mainscreen();
+  mod_select:=1;
+  p_area();
+  LOCAL toque;
+  REPEAT
+    toque:=MOUSE();
+    toque:=B→R(toque(1));
+    IF SIZE(toque) AND toque(5)<>2 THEN
+      touch(toque(1),toque(2));
+    END;
+  UNTIL ISKEYDOWN(1);
+END;
+//========================================================================================
+mainscreen()
+BEGIN
+  LOCAL color1:=#000000;
+  a:=0;b:=0;c:=0;d:=0;
+  RECT_P();
+  RECT_P(0,0,319,239,#0000FF,#111133);
+  RECT_P(5,4,120,220,#FF0000,#00DDFF);
+  RECT_P(6,5,119,22,#FF0000,#00FF00);
+  RECT_P(90,5,119,22,#FF0000,#00FF00);
+  RECT_P(124,4,316,220,#FF0000,#FFFF00);
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF);
+  RECT_P(5,221,40,238,#AA0000,#DDDDDD);
+  TEXTOUT_P("O",17,223,3,#FF0000,300); TEXTOUT_P("'",20,218,7,#FF0000,300);
+  TEXTOUT_P("O",18,223,3,#FF0000,300);  RECT_P(20,224,24,228,#DDDDDD);  TEXTOUT_P("'",20,218,7,#FF0000,300);
+  RECT_P(41,221,76,238,#AA0000,#DDDDDD);   TEXTOUT_P("?",55,222,3,#0000FF,300);TEXTOUT_P("?",56,222,3,#0000FF,300); 
+  TEXTOUT_P("GEOMETRIC V2  BY: Mario Cesgo Soliz",78,222,3,#FFFFFF,300);
+  x0:=10;
+  y0:=42;
+  FOR I FROM 1 TO 10 DO
+    LINE_P(x0,y0,110,y0,#0000FF);
+    y0:=y0+18;
+  END;
+  TEXTOUT_P("︾",98,7,4,#000000,300);
+  LOCAL xb,yb,xb2,yb2,colorb,colpx,color1;
+  xb:=181;yb:=152;colorb:=#000000;colpx:=#FFFF00;
+  xb2:=75;yb2:=16;
+  RECT_P(xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(xb,yb,colpx);PIXON_P(xb+xb2,yb+yb2,colpx);PIXON_P(xb,yb+yb2,colpx);PIXON_P(xb+xb2,yb,colpx);
+  TEXTOUT_P("CALCULAR",191,155,2,#FFFFFF);  TEXTOUT_P("CALCULAR",191,155,2,#FFFFFF);
+  LINE_P(G0,181,159,131,159,color1);
+  LINE_P(G0,131,159,129,160,color1);
+  LINE_P(G0,129,160,127,161,color1);
+  LINE_P(G0,127,161,126,162,color1);
+  LINE_P(G0,126,162,126,164,color1);
+  LINE_P(G0,126,164,126,212,color1);
+  LINE_P(G0,126,212,126,213,color1);
+  LINE_P(G0,126,213,127,215,color1);
+  LINE_P(G0,127,215,128,216,color1);
+  LINE_P(G0,128,216,131,217,color1);
+  LINE_P(G0,131,217,308,217,color1);
+  LINE_P(G0,308,217,309,216,color1);
+  LINE_P(G0,309,216,311,216,color1);
+  LINE_P(G0,311,216,312,214,color1);
+  LINE_P(G0,312,214,313,212,color1);
+  LINE_P(G0,314,212,314,212,color1);
+  LINE_P(G0,314,212,314,164,color1);
+  LINE_P(G0,313,164,312,162,color1);
+  LINE_P(G0,312,162,311,161,color1);
+  LINE_P(G0,311,161,310,160,color1);
+  LINE_P(G0,310,160,309,160,color1);
+  LINE_P(G0,309,160,308,159,color1);
+  LINE_P(G0,308,159,257,159,color1);
+  LOCAL xb,yb,xb2,yb2,colorb,colpx,color1;
+  xb:=290;yb:=175;colorb:=#00FF00;colpx:=#FFFF00;
+  xb2:=20;yb2:=25;
+  RECT_P(xb,yb,xb+xb2,yb+yb2,#000000,colorb);PIXON_P(xb,yb,colpx);PIXON_P(xb+xb2,yb+yb2,colpx);PIXON_P(xb,yb+yb2,colpx);PIXON_P(xb+xb2,yb,colpx);
+  TEXTOUT_P("≡",294,174,7,#0000FF,300);
+  //-------------------------------------------------------------------------------------
+END;
+toque8(xxx,yyy)
+BEGIN
+  IF 230<xxx<257 AND 143<yyy<159 THEN
+    LOCAL i,xb,yb,colorb,colpx;
+    LOCAL touch2;
+    xb:=230;yb:=143;colorb:=#000000;colpx:=#555555;
+    RECT_P(xb,yb,xb+27,yb+16,#FFFFFF,#FFFFFF); PIXON_P(xb,yb,colpx);PIXON_P(xb+27,yb+16,colpx);PIXON_P(xb,yb+16,colpx);PIXON_P(xb+27,yb,colpx);
+    TEXTOUT_P("OK",xb+4,yb+1,3,#000000);TEXTOUT_P("OK",xb+4,yb+1,3,#000000);
+    WAIT(.2);
+    hgeometric();
+  END;
+END;
+touch(x,y)
+BEGIN
+  IF 5<x<120 AND 4<y<22  THEN
+    select();
+  END;
+  //---------------------- BOTON DE CALCULAR ------------------------------------------------------
+  IF 189<x<189+75 AND 152<y<152+16  THEN // CALCULAR  
+    LOCAL xb,yb,xb2,yb2,colorb,colpx,color1;
+    xb:=181;yb:=152;colorb:=#FF0000;colpx:=#FFFF00;
+    xb2:=75;yb2:=16;
+    RECT_P(xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(xb,yb,colpx);PIXON_P(xb+xb2,yb+yb2,colpx);PIXON_P(xb,yb+yb2,colpx);PIXON_P(xb+xb2,yb,colpx);
+    TEXTOUT_P("CALCULAR",191,155,2,#0000FF);  TEXTOUT_P("CALCULAR",191,155,2,#0000FF);
+    WAIT(.3);
+    xb:=181;yb:=152;colorb:=#000000;colpx:=#FFFF00;
+    xb2:=75;yb2:=16;
+    RECT_P(xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(xb,yb,colpx);PIXON_P(xb+xb2,yb+yb2,colpx);PIXON_P(xb,yb+yb2,colpx);PIXON_P(xb+xb2,yb,colpx);
+    TEXTOUT_P("CALCULAR",191,155,2,#FFFFFF);  TEXTOUT_P("CALCULAR",191,155,2,#FFFFFF);
+    IF inps == 1 THEN
+      IF inp == 1 THEN
+        A:=c^2;
+        P:=4*c;
+      END;
+      IF inp == 2 THEN
+        A:=c*d;
+        P:=2*(c+d);
+      END;
+      IF inp == 3 THEN
+        A:=c*d/2;
+        P:=ROUND((c+d+sqrt((c^2)+(d^2))),3);
+      END;
+      IF inp == 4 THEN
+        S:=(b+c+d)/2;
+        A:=sqrt(S*(S-b)*(S-c)*(S-d));
+        P:=b+c+d;
+      END;
+      IF inp == 5 THEN
+        A:=c*d;
+        P:=2*(c+d);
+      END;
+      IF inp == 6 THEN //trapecio
+        A:=((b+c)*d)/2;
+        P:=ROUND((b+c+(2*(sqrt(((b-c)/2)^2+d^2)))),3);
+      END;
+      IF inp == 7 THEN //circulo
+        A:=(π*c^2);
+        P:=2*π*c;
+      END;
+      IF inp == 8 THEN  //secttor circular
+        A:=ROUND(((d*π*c^2)/360),3);
+        P:=ROUND((c*(2+(2*π*d/360))),3);
+      END;
+      IF inp == 9 THEN // corona circular
+        A:=((π*c^2)-(π*d^2));
+        P:=0;
+      END;
+      IF inp == 10 THEN  //elipsoide
+        A:=π*c*d;
+        P:=π*(c+d)*(1+(3*((c-d)/(c+d))^2)/(10+sqrt(4-3*((c-d)/(c+d)))));
+      END;
+      IF inp == 11 THEN  //polig
+        A:=ROUND((π*c*d),3);
+        P:=ROUND((π*(c+d)*(1+(3*((c-d)/(c+d))^2)/(10+sqrt(4-3*((c-d)/(c+d))^2)))),3);
+      END;
+      RECT_P(208,180,288,216,#FFFF00);
+      TEXTOUT_P(""+ROUND(A,3),220,180,3,#FF0000,300,#FFFF00);  TEXTOUT_P(""+ROUND(A,3),220,180,3,#FF0000,300,#FFFF00);
+      TEXTOUT_P(""+ROUND(P,3),220,200,3,#FF0000,300,#FFFF00);  TEXTOUT_P(""+ROUND(P,3),220,200,3,#FF0000,300,#FFFF00);
+      WAIT(.2);
+      TEXTOUT_P(""+ROUND(A,3),220,180,3,#0000FF,300,#FFFF00);  TEXTOUT_P(""+ROUND(A,3),220,180,3,#0000FF,300,#FFFF00);
+      TEXTOUT_P(""+ROUND(P,3),220,200,3,#0000FF,300,#FFFF00);  TEXTOUT_P(""+ROUND(P,3),220,200,3,#0000FF,300,#FFFF00);
+    END;
+    IF inps == 2 THEN
+        2▶AAngle;
+      IF inp == 1 THEN //cubo
+        V:=c^3;
+        S:=6*c^2;
+      END;
+      IF inp == 2 THEN //ortoedro
+        V:=b*c*d;
+        S:=2*b*c+2*c*d+2*b*d;
+      END;
+      IF inp == 3 THEN  // piramide
+        2▶AAngle;
+        V:=(d*3*c^2)/(12*tan(180/3));
+        S:=(3*c/2)*sqrt(d^2+(c/(2*tan(180/3)))^2)+((3*c^2)/(4*tan(180/3)));
+      END;
+      IF inp == 4 THEN // tronco de piramide
+        V:=(d*(((3*b^2)/(4*tan(180/3)))+sqrt(((3*b^2)/(4*tan(180/3)))*((3*c^2)/(4*tan(180/3))))+((3*c^2)/(4*tan(180/3)))))/3;
+        S:=0;
+      END;
+      IF inp == 5 THEN  // esfera
+        V:=(4*π*c^3)/3;
+        S:=4*π*c^2;
+      END;
+      IF inp == 6 THEN  //cilindro
+        V:=π*c^2*d;
+        S:=2*π*c*(d+c);
+      END;
+      IF inp == 7 THEN  //cono
+        V:=(π*c^2*d)/3;
+        S:=π*c*(c+sqrt(c^2+d^2));
+      END;
+      IF inp == 8 THEN //tronco de cono
+        V:=π*d*(b^2+b+c+c^2)/3;
+        S:=π*(b^2+(b+c)*sqrt(d^2+(b-c)^2));
+      END;
+      IF inp == 9 THEN  //cuna esferica
+        V:=(π*c^3*d)/270;
+        S:=(4*π*c^2*d)/360;
+      END;
+      IF inp == 10 THEN //caSquete esferico
+        2▶AAngle;
+        V:=((π*d^2)*((3*c)-d))/3;
+        S:=2*π*c*d;
+      END;
+      IF inp == 11 THEN //zona esferica
+        V:=((π*d)*(3*b^2+3*c^2+d^2))/6;
+        S:=2*π*b*d;
+      END;
+      RECT_P(208,180,288,216,#FFFF00);
+      TEXTOUT_P(""+ROUND(V,3),220,180,3,#FF0000,300,#FFFF00);  TEXTOUT_P(""+ROUND(V,3),220,180,3,#FF0000,300,#FFFF00);
+      TEXTOUT_P(""+ROUND(S,3),220,200,3,#FF0000,300,#FFFF00);  TEXTOUT_P(""+ROUND(S,3),220,200,3,#FF0000,300,#FFFF00);
+      WAIT(.2);
+      TEXTOUT_P(""+ROUND(V,3),220,180,3,#0000FF,300,#FFFF00);  TEXTOUT_P(""+ROUND(V,3),220,180,3,#0000FF,300,#FFFF00);
+      TEXTOUT_P(""+ROUND(S,3),220,200,3,#0000FF,300,#FFFF00);  TEXTOUT_P(""+ROUND(S,3),220,200,3,#0000FF,300,#FFFF00);
+    END;
+    IF inps == 3 THEN 
+      2▶AAngle;
+      LOCAL cgx,cgy,Ix,Iy,aa,drad;
+      IF inp == 1 THEN //rectangulo
+        aa:=d*c;
+        cgx:=c/2;
+        cgy:=d/2;
+        Ix:=(c*d^3)/12;
+        Iy:=(d*c^3)/12;
+      END;
+      IF inp == 2 THEN //triangulo rectangulo
+        aa:=(c*d)/2;
+        cgx:=c/3;
+        cgy:=d/3;
+        Ix:=(c*d^3)/36;
+        Iy:=(d*c^3)/36;
+      END;
+      IF inp == 3 THEN  // triangulo isoceles
+        aa:=(c*d)/2;
+        cgx:=0;
+        cgy:=d/3;
+        Ix:=(c*d^3)/36;
+        Iy:=(d*c^3)/48;
+      END;
+      IF inp == 4 THEN // triangulo
+        aa:=(c*d)/2;
+        cgx:=0;
+        cgy:=d/3;
+        Ix:=(c*d^3)/36;
+        Iy:=(d*c^3)/12;
+      END;
+      IF inp == 5 THEN  // circulo
+        aa:=(π*c^2);
+        cgx:=0;
+        cgy:=0;
+        Ix:=(π*c^4)/4;
+        Iy:=(π*c^4)/4;
+      END;
+      IF inp == 6 THEN  //semicirculo
+        aa:=(π*c^2)/2;
+        cgx:=0;
+        cgy:=(4*c)/(3*π);
+        Ix:=(π*c^4)/8;
+        Iy:=(π*c^4)/8;
+      END;
+      IF inp == 7 THEN  //cuarto de circulo
+        aa:=(π*c^2)/4;
+        cgx:=(4*c)/(3*π);
+        cgy:=(4*c)/(3*π);
+        Ix:=(π*c^4)/16;
+        Iy:=(π*c^4)/16;
+      END;
+      IF inp == 8 THEN //cuarto de elipse
+        aa:=(1/4)*π*c*d;
+        cgx:=(4*c)/(3*π);
+        cgy:=(4*d)/(3*π);
+        Ix:=(π*d^3*c)/16;
+        Iy:=(π*c^4*d)/16;
+      END;
+      IF inp == 9 THEN  //parabola
+        aa:=(1/3)*c*d;
+        cgx:=(3*c)/4;
+        cgy:=(4*d)/10;
+        Ix:=(c*d^3)/21;
+        Iy:=(d*c^3)/5;
+      END;
+      IF inp == 10 THEN //media parabola
+        aa:=(2/3)*c*d;
+        cgx:=(3*c)/8;
+        cgy:=(3*d)/5;
+        Ix:=(2*c*d^3)/7;
+        Iy:=(2*d*c^3)/15;
+      END;
+      IF inp == 11 THEN //sector circular
+        drad:=d*π/180;
+        aa:=drad*c^2;
+        cgx:=(2*c*sin(drad))/(3*drad);
+        cgy:=0;
+        Ix:=(c^4*(2*drad-sin(2*drad)))/8;
+        Iy:=(c^4*(2*drad+sin(2*drad)))/8;
+      END;
+      RECT_P(167,172,289,214,#FFFF00,#FFFF00);
+      TEXTOUT_P("A = "+ROUND(aa,4),247,8,2,#FF0000,80,#FFFFFF);
+      TEXTOUT_P("X="+ROUND(cgx,3)+"   Y="+ROUND(cgy,3),170,173,2,#FF0000,300,#FFFF00);
+      TEXTOUT_P(""+ROUND(Ix,4),180,185,3,#FF0000,300,#FFFF00);
+      TEXTOUT_P(""+ROUND(Iy,4),180,200,3,#FF0000,300,#FFFF00);
+      WAIT(.2);
+      TEXTOUT_P("A = "+ROUND(aa,4),247,8,2,#0000FF,80,#FFFFFF);
+      TEXTOUT_P("X="+ROUND(cgx,3)+"   Y="+ROUND(cgy,3),170,173,2,#0000FF,300,#FFFF00);
+      TEXTOUT_P(""+ROUND(Ix,4),180,185,3,#0000FF,300,#FFFF00);
+      TEXTOUT_P(""+ROUND(Iy,4),180,200,3,#0000FF,300,#FFFF00);
+    END;
+  END;
+//------------------------BOTON DE FORMULARIOS------------------------------------------------  
+  IF 290<x<310 AND 175<y<200  THEN // 1
+  LOCAL xb,yb,xb2,yb2,colorb,colpx,color1;
+  xb:=290;yb:=175;colorb:=#FFFFFF;colpx:=#FFFF00;
+  xb2:=20;yb2:=25;
+  RECT_P(xb,yb,xb+xb2,yb+yb2,#000000,colorb);PIXON_P(xb,yb,colpx);PIXON_P(xb+xb2,yb+yb2,colpx);PIXON_P(xb,yb+yb2,colpx);PIXON_P(xb+xb2,yb,colpx);
+  TEXTOUT_P("≡",294,174,7,#000000,300);
+  WAIT(.2); 
+  xb:=290;yb:=175;colorb:=#00FF00;colpx:=#FFFF00;
+  xb2:=20;yb2:=25;
+  RECT_P(xb,yb,xb+xb2,yb+yb2,#000000,colorb);PIXON_P(xb,yb,colpx);PIXON_P(xb+xb2,yb+yb2,colpx);PIXON_P(xb,yb+yb2,colpx);PIXON_P(xb+xb2,yb,colpx);
+  TEXTOUT_P("≡",294,174,7,#0000FF,300);
+
+  formulario();
+
+ // mainscreen();
+  IF mod_select == 1 THEN
+    p_area();
+  END;
+  IF mod_select == 2 THEN
+    sup_volumen();
+  END;
+  IF mod_select == 3 THEN
+    cg_inercia();
+  END;
+  END;
+//-----------------------IMPRIME SEGUN A LA CANTIDA DE DATOS --------------------------------------------------
+  IF ndato == 1 THEN
+    IF 275<x<308 AND 117<y<130  THEN // 2
+      RECT_P(274,116,308,130,#FF0000,#99FFFF);
+      inputb:=3;
+      tecla();
+      RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+      //   TEXTOUT_P(text,277,118,2,#0000FF,28,#99FFFF);
+      TEXTOUT_P(""+c,277,118,2,#0000);     TEXTOUT_P(""+c,277,118,2,#0000);      
+    END;
+  END;
+  
+  IF ndato == 2 THEN
+    IF 275<x<308 AND 117<y<130  THEN // 2
+      RECT_P(274,116,308,130,#FF0000,#99FFFF);
+      inputb:=3;
+      tecla();
+      RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+      TEXTOUT_P(""+c,277,118,2,#0000);     TEXTOUT_P(""+c,277,118,2,#0000);
+    END;     
+    IF 275<x<308 AND 132<y<145  THEN // 3
+      RECT_P(274,132,308,132+14,#FF0000,#99FFFF);
+      inputb:=4;
+      tecla();
+      RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+      TEXTOUT_P(""+d,277,134,2,#000000); TEXTOUT_P(""+d,277,134,2,#000000);
+    
+    ELSE
+    IF ISKEYDOWN(30) THEN // 3
+      RECT_P(274,132,308,132+14,#FF0000,#99FFFF);
+      inputb:=4;
+      tecla();
+      RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+      TEXTOUT_P(""+d,277,134,2,#000000); TEXTOUT_P(""+d,277,134,2,#000000);
+    END;
+  END;
+  END; 
+  IF ndato == 3 THEN
+    IF 275<x<308 AND 102<y<115  THEN // 2
+      RECT_P(274,100,308,114,#FF0000,#99FFFF);
+      inputb:=2;
+      tecla();
+      RECT_P(274,100,308,114,#FF0000,#DDDDDD);
+      TEXTOUT_P(text,277,102,2,#000000);     TEXTOUT_P(text,277,102,2,#0000);
+    END;
+    IF 275<x<308 AND 117<y<130  THEN // 2
+      RECT_P(274,116,308,130,#FF0000,#99FFFF);
+      inputb:=3;
+      tecla();
+      RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+      //   TEXTOUT_P(text,277,118,2,#0000FF,28,#99FFFF);
+      TEXTOUT_P(text,277,118,2,#0000);     TEXTOUT_P(text,277,118,2,#0000);
+    END; 
+
+    IF 275<x<308 AND 132<y<145  THEN // 3
+      RECT_P(274,132,308,132+14,#FF0000,#99FFFF);
+      inputb:=4;
+      tecla();
+      RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+      TEXTOUT_P(text,277,134,2,#000000); TEXTOUT_P(text,277,134,2,#000000);
+    END;
+  END;
+  IF ndato == 4 THEN
+    IF 275<x<308 AND 102<y<115  THEN // 2
+      RECT_P(274,100,308,114,#FF0000,#99FFFF);
+      inputb:=2;
+      tecla();
+      RECT_P(274,100,308,114,#FF0000,#DDDDDD);
+      TEXTOUT_P(text,277,102,2,#000000);     TEXTOUT_P(text,277,102,2,#0000);
+    END;
+    IF 275<x<308 AND 117<y<130  THEN // 2
+      RECT_P(274,116,308,130,#FF0000,#99FFFF);
+      inputb:=3;
+      tecla();
+      RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+      //   TEXTOUT_P(text,277,118,2,#0000FF,28,#99FFFF);
+      TEXTOUT_P(text,277,118,2,#0000);     TEXTOUT_P(text,277,118,2,#0000);  
+    END;
+    IF 275<x<308 AND 132<y<145  THEN // 3
+      RECT_P(274,132,308,132+14,#FF0000,#99FFFF);
+      inputb:=4;
+      tecla();
+      RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+      TEXTOUT_P(text,277,134,2,#000000); TEXTOUT_P(text,277,134,2,#000000);
+    END;
+  END;
+//----------------------------------------------------------------------------------------------------
+
+  IF 5<x<120 AND 22<y<40  THEN // 4
+  END;
+  IF 5<x<120 AND 22<y<40  THEN // 1
+    1▶AAngle;
+    IF mod_select==1 THEN
+      cuadrado();
+    END;
+    IF mod_select==2 THEN
+      cubo();
+    END;
+    IF mod_select==3 THEN
+      irectangulo();
+    END;
+  END;
+  IF 5<x<120 AND 40<y<58  THEN // 2
+    1▶AAngle;
+    IF mod_select==1 THEN
+      rectangulo();
+    END;
+    IF mod_select==2 THEN
+      ortoedro();
+    END;
+    IF mod_select==3 THEN
+      itriangulo1();
+    END;
+  END;
+  IF 5<x<120 AND 58<y<76  THEN // 3
+    1▶AAngle;
+    IF mod_select==1 THEN
+      triangulo();
+    END;
+    IF mod_select==2 THEN
+      piramide();
+    END;
+    IF mod_select==3 THEN
+      itriangulo2();
+    END;
+  END;
+  IF 5<x<120 AND 76<y<94  THEN // 4
+    1▶AAngle;
+    IF mod_select==1 THEN
+      triangulo2();
+    END;
+    IF mod_select==2 THEN
+      tronco_piramide();
+    END;
+    IF mod_select==3 THEN
+      itriangulo3();
+    END;
+  END;
+  IF 5<x<120 AND 94<y<112  THEN  // 5
+    1▶AAngle;
+    IF mod_select==1 THEN
+      paralelogramo();
+    END;
+    IF mod_select==2 THEN
+      esfera();
+    END;
+    IF mod_select==3 THEN
+      icirculo();
+    END;
+  END;
+  IF 5<x<120 AND 112<y<130  THEN // 6
+    1▶AAngle;
+    IF mod_select==1 THEN
+      trapecio();
+    END;
+    IF mod_select==2 THEN
+      cilindro();
+    END;
+    IF mod_select==3 THEN
+      isemicirculo();
+    END;
+  END;
+  IF 5<x<120 AND 130<y<148  THEN // 7
+    1▶AAngle;
+    IF mod_select==1 THEN
+      circulo();
+    END;
+    IF mod_select==2 THEN
+      cono();
+    END;
+    IF mod_select==3 THEN
+      icuartocirculo();
+    END;
+  END;
+  IF 5<x<120 AND 148<y<166  THEN // 8
+    1▶AAngle;
+    IF mod_select==1 THEN
+      sectorcircular();
+    END;
+    IF mod_select==2 THEN
+      tronco_cono();
+    END;
+    IF mod_select==3 THEN
+     icuartoelipse();
+    END
+  END;
+  IF 5<x<120 AND 166<y<184  THEN // 9
+    1▶AAngle;
+    IF mod_select==1 THEN
+      coronacircular();
+    END;
+    IF mod_select==2 THEN
+      cuna_esferico();
+    END;
+    IF mod_select==3 THEN
+      iparabola();
+    END
+  END;
+  IF 5<x<120 AND 184<y<202  THEN // 10
+    1▶AAngle;
+    IF mod_select==1 THEN
+      elipsoide();
+    END;
+    IF mod_select==2 THEN
+      casquete_esferico();
+    END;
+    IF mod_select==3 THEN
+      imediaparabola();
+    END
+  END;
+  IF 5<x<120 AND 202<y<220  THEN // 11
+    1▶AAngle;
+    IF mod_select==1 THEN
+      polig();
+    END;
+    IF mod_select==2 THEN
+      zona_esferica();
+    END;
+    IF mod_select==3 THEN
+      isectcircular();
+    END
+  END;
+  //END;
+  IF 5<x<40 AND 221<y<238  THEN
+    RECT_P(5,221,40,238,#AA0000,#FF0000);
+    TEXTOUT_P("O",17,223,3,#000000,300); TEXTOUT_P("'",19,218,7,#000000,300);
+    TEXTOUT_P("O",18,223,3,#000000,300);RECT_P(20,224,24,228,#FF0000); TEXTOUT_P("'",20,218,7,#000000,300);
+    WAIT(.2);
+    //MSGBOX("     GEOMETRIC\n\nDESARROLLADOR:\nMario Cesgo Soliz");
+    KILL;
+  END;
+  IF 41<x<76 AND 221<y<238  THEN
+    RECT_P(41,221,76,238,#AA0000,#FF0000);   TEXTOUT_P("?",55,222,3,#000000,300);
+    TEXTOUT_P("?",56,222,3,#000000,300);
+    WAIT(.2);
+    RECT_P(41,221,76,238,#FF0000,#DDDDDD);   TEXTOUT_P("?",55,222,3,#0000FF,300);
+    TEXTOUT_P("?",56,222,3,#000000,300);
+    RECT_P(0,0,320,240,#0000FF,{#000000,200});
+    RECT_P(50,60,268,169,#0000FF,{#000000,100});
+    LOCAL xb,yb,xb2,yb2,colorb,colpx,color1;
+    xb:=230;yb:=143;colorb:=#BBBBBB;colpx:=#555555;
+    RECT_P(xb,yb,xb+27,yb+16,colorb); PIXON_P(xb,yb,colpx);PIXON_P(xb+27,yb+16,colpx);PIXON_P(xb,yb+16,colpx);PIXON_P(xb+27,yb,colpx);
+    TEXTOUT_P("OK",xb+4,yb+1,3,#FF0000);TEXTOUT_P("OK",xb+4,yb+1,3,#FF0000);
+    TEXTOUT_P("GEOMETRIC",70,70,7,#FFFFFF);TEXTOUT_P("GEOMETRIC",70,70,7,#FFFFFF);TEXTOUT_P("GEOMETRIC",71,70,7,#FFFFFF);TEXTOUT_P("GEOMETRIC",71,70,7,#FFFFFF);
+    TEXTOUT_P("Version 2.1",188,83,2,#FFFFFF);
+    TEXTOUT_P("DESARROLLADOR:",55,105,2,#FFFFFF);    TEXTOUT_P("Mario Cesgo Soliz",160,105,2,#FFFFFF);
+    TEXTOUT_P("G-MAIL:",55,120,2,#FFFFFF);    TEXTOUT_P("mariocs855@gmail.com",125,120,2,#FFFFFF);
+    TEXTOUT_P("SUCRE-BOLIVIA",110,135,2,#CCCCCC);
+    REPEAT
+      touch2:=MOUSE;
+      touch2:=B→R(touch2(1));
+      IF SIZE(touch2) THEN
+        toque8(touch2(1),touch2(2));
+      END;
+    UNTIL ISKEYDOWN(0);
+  END; 
+END;
+//--------------------------------------------------------------------------------------
+select()
+BEGIN
+  RECT_P(5,2,318,239,#FF0000,{#000000,150});
+  RECT_P(5,22,119,76,#FF0000,#AAFF00);
+  x0:=10;
+  y0:=5;
+  FOR I FROM 1 TO 4 DO
+    LINE_P(x0,y0,110,y0,#0000FF);
+    y0:=y0+18;
+  END;
+  RECT_P(6,5,119,22,#FF0000,#00FF00);
+  RECT_P(90,5,119,22,#FF0000,#00FF00);
+  //TEXTOUT_P("P. AREA",8,6);
+  TEXTOUT_P("︾",98,7,4,#000000,300);
+  TEXTOUT_P("P. AREA",8,24);
+  TEXTOUT_P("SUP. VOLUMEN",8,42);
+  TEXTOUT_P("CG. INERCIA",8,60);
+  //WAIT(-1);
+  LOCAL toque2;
+  REPEAT
+    toque2:=MOUSE();
+    toque2:=B→R(toque2(1));
+    IF SIZE(toque2) THEN
+      touch_select(toque2(1),toque2(2));
+    END;
+  UNTIL ISKEYDOWN(0);
+END;
+//-------------------------------------------------------------------------------------
+touch_select(xx,yy)
+BEGIN
+  IF 5<xx<120 AND 22<yy<40  THEN
+    mod_select:=1;
+    p_area();
+    
+  END;
+  IF 5<xx<120 AND 40<yy<58  THEN
+    mod_select:=2;
+    sup_volumen();
+    
+  END;
+  IF 5<xx<120 AND 58<yy<76  THEN
+    mod_select:=3;
+    cg_inercia();
+  END;
+END;
+
+//==============================================================================
+touch_dat()
+BEGIN
+  LOCAL toque3;
+  REPEAT
+    toque3:=MOUSE();
+    toque3:=B→R(toque3(1));
+    IF SIZE(toque3) THEN
+      IF 270<toque3(1)<270 AND 120<toque3(2)<300 THEN
+        
+      END;
+      touch_select(toque3(1),toque3(2));
+    END;
+  UNTIL ISKEYDOWN(0);
+END;
+//==================================================================================
+tecla()
+BEGIN
+  text:="";
+  REPEAT
+    code:=WAIT();
+    IF TYPE(code)==0 THEN
+      CASE
+        IF code==47 THEN code:=0 END;
+        IF code==42 THEN code:=1 END;
+        IF code==43 THEN code:=2 END;
+        IF code==44 THEN code:=3 END;
+        IF code==37 THEN code:=4 END;
+        IF code==38 THEN code:=5 END;
+        IF code==39 THEN code:=6 END;
+        IF code==32 THEN code:=7 END;
+        IF code==33 THEN code:=8 END;
+        IF code==34 THEN code:=9 END;
+        IF code==48 THEN code:= "." END;
+        IF code==35 THEN code:= "/" END;
+        IF code==40 THEN code:= "*" END;
+        IF code==45 THEN code:= "-" END;
+        IF code==50 THEN code:= "+" END;
+        IF code==19 THEN
+          IF SIZE(text)==1 THEN text:=""; code:="";
+            ELSE
+            text:=LEFT(text,SIZE(text)-1); code:="";
+          END;
+        END;
+        DEFAULT
+        code:="";
+      END;
+      text:=text+code;
+    END;
+    IF inputb==1 THEN   // inptut #4
+      TEXTOUT_P(text,273,112,4,#0000FF,300,#CCCCFF);
+      a:=EVAL(CAS(CAS(text)));
+    END;
+    IF inputb==2 THEN   // inptut #1
+      RECT_P(274,100,308,114,#FF0000,#99FFFF);
+      TEXTOUT_P(text,277,102,2,#0000FF,30,#99FFFF);
+      b:=EVAL(CAS(CAS(text)));
+    END;
+    IF inputb==3 THEN   // inptut #2
+      RECT_P(274,116,308,130,#FF0000,#99FFFF);
+      TEXTOUT_P(text,277,118,2,#0000FF,30,#99FFFF);
+      c:=EVAL(CAS(CAS(text)));
+    END;
+    IF inputb==4 THEN   // inptut #3
+      RECT_P(274,132,308,132+14,#FF0000,#99FFFF);
+      TEXTOUT_P(text,277,134,2,#0000FF,30,#99FFFF);
+      d:=EVAL(CAS(CAS(text)));
+    END;
+UNTIL ISKEYDOWN(30) END;
+END;
+//-------------------------------------------------------------------------------------
+p_area()
+BEGIN
+  mainscreen();
+  inps:=1;
+  TEXTOUT_P("P. AREA",8,6);
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(Area(I),8,y0,3,#000000,111);
+    y0:=y0+18;
+  END;
+  TEXTOUT_P("P. ÁREA",8,6);
+  TEXTOUT_P("ÁREA:",130,180,3,#000000,300);
+  TEXTOUT_P("PERÍMETRO:",130,200,3,#000000,300);
+  LOCAL toque3;
+  REPEAT
+    toque3:=MOUSE();
+    toque3:=B→R(toque3(1));
+    IF SIZE(toque3) THEN
+      touch(toque3(1),toque3(2));
+    END;
+  UNTIL ISKEYDOWN(4);
+END;
+//-------------------------------------------------------------------------------------
+sup_volumen()
+BEGIN
+  mainscreen();
+  inps:=2;
+  TEXTOUT_P("S. VOLUMEN",8,6);
+  TEXTOUT_P("VOLUMEN:",130,180,3,#000000,300);
+  TEXTOUT_P("SUPERFICIE:",130,200,3,#000000,300);
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(volumen(I),8,y0,3,#000000,111);
+    y0:=y0+18;
+  END;
+  WAIT(-1);
+  
+  LOCAL toque3;
+  REPEAT
+    toque3:=MOUSE();
+    toque3:=B→R(toque3(1));
+    IF SIZE(toque3) THEN
+      touch(toque3(1),toque3(2));
+    END;
+  UNTIL ISKEYDOWN(0);
+END;
+//-------------------------------------------------------------------------------------
+cg_inercia()
+BEGIN
+  mainscreen();
+  inps:=3;
+  TEXTOUT_P("CG. INERCIA",8,6);
+  TEXTOUT_P("CG:",130,170,3,#000000,300);
+  TEXTOUT_P("Ix:",130,185,3,#000000,300);
+  TEXTOUT_P("Iy:",130,200,3,#000000,300);
+  y0:=25;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(inercia(I),8,y0,3,#000000,300);
+    y0:=y0+18;
+  END;
+  
+  LOCAL toque3;
+  REPEAT
+    toque3:=MOUSE();
+    toque3:=B→R(toque3(1));
+    IF SIZE(toque3) THEN
+      touch(toque3(1),toque3(2));
+    END;
+  UNTIL ISKEYDOWN(0);
+END;
+
+//-------------------------------------------------------------------------------------
+cuadrado()
+BEGIN
+  ndato:=1;
+  inp:=1;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(Area(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF);
+  TEXTOUT_P("►Cuadrado",8,25,3,#FF0000,300,#00DDFF);
+  RECT_P(140,20,240,120,#0000FF,#66FF66);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  TEXTOUT_P("a",185,115,4,#000000,300);  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  TEXTOUT_P("a:",260,112,4,#000000,300);
+END;
+//-------------------------------------------------------------------------------------
+rectangulo()
+BEGIN
+  ndato:=2;
+  inp:=2;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(Area(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF);
+  TEXTOUT_P("►Rectángulo",8,44,3,#FF0000,300,#00DDFF);
+  RECT_P(140,38,240,94,#0000FF,#66FF66);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  TEXTOUT_P("a:",260,112,4,#000000,300);
+  TEXTOUT_P("b:",260,128,4,#000000,300);
+  TEXTOUT_P("a",185,90,4,#000000,300);
+  TEXTOUT_P("b",245,53,4,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+//-------------------------------------------------------------------------------------
+triangulo()
+BEGIN
+  ndato:=2;
+  inp:=3;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(Area(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P("►Triángulo Rect.",8,80-18,3,#FF0000,300,#00DDFF);
+  FILLPOLY_P({139,94,249,27,249,94},#66FF66);
+  LINE_P(135,95,250,25,#0000FF);
+  LINE_P(250,25,250,95,#0000FF);
+  LINE_P(135,95,250,95,#0000FF);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  TEXTOUT_P("b:",260,112,4,#000000,300);
+  TEXTOUT_P("h:",260,128,4,#000000,300);
+  TEXTOUT_P("b",185,93,4,#000000,300);
+  TEXTOUT_P("h",252,53,4,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+//-------------------------------------------------------------------------------------
+triangulo2()
+BEGIN
+  ndato:=3;
+  inp:=4;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(Area(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P("►Triángulo",8,80,3,#FF0000,300,#00DDFF);
+  FILLPOLY_P({135,95,220,25,250,95},#00FF00);
+  LINE_P(135,95,220,25,#0000FF);
+  LINE_P(220,25,250,95,#0000FF);
+  LINE_P(135,95,250,95,#0000FF);
+  TEXTOUT_P("DATOS",260,82,3,#000000,300);
+  TEXTOUT_P("a:",260,95,4,#000000,300);
+  TEXTOUT_P("b:",260,112,4,#000000,300);
+  TEXTOUT_P("c:",260,128,4,#000000,300);
+  TEXTOUT_P("a",190,93,4,#000000,300);
+  TEXTOUT_P("b",240,50,4,#000000,300);
+  TEXTOUT_P("c",170,43,4,#000000,300);
+  RECT_P(274,100,308,114,#FF0000,#DDDDDD);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+//-------------------------------------------------------------------------------------
+paralelogramo()
+BEGIN
+  ndato:=2;
+  inp:=5;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(Area(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P("►Paralelogramo",8,98,3,#FF0000,300,#00DDFF);
+  FILLPOLY_P({(135,95),(235,95),(260,25),(160,25)},#00FF00);
+  LINE_P((135,95),(235,95),#0000FF);
+  LINE_P((235,95),(260,25),#0000FF);
+  LINE_P((260,25),(160,25),#0000FF);
+  LINE_P((135,95),(160,25),#0000FF);
+  LINE_P(160,25,160,95,#0000FF);
+  TEXTOUT_P("b",185,93,4,#000000,300);
+  TEXTOUT_P("h",163,53,4,#000000,300);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  TEXTOUT_P("a:",260,112,4,#000000,300);
+  TEXTOUT_P("h:",260,128,4,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+//-------------------------------------------------------------------------------------
+trapecio()
+BEGIN
+  ndato:=3;
+  inp:=6;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(Area(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P("►Trapecio",8,116,3,#FF0000,300,#00DDFF);
+  FILLPOLY_P({(135,95),(250,95),(225,25),(160,25)},#0000FF);
+  FILLPOLY_P({(136,94),(249,94),(224,26),(161,26)},#00FF00);
+  LINE_P(160,25,160,95,#0000FF);
+  TEXTOUT_P("DATOS",260,82,3,#000000,300);
+  TEXTOUT_P("b",188,8,4,#000000,300);
+  TEXTOUT_P("a",188,93,4,#000000,300);
+  TEXTOUT_P("h",163,53,4,#000000,300);
+  TEXTOUT_P("a:",260,95,4,#000000,300);
+  TEXTOUT_P("b:",260,112,4,#000000,300);
+  TEXTOUT_P("h:",260,128,4,#000000,300);
+  RECT_P(274,100,308,114,#FF0000,#DDDDDD);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+//-------------------------------------------------------------------------------------
+circulo()
+BEGIN
+  ndato:=1;
+  inp:=7;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(Area(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P("►Círculo",8,134,3,#FF0000,300,#00DDFF);
+  ARC_P(190,70,55,{#0000FF,#00FF00});
+  ARC_P(190,70,1,#0000FF);
+  LINE_P(190,70,232,35,#0000FF);
+  TEXTOUT_P("R",215,50,4,#000000,300);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  TEXTOUT_P("R:",260,112,4,#000000,300);
+END;
+//-------------------------------------------------------------------------------------
+sectorcircular()
+BEGIN
+  ndato:=2;
+  inp:=8;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(Area(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P("►Sector Circular",8,152,3,#FF0000,300,#00DDFF);
+  ARC_P(190,110,90,4/3*π,−π/3,{#0000FF,#00FF00});
+  ARC_P(190,110,17,4/3*π,−π/3,{#0000FF,#00FF00});
+  TEXTOUT_P("R",220,60,4,#000000,300);
+  TEXTOUT_P("Ө",186,80,3,#000000,300);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  TEXTOUT_P("R:",260,112,4,#000000,300);
+  TEXTOUT_P("Ө:",260,128,4,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+//-------------------------------------------------------------------------------------
+coronacircular()
+BEGIN
+  ndato:=2;
+  inp:=9;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(Area(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P("►Corona Circular",8,170,3,#FF0000,300,#00DDFF);
+  ARC_P(190,70,55,{#0000FF,#00FF00});
+  ARC_P(190,70,40,{#0000FF,#FFFFFF});
+  ARC_P(190,70,1,#0000FF);
+  LINE_P(190,70,232,35,#0000FF);
+  LINE_P(190,70,212,102,#0000FF);
+  TEXTOUT_P("R",200,33,4,#000000,300);
+  TEXTOUT_P("r",190,80,4,#000000,300);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  TEXTOUT_P("R:",260,112,4,#000000,300);
+  TEXTOUT_P("r:",260,128,4,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+//-------------------------------------------------------------------------------------
+elipsoide()
+BEGIN
+  ndato:=2;
+  inp:=10;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(Area(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P("►Elipsoide",8,188,3,#FF0000,300,#00DDFF);
+  ARC_P(190,70,{55,40},0,2*π,{#0000FF,#00FF00});
+  ARC_P(190,70,1,#0000FF);
+  TEXTOUT_P("a",210,66,4,#000000,300);
+  TEXTOUT_P("b",196,38,4,#000000,300);
+  LINE_P(190,70,245,70,#0000FF);
+  LINE_P(190,70,190,30,#0000FF);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  TEXTOUT_P("a:",260,112,4,#000000,300);
+  TEXTOUT_P("b:",260,128,4,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+//-------------------------------------------------------------------------------------
+polig()
+BEGIN
+  inp:=0;
+  y0:=26;
+  ndato:=0;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(Area(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+
+  TEXTOUT_P("►Poligono x coord",8,188+18,3,#FF0000,111,#00DDFF);
+  WAIT(.3);
+  LOCAL crd:=[[0,0]],s,r,d,mdim;
+  LOCAL maxx,maxy,minx,miny,ymax,xmax,gmax;
+  LOCAL xy:={},xyi;
+  EDITMAT(crd,{"DATOS DE COORDENADAS",{"1"},{"X","Y"," "}});
+  mdim:=DIM(crd);   mdim:=mdim(1);
+  maxx:=crd(1,1);  maxy:=crd(1,2);  minx:=crd(1,1);  miny:=crd(1,2);
+  IF mdim > 2 THEN
+  crd(mdim+1,1):=crd(1,1);    crd(mdim+1,2):=crd(1,2);
+   FOR I FROM 1 TO mdim DO
+     IF maxx < crd(I+1,1) THEN maxx:=crd(I+1,1) END;
+     IF maxy < crd(I+1,2) THEN maxy:=crd(I+1,2) END;
+     IF minx > crd(I+1,1) THEN minx:=crd(I+1,1) END;
+     IF miny > crd(I+1,2) THEN miny:=crd(I+1,2) END;
+     r:=crd(I,1)*crd(I+1,2)+r;
+     s:=-(crd(I,2)*crd(I+1,1))+s;
+     d:=sqrt((crd(I+1,1)-crd(I,1))^2+(crd(I+1,2)-crd(I,2))^2)+d;
+   END;
+   xmax:=(maxx-minx);    ymax:=(maxy-miny);
+   IF xmax > ymax THEN gmax:=xmax; ELSE gmax:=ymax; END;
+  // MSGBOX(gmax);
+   gmax:=138/(gmax+miny);
+   A:=ABS((r+s)/2);
+   P:=d;
+  ELSE
+   MSGBOX("Las coordenadas no forman un polígono.");
+  END;
+
+  mainscreen();
+  inps:=1;
+  TEXTOUT_P("P. AREA",8,6);
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(Area(I),8,y0,3,#000000,111);
+    y0:=y0+18;
+  END;
+  TEXTOUT_P("►Poligono x coord",8,188+18,3,#FF0000,111,#00DDFF);
+  TEXTOUT_P("P. AREA",8,6);
+  TEXTOUT_P("AREA:",130,180,3,#000000,300);
+  TEXTOUT_P("PERIMETRO:",130,200,3,#000000,300);
+  IF mdim > 2 THEN
+  FOR I FROM 130 TO 313 STEP gmax DO
+    LINE_P(I,10,I,145,#DDDDDD);
+  END;
+  FOR I FROM 145 DOWNTO 10 STEP gmax DO
+    LINE_P(130,I,313,I,#DDDDDD);
+  END; xyi:=1;
+  FOR I FROM 1 TO mdim DO
+    xy(xyi):=(130+crd(I,1)*gmax);  xy(xyi+1):=(145-crd(I,2)*gmax); xyi:=xyi+2;
+    TEXTOUT_P("("+crd(I,1)+","+crd(I,2)+")",(130+crd(I,1)*gmax),(145-crd(I,2)*gmax),1,#000000,300);
+    LINE_P(130+crd(I,1)*gmax,145-crd(I,2)*gmax,130+crd(I+1,1)*gmax,145-crd(I+1,2)*gmax,#0000FF);
+  END;
+  FILLPOLY_P(xy,#00FF00);
+  FOR I FROM 1 TO mdim DO
+    TEXTOUT_P("("+crd(I,1)+","+crd(I,2)+")",(130+crd(I,1)*gmax),(145-crd(I,2)*gmax),1,#000000,300);
+    LINE_P(130+crd(I,1)*gmax,145-crd(I,2)*gmax,130+crd(I+1,1)*gmax,145-crd(I+1,2)*gmax,#0000FF);
+  END;
+  END;
+  //p_area();
+END;
+//=================================VOLUMEN===========================================
+cubo()
+BEGIN
+  ndato:=1;
+  inp:=1;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(volumen(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(volumen2(1),8,26,3,#FF0000,150,#00DDFF);
+  RECT_P(170,20,240,90,#0000FF,#00FF00);
+  RECT_P(140,45,210,115,#0000FF,#00FF00);
+  FILLPOLY_P({(170,21),(239,21),(239,89),(211,115),(211,45),(140,45)},#00AA00);
+  FILLPOLY_P({(170,21),(239,21),(211,44),(140,44)},#00CC00);
+  LINE_P(170,20,140,45,#0000FF);
+  LINE_P(240,20,210,45,#0000FF);
+  LINE_P(240,90,210,115,#0000FF);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  TEXTOUT_P("a",175,112,4,#000000,300);
+  TEXTOUT_P("a:",260,112,4,#000000,300);
+END;
+//-------------------------------------------------------------------------------------
+ortoedro()
+BEGIN
+  ndato:=3;
+  inp:=2;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(volumen(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(volumen2(2),8,44,3,#FF0000,300,#00DDFF);
+  RECT_P(169,15,224,90,#0000FF,#00FF00);
+  RECT_P(144,42,202,116,#0000FF,#00FF00);
+  FILLPOLY_P({(145,41),(202,41),(223,16),(168,16)},#00CC00);
+  FILLPOLY_P({(203,42),(223,17),(223,90),(203,116)},#00AA00);
+  LINE_P(144,42,169,15,#0000FF);
+  LINE_P(202,42,224,15,#0000FF);
+  LINE_P(202,116,224,90,#0000FF);
+  TEXTOUT_P("DATOS",260,82,3,#000000,300);
+  TEXTOUT_P("a:",260,95,4,#000000,300);
+  TEXTOUT_P("b:",260,112,4,#000000,300);
+  TEXTOUT_P("h:",260,128,4,#000000,300);
+  TEXTOUT_P("a",168,115,4,#000000,300);
+  TEXTOUT_P("b",214,102,4,#000000,300);
+  TEXTOUT_P("h",192,70,4,#000000,300);
+  RECT_P(274,100,308,114,#FF0000,#DDDDDD);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+//-------------------------------------------------------------------------------------
+piramide()
+BEGIN
+  ndato:=2;
+  inp:=3;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(volumen(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(volumen2(3),8,62,3,#FF0000,300,#00DDFF);
+  FILLPOLY_P({(182,117),  (182,26),  (224,89)},#00AA00);
+  FILLPOLY_P({(182,117),  (182,26),  (141,89)},#00CC00);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  TEXTOUT_P("a:",260,112,4,#000000,300);
+  TEXTOUT_P("h:",260,128,4,#000000,300);
+  TEXTOUT_P("a",205,93,4,#000000,300);
+  TEXTOUT_P("h",163,65,4,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+  LOCAL color1:=#0000FF;
+  LINE_P(G0,182,26,224,89,color1);
+  LINE_P(G0,224,89,182,117,color1);
+  LINE_P(G0,182,117,182,26,color1);
+  LINE_P(G0,182,26,141,89,color1);
+  LINE_P(G0,141,89,182,117,color1);
+  
+  
+END;
+//-------------------------------------------------------------------------------------
+tronco_piramide()
+BEGIN
+  ndato:=3;
+  inp:=4;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(volumen(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(volumen2(4),8,80,3,#FF0000,111,#00DDFF);
+  FILLPOLY_P({(231,84),  (197,33),  (182,40),  (182,117)},#00AA00);
+  FILLPOLY_P({(182,40),  (182,117),  (134,84),  (168,33)},#00CC00);
+  FILLPOLY_P({(182,26),  (197,33),  (182,40),  (168,33)},#00EE00);
+  TEXTOUT_P("DATOS",260,82,3,#000000,300);
+  TEXTOUT_P("b",188,10,4,#000000,300);
+  TEXTOUT_P("a",205,95,4,#000000,300);
+  TEXTOUT_P("h",163,63,4,#000000,300);
+  TEXTOUT_P("a:",260,95,4,#000000,300);
+  TEXTOUT_P("b:",260,112,4,#000000,300);
+  TEXTOUT_P("h:",260,128,4,#000000,300);
+  RECT_P(274,100,308,114,#FF0000,#DDDDDD);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+  LOCAL color1:=#0000FF;
+  LINE_P(G0,182,117,231,84,color1);
+  LINE_P(G0,231,84,197,33,color1);
+  LINE_P(G0,197,33,182,40,color1);
+  LINE_P(G0,182,40,182,117,color1);
+  LINE_P(G0,182,117,134,84,color1);
+  LINE_P(G0,134,84,168,33,color1);
+  LINE_P(G0,168,33,182,40,color1);
+  LINE_P(G0,168,33,182,26,color1);
+  LINE_P(G0,182,26,197,33,color1);
+  
+END;
+//-------------------------------------------------------------------------------------
+esfera()
+BEGIN
+  ndato:=1;
+  inp:=5;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(volumen(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(volumen2(5),8,98,3,#FF0000,300,#00DDFF);
+  FOR I FROM 55 DOWNTO 0 DO
+    ARC_P(190,70,I,{RGB(0,250-I,0),RGB(0,250-I,0)});
+  END;
+  ARC_P(190,70,1,#0000FF);
+  LINE_P(190,70,232,35,#0000FF);
+  TEXTOUT_P("R",200,33,4,#000000,300);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  TEXTOUT_P("R:",260,112,4,#000000,300);
+END;
+//-------------------------------------------------------------------------------------
+cilindro()
+BEGIN
+  ndato:=2;
+  inp:=6;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(volumen(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(volumen2(6),8,116,3,#FF0000,300,#00DDFF);
+  
+  RECT_P(150,25,224,113,#0000FF,#00CC00);
+  ARC_P(187,25,{37,10},0,2*π,{#0000FF,#00FF00});
+  ARC_P(187,113,{37,10},0,2*π,{#0000FF,#00CC00});
+  RECT_P(151,100,223,113,#00CC00,#00CC00);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  TEXTOUT_P("R:",260,112,4,#000000,300);
+  TEXTOUT_P("h:",260,128,4,#000000,300);
+  TEXTOUT_P("R",187,100,4,#000000,300);
+  TEXTOUT_P("h",230,53,4,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+//-------------------------------------------------------------------------------------
+cono()
+BEGIN
+  ndato:=2;
+  inp:=7;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(volumen(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(volumen2(7),8,134,3,#FF0000,300,#00DDFF);
+  ARC_P(189,109,{45,10},0,2*π,{#0000FF,#00CC00});
+  FILLPOLY_P({(189,17),(233,109),(145,109)},#00DD00);
+  LINE_P(189,17,144,109,#0000FF);
+  LINE_P(189,17,234,109,#0000FF);
+  FOR I FROM 145 TO 189 DO
+    LINE_P(190,19,I,109,RGB(0,30+I,0));
+    y0:=y0+18;
+  END;
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  TEXTOUT_P("R:",260,112,4,#000000,300);
+  TEXTOUT_P("h:",260,128,4,#000000,300);
+  TEXTOUT_P("R",185,93,4,#000000,300);
+  TEXTOUT_P("h",150,53,4,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+//-------------------------------------------------------------------------------------
+tronco_cono()
+BEGIN
+  ndato:=3;
+  inp:=8;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(volumen(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(volumen2(8),8,134+18,3,#FF0000,300,#00DDFF);
+  FILLPOLY_P({(172,40),  (143,108),  (144,110),  (147,112),  (151,114),  (158,115),  (176,117),  (189,118),  (201,117),  (215,116),  (223,115),  (229,113),  (232,111),  (233,110),  (233,109),  (234,108),  (205,40),  (205,40),  (204,41),  (202,42),  (198,43),  (194,43),  (190,43),  (185,43),  (182,43),  (180,43),  (176,42),  (174,42),  (173,41),  (172,41),  (172,40),  (172,40),  (172,40)},#00DD00);
+  ARC_P(189,40,{16,4},0,2*π,{#0000FF,#00EE00});
+  LOCAL color1:=#0000FF;
+  LINE_P(G0,172,40,143,108,color1);
+  LINE_P(G0,143,108,144,109,color1);
+  LINE_P(G0,144,109,144,110,color1);
+  LINE_P(G0,144,110,146,111,color1);
+  LINE_P(G0,146,111,149,113,color1);
+  LINE_P(G0,149,113,153,114,color1);
+  LINE_P(G0,153,114,162,116,color1);
+  LINE_P(G0,162,116,174,117,color1);
+  LINE_P(G0,174,117,202,117,color1);
+  LINE_P(G0,202,117,213,116,color1);
+  LINE_P(G0,213,116,221,115,color1);
+  LINE_P(G0,221,115,226,114,color1);
+  LINE_P(G0,226,114,230,112,color1);
+  LINE_P(G0,230,112,232,111,color1);
+  LINE_P(G0,232,111,233,110,color1);
+  LINE_P(G0,233,110,233,110,color1);
+  LINE_P(G0,233,110,234,109,color1);
+  LINE_P(G0,234,109,234,108,color1);
+  LINE_P(G0,234,108,205,40,color1);
+  LINE_P(G0,205,40,205,39,color1);
+  LINE_P(G0,205,39,204,39,color1);
+  LINE_P(G0,204,39,203,38,color1);
+  LINE_P(G0,203,38,201,38,color1);
+  LINE_P(G0,201,38,198,37,color1);
+  LINE_P(G0,198,37,194,37,color1);
+  LINE_P(G0,194,37,188,37,color1);
+  LINE_P(G0,188,37,183,37,color1);
+  LINE_P(G0,183,37,180,37,color1);
+  LINE_P(G0,180,37,176,38,color1);
+  LINE_P(G0,176,38,175,38,color1);
+  LINE_P(G0,175,38,174,38,color1);
+  LINE_P(G0,174,38,173,39,color1);
+  LINE_P(G0,173,39,172,39,color1);
+  LINE_P(G0,172,39,172,39,color1);
+  LINE_P(G0,172,39,172,40,color1);
+  LINE_P(G0,172,40,172,40,color1);
+  LINE_P(G0,172,40,173,41,color1);
+  LINE_P(G0,173,41,174,42,color1);
+  LINE_P(G0,174,42,177,42,color1);
+  LINE_P(G0,177,42,182,43,color1);
+  LINE_P(G0,182,43,189,43,color1);
+  LINE_P(G0,189,43,195,43,color1);
+  LINE_P(G0,195,43,200,42,color1);
+  LINE_P(G0,200,42,202,42,color1);
+  LINE_P(G0,202,42,203,41,color1);
+  LINE_P(G0,203,41,204,41,color1);
+  LINE_P(G0,204,41,205,41,color1);
+  LINE_P(G0,205,41,205,40,color1);
+  LINE_P(G0,205,40,205,40,color1);
+  J:=172;
+  K:=108;
+  FOR I FROM 144 TO 189 DO
+    LINE_P(J,44,I,K,RGB(0,30+I,0));
+    y0:=y0+18;
+    J:=J+0.5;
+    K:=K+0.2;
+  END;
+  TEXTOUT_P("DATOS",260,114-32,3,#000000,300);
+  TEXTOUT_P("R:",260,95,4,#000000,300);
+  TEXTOUT_P("r:",260,112,4,#000000,300);
+  TEXTOUT_P("h:",260,128,4,#000000,300);
+  TEXTOUT_P("r",188,20,4,#000000,300);
+  TEXTOUT_P("R",188,93,4,#000000,300);
+  TEXTOUT_P("h",163,60,4,#000000,300);
+  RECT_P(274,100,308,114,#FF0000,#DDDDDD);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+//-------------------------------------------------------------------------------------
+
+cuna_esferico()
+BEGIN
+  ndato:=2;
+  inp:=9;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(volumen(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(volumen2(9),8,134+36,3,#FF0000,300,#00DDFF);
+  LOCAL color1:=#0000FF;
+  FILLPOLY_P({(189,16),  (189,125),  (188,125),  (187,124),  (185,123),  (184,121),  (182,119),  (181,117),  (180,115),  (178,110),  (176,100),  (174,93),  (173,80),  (173,74),  (173,66),  (174,54),  (175,42),  (178,31),  (180,24),  (181,22),  (182,21),  (183,19),  (185,18),  (186,17),  (187,16),  (187,16),  (188,16),  (189,16)},#00AA00);
+  FILLPOLY_P({(189,16),  (189,16),  (189,16),  (188,16),  (188,16),  (187,16),  (186,16),  (184,18),  (183,20),  (181,22),  (180,25),  (179,28),  (177,33),  (176,38),  (175,43),  (174,49),  (174,55),  (173,59),  (173,67),  (173,73),  (173,80),  (174,89),  (175,99),  (178,109),  (180,116),  (182,119),  (184,122),  (186,123),  (187,124),  (188,125),  (189,125),  (189,125),  (188,125),  (186,125),  (184,124),  (180,123),  (176,122),  (171,120),  (163,113),  (158,107),  (154,101),  (150,93),  (148,82),  (147,71),  (147,63),  (148,54),  (151,46),  (155,37),  (160,31),  (166,24),  (172,20),  (178,17),  (183,16),  (185,16)},#00DD00);
+  
+  LINE_P(G0,189,16,189,16,color1);
+  LINE_P(G0,189,16,189,16,color1);
+  LINE_P(G0,189,16,188,16,color1);
+  LINE_P(G0,188,16,188,16,color1);
+  LINE_P(G0,188,16,187,16,color1);
+  LINE_P(G0,187,16,186,16,color1);
+  LINE_P(G0,186,16,184,18,color1);
+  LINE_P(G0,184,18,183,20,color1);
+  LINE_P(G0,183,20,181,22,color1);
+  LINE_P(G0,181,22,180,25,color1);
+  LINE_P(G0,180,25,179,28,color1);
+  LINE_P(G0,179,28,177,33,color1);
+  LINE_P(G0,177,33,176,38,color1);
+  LINE_P(G0,176,38,175,43,color1);
+  LINE_P(G0,175,43,174,49,color1);
+  LINE_P(G0,174,49,174,55,color1);
+  LINE_P(G0,174,55,173,59,color1);
+  LINE_P(G0,173,59,173,67,color1);
+  LINE_P(G0,173,67,173,73,color1);
+  LINE_P(G0,173,73,173,80,color1);
+  LINE_P(G0,173,80,174,89,color1);
+  LINE_P(G0,174,89,175,99,color1);
+  LINE_P(G0,175,99,178,109,color1);
+  LINE_P(G0,178,109,180,116,color1);
+  LINE_P(G0,180,116,182,119,color1);
+  LINE_P(G0,182,119,184,122,color1);
+  LINE_P(G0,184,122,186,123,color1);
+  LINE_P(G0,186,123,187,124,color1);
+  LINE_P(G0,187,124,188,125,color1);
+  LINE_P(G0,188,125,189,125,color1);
+  LINE_P(G0,189,125,189,125,color1);
+  LINE_P(G0,189,125,188,125,color1);
+  LINE_P(G0,188,125,186,125,color1);
+  LINE_P(G0,186,125,184,124,color1);
+  LINE_P(G0,184,124,180,123,color1);
+  LINE_P(G0,180,123,176,122,color1);
+  LINE_P(G0,176,122,171,120,color1);
+  LINE_P(G0,171,120,163,113,color1);
+  LINE_P(G0,163,113,158,107,color1);
+  LINE_P(G0,158,107,154,101,color1);
+  LINE_P(G0,154,101,150,93,color1);
+  LINE_P(G0,150,93,148,82,color1);
+  LINE_P(G0,148,82,147,71,color1);
+  LINE_P(G0,147,71,147,63,color1);
+  LINE_P(G0,147,63,148,54,color1);
+  LINE_P(G0,148,54,151,46,color1);
+  LINE_P(G0,151,46,155,37,color1);
+  LINE_P(G0,155,37,160,31,color1);
+  LINE_P(G0,160,31,166,24,color1);
+  LINE_P(G0,166,24,172,20,color1);
+  LINE_P(G0,172,20,178,17,color1);
+  LINE_P(G0,178,17,183,16,color1);
+  LINE_P(G0,183,16,185,16,color1);
+  LINE_P(G0,185,16,189,16,color1);
+  
+  LINE_P(G0,189,16,189,125,color1);
+  LINE_P(G0,189,125,188,125,color1);
+  LINE_P(G0,188,125,187,124,color1);
+  LINE_P(G0,187,124,185,123,color1);
+  LINE_P(G0,185,123,184,121,color1);
+  LINE_P(G0,184,121,182,119,color1);
+  LINE_P(G0,182,119,181,117,color1);
+  LINE_P(G0,181,117,180,115,color1);
+  LINE_P(G0,180,115,178,110,color1);
+  LINE_P(G0,178,110,176,100,color1);
+  LINE_P(G0,176,100,174,93,color1);
+  LINE_P(G0,174,93,173,80,color1);
+  LINE_P(G0,173,80,173,74,color1);
+  LINE_P(G0,173,74,173,66,color1);
+  LINE_P(G0,173,66,174,54,color1);
+  LINE_P(G0,174,54,175,42,color1);
+  LINE_P(G0,175,42,178,31,color1);
+  LINE_P(G0,178,31,180,24,color1);
+  LINE_P(G0,180,24,181,22,color1);
+  LINE_P(G0,181,22,182,21,color1);
+  LINE_P(G0,182,21,183,19,color1);
+  LINE_P(G0,183,19,185,18,color1);
+  LINE_P(G0,185,18,186,17,color1);
+  LINE_P(G0,186,17,187,16,color1);
+  LINE_P(G0,187,16,187,16,color1);
+  LINE_P(G0,187,16,188,16,color1);
+  LINE_P(G0,188,16,189,16,color1);
+  LINE_P(G0,189,16,189,16,color1);
+  
+  LINE_P(G0,189,16,184,16,color1);
+  
+  LINE_P(G0,178,17,174,18,color1);
+  
+  LINE_P(G0,169,19,165,21,color1);
+  
+  LINE_P(G0,160,24,154,28,color1);
+  
+  LINE_P(G0,151,31,145,39,color1);
+  
+  LINE_P(G0,141,45,139,50,color1);
+  
+  LINE_P(G0,136,56,135,62,color1);
+  
+  LINE_P(G0,135,67,135,73,color1);
+  
+  LINE_P(G0,135,79,137,85,color1);
+  
+  LINE_P(G0,139,90,141,96,color1);
+  
+  LINE_P(G0,144,101,147,105,color1);
+  
+  LINE_P(G0,151,109,155,113,color1);
+  
+  LINE_P(G0,160,116,166,120,color1);
+  
+  LINE_P(G0,172,122,177,123,color1);
+  
+  LINE_P(G0,183,124,189,125,color1);
+  
+  LINE_P(G0,195,125,202,123,color1);
+  
+  LINE_P(G0,208,122,214,119,color1);
+  
+  LINE_P(G0,218,116,225,112,color1);
+  
+  LINE_P(G0,230,107,233,103,color1);
+  
+  LINE_P(G0,236,99,239,94,color1);
+  
+  LINE_P(G0,241,88,243,83,color1);
+  
+  LINE_P(G0,244,77,244,72,color1);
+  
+  LINE_P(G0,244,65,243,60,color1);
+  
+  LINE_P(G0,242,55,240,50,color1);
+  
+  LINE_P(G0,238,46,235,41,color1);
+  
+  LINE_P(G0,231,35,227,31,color1);
+  
+  LINE_P(G0,223,27,218,23,color1);
+  
+  LINE_P(G0,213,21,208,19,color1);
+  
+  LINE_P(G0,203,17,198,16,color1);
+  
+  LINE_P(G0,193,16,190,16,color1);
+
+  LINE_P(G0,148,83,190,70,color1);
+  LINE_P(G0,190,70,173,83,color1);
+  ARC_P(190,70,1,#0000FF);
+  LINE_P(190,70,232,35,#0000FF);
+  TEXTOUT_P("R",200,33,4,#000000,300);
+  TEXTOUT_P("Ө",173,60,3,#000000,300);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  TEXTOUT_P("R:",260,112,4,#000000,300);
+  TEXTOUT_P("Ө:",260,128,4,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+  
+END;
+
+
+casquete_esferico()
+BEGIN
+  ndato:=2;
+  inp:=10;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(volumen(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(volumen2(10),8,134+36+18,3,#FF0000,111,#00DDFF);
+  LOCAL color1:=#0000FF;
+  
+  LOCAL color1:=#0000FF;
+  LINE_P(G0,144,40,141,44,color1);
+  
+  LINE_P(G0,139,48,138,52,color1);
+  
+  LINE_P(G0,137,55,136,60,color1);
+  
+  LINE_P(G0,135,65,135,69,color1);
+  
+  LINE_P(G0,135,73,135,79,color1);
+  
+  LINE_P(G0,137,84,138,89,color1);
+  
+  LINE_P(G0,140,93,142,98,color1);
+  
+  LINE_P(G0,145,102,147,105,color1);
+  
+  LINE_P(G0,151,109,154,112,color1);
+  
+  LINE_P(G0,158,115,163,118,color1);
+  
+  LINE_P(G0,167,120,171,122,color1);
+  
+  LINE_P(G0,174,123,179,124,color1);
+  
+  LINE_P(G0,184,125,188,125,color1);
+  
+  LINE_P(G0,192,125,197,124,color1);
+  
+  LINE_P(G0,202,123,207,122,color1);
+  
+  LINE_P(G0,210,120,215,118,color1);
+  
+  LINE_P(G0,219,116,223,113,color1);
+  
+  LINE_P(G0,227,110,230,107,color1);
+  
+  LINE_P(G0,233,104,235,101,color1);
+  
+  LINE_P(G0,237,97,239,93,color1);
+  
+  LINE_P(G0,241,89,242,85,color1);
+  
+  LINE_P(G0,243,80,244,75,color1);
+  
+  LINE_P(G0,244,70,244,64,color1);
+  
+  LINE_P(G0,243,60,242,56,color1);
+  
+  LINE_P(G0,241,51,239,47,color1);
+  
+  LINE_P(G0,237,43,235,40,color1);
+  
+  FILLPOLY_P({(189,16),  (186,16),  (180,16),  (173,18),  (165,21),  (158,25),  (152,30),  (149,34),  (146,36),  (144,40),  (144,42),  (144,43),  (146,44),  (147,45),  (149,46),  (153,47),  (162,50),  (172,51),  (182,52),  (189,52),  (196,52),  (202,52),  (210,51),  (218,50),  (224,48),  (229,46),  (231,45),  (232,44),  (234,43),  (234,42),  (235,42),  (235,41),  (235,40),  (232,36),  (228,31),  (224,28),  (218,24),  (214,21),  (205,18),  (199,16),  (195,16),  (192,16)},#00DD00);
+  //color1:=#0000FF;
+  LINE_P(G0,189,16,186,16,color1);
+  LINE_P(G0,186,16,180,16,color1);
+  LINE_P(G0,180,16,173,18,color1);
+  LINE_P(G0,173,18,165,21,color1);
+  LINE_P(G0,165,21,158,25,color1);
+  LINE_P(G0,158,25,152,30,color1);
+  LINE_P(G0,152,30,149,34,color1);
+  LINE_P(G0,149,34,146,36,color1);
+  LINE_P(G0,146,36,144,40,color1);
+  LINE_P(G0,144,40,144,42,color1);
+  LINE_P(G0,144,42,144,43,color1);
+  LINE_P(G0,144,43,146,44,color1);
+  LINE_P(G0,146,44,147,45,color1);
+  LINE_P(G0,147,45,149,46,color1);
+  LINE_P(G0,149,46,153,47,color1);
+  LINE_P(G0,153,47,162,50,color1);
+  LINE_P(G0,162,50,172,51,color1);
+  LINE_P(G0,172,51,182,52,color1);
+  LINE_P(G0,182,52,189,52,color1);
+  LINE_P(G0,189,52,196,52,color1);
+  LINE_P(G0,196,52,202,52,color1);
+  LINE_P(G0,202,52,210,51,color1);
+  LINE_P(G0,210,51,218,50,color1);
+  LINE_P(G0,218,50,224,48,color1);
+  LINE_P(G0,224,48,229,46,color1);
+  LINE_P(G0,229,46,231,45,color1);
+  LINE_P(G0,231,45,232,44,color1);
+  LINE_P(G0,232,44,234,43,color1);
+  LINE_P(G0,234,43,234,42,color1);
+  LINE_P(G0,234,42,235,42,color1);
+  LINE_P(G0,235,42,235,41,color1);
+  LINE_P(G0,235,41,235,40,color1);
+  LINE_P(G0,235,40,232,36,color1);
+  LINE_P(G0,232,36,228,31,color1);
+  LINE_P(G0,228,31,224,28,color1);
+  LINE_P(G0,224,28,218,24,color1);
+  LINE_P(G0,218,24,214,21,color1);
+  LINE_P(G0,214,21,205,18,color1);
+  LINE_P(G0,205,18,199,16,color1);
+  LINE_P(G0,199,16,195,16,color1);
+  LINE_P(G0,195,16,192,16,color1);
+  LINE_P(G0,192,16,189,16,color1);
+
+  LINE_P(G0,236,41,189,41,color1);
+  LINE_P(G0,189,41,189,16,color1);
+    ARC_P(190,70,1,#0000FF);
+  LINE_P(190,70,236,41,#0000FF);
+  TEXTOUT_P("h",192,16,4,#000000,300);
+  TEXTOUT_P("a",208,24,4,#000000,300);
+  TEXTOUT_P("R",215,50,4,#000000,300);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  TEXTOUT_P("R:",260,112,4,#000000,300);
+  TEXTOUT_P("h:",260,128,4,#000000,300);
+  //RECT_P(274,100,308,114,#FF0000,#DDDDDD);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+  
+END;
+
+zona_esferica()
+BEGIN
+  ndato:=4;
+  inp:=11;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(volumen(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(volumen2(11),8,134+36+18+18,3,#FF0000,111,#00DDFF);
+   
+  LOCAL color1:=#0000FF;
+  
+  FILLPOLY_P({(140,47),  (140,48),  (140,49),  (141,51),  (142,52),  (144,54),  (146,55),  (148,56),  (150,57),  (152,58),  (155,59),  (159,60),  (165,62),  (175,63),  (186,64),  (198,64),  (208,63),  (218,61),  (227,58),  (233,55),  (235,53),  (237,52),  (238,51),  (238,49),  (239,48),  (239,47),  (239,46),  (238,44),  (235,40),  (232,36),  (228,31),  (224,28),  (221,26),  (222,26),  (221,27),  (221,27),  (220,28),  (219,29),  (217,30),  (215,30),  (213,31),  (210,31),  (208,32),  (204,32),  (198,33),  (189,33),  (183,33),  (174,32),  (167,31),  (163,30),  (161,29),  (159,28),  (158,28),  (158,27),  (157,27),  (157,27),  (157,26),  (157,26),  (157,26),  (157,26),  (155,28),  (151,31),  (148,34),  (144,40),  (141,44),  (140,46)},#00AA00);
+  FILLPOLY_P({(157,26),  (159,24),  (160,24),  (162,22),  (166,21),  (173,20),  (186,19),  (198,19),  (205,20),  (209,21),  (213,21),  (216,22),  (218,23),  (220,24),  (220,25),  (221,26),  (221,26),  (222,26),  (221,27),  (221,27),  (220,28),  (218,29),  (216,30),  (212,31),  (208,32),  (201,33),  (193,33),  (183,33),  (174,32),  (166,31),  (162,30),  (159,28),  (158,28),  (158,27),  (158,27),  (157,27),  (157,26)},#00EE00);
+  
+  LINE_P(G0,189,16,184,16,color1);
+  
+  LINE_P(G0,178,17,174,18,color1);
+  
+  LINE_P(G0,169,19,165,21,color1);
+  
+  LINE_P(G0,160,24,154,28,color1);
+  
+  LINE_P(G0,151,31,145,39,color1);
+  
+  LINE_P(G0,141,45,139,50,color1);
+  
+  LINE_P(G0,136,56,135,62,color1);
+  
+  LINE_P(G0,135,67,135,73,color1);
+  
+  LINE_P(G0,135,79,137,85,color1);
+  
+  LINE_P(G0,139,90,141,96,color1);
+  
+  LINE_P(G0,144,101,147,105,color1);
+  
+  LINE_P(G0,151,109,155,113,color1);
+  
+  LINE_P(G0,160,116,166,120,color1);
+  
+  LINE_P(G0,172,122,177,123,color1);
+  
+  LINE_P(G0,183,124,189,125,color1);
+  
+  LINE_P(G0,195,125,202,123,color1);
+  
+  LINE_P(G0,208,122,214,119,color1);
+  
+  LINE_P(G0,218,116,225,112,color1);
+  
+  LINE_P(G0,230,107,233,103,color1);
+  
+  LINE_P(G0,236,99,239,94,color1);
+  
+  LINE_P(G0,241,88,243,83,color1);
+  
+  LINE_P(G0,244,77,244,72,color1);
+  
+  LINE_P(G0,244,65,243,60,color1);
+  
+  LINE_P(G0,242,55,240,50,color1);
+  
+  LINE_P(G0,238,46,235,41,color1);
+  
+  LINE_P(G0,231,35,227,31,color1);
+  
+  LINE_P(G0,223,27,218,23,color1);
+  
+  LINE_P(G0,213,21,208,19,color1);
+  
+  LINE_P(G0,203,17,198,16,color1);
+  
+  LINE_P(G0,193,16,190,16,color1);
+ 
+  TEXTOUT_P("DATOS",260,114-32,3,#000000,300);
+  TEXTOUT_P("R:",260,95,4,#000000,300);
+  TEXTOUT_P("r:",260,112,4,#000000,300);
+  TEXTOUT_P("h:",260,128,4,#000000,300);
+  TEXTOUT_P("R",188,61,4,#000000,300);
+  TEXTOUT_P("r",188,10,4,#000000,300);
+  TEXTOUT_P("h",188,38,4,#000000,300);
+  RECT_P(274,100,308,114,#FF0000,#DDDDDD);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+//=======================INERCIAS=====================================
+
+//-------------------------------------------------------------------------------------
+irectangulo()
+BEGIN
+  ndato:=2;
+  inp:=1;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(inercia(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF);
+  TEXTOUT_P(inercia2(1),8,26,3,#FF0000,300,#00DDFF);
+  RECT_P(137,34,240,97,#0000FF,#66FF66);
+  LOCAL color1:=#0000FF;
+  LINE_P(G0,255,97,137,97,#FF0000);
+  LINE_P(G0,137,97,137,22,#FF0000);
+  LINE_P(G0,137,34,240,34,color1);
+  LINE_P(G0,240,34,240,97,color1);
+  LINE_P(G0,255,66,188,66,color1);
+  LINE_P(G0,188,66,188,23,color1);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  TEXTOUT_P("a:",260,112,4,#000000,300);
+  TEXTOUT_P("b:",260,128,4,#000000,300);
+  TEXTOUT_P("a",185,92,4,#000000,300);
+  TEXTOUT_P("b",128,53,4,#000000,300);
+  TEXTOUT_P("a/2",241,74,2,#000000,300);
+  TEXTOUT_P("b/2",154,19,2,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+//-------------------------------------------------------------------------------------
+itriangulo1()
+BEGIN
+  ndato:=2;
+  inp:=2;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(inercia(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(inercia2(2),8,44,3,#FF0000,111,#00DDFF);
+ LOCAL color1:=#0000FF,red:=#FF0000,green:=#00FF00;
+FILLPOLY_P({137,22,249,97,137,97},green);
+LINE_P(G0,256,97,137,97,red);
+LINE_P(G0,137,97,137,14,red);
+LINE_P(G0,137,22,249,97,color1);
+LINE_P(G0,252,89,254,97,color1);
+LINE_P(G0,254,97,256,89,color1);
+LINE_P(G0,254,97,254,73,color1);
+LINE_P(G0,254,73,256,80,color1);
+LINE_P(G0,252,80,254,73,color1);
+LINE_P(G0,258,73,170,73,color1);
+LINE_P(G0,170,73,170,14,color1);
+LINE_P(G0,163,20,170,18,color1);
+LINE_P(G0,170,18,163,16,color1);
+LINE_P(G0,170,18,137,18,color1);
+LINE_P(G0,137,18,144,20,color1);
+LINE_P(G0,137,18,144,16,color1);
+
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  TEXTOUT_P("b:",260,112,4,#000000,300);
+  TEXTOUT_P("h:",260,128,4,#000000,300);
+  TEXTOUT_P("b",185,93,4,#000000,300);
+  TEXTOUT_P("h",128,53,4,#000000,300);
+  TEXTOUT_P("b/3",145,7,2,#000000,300);
+  TEXTOUT_P("h/3",259,78,2,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+//-------------------------------------------------------------------------------------
+itriangulo2()
+BEGIN
+  ndato:=2;
+  inp:=3;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(inercia(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(inercia2(3),8,62,3,#FF0000,111,#00DDFF);
+LOCAL color1:=#0000FF,red:=#FF0000,green:=#00FF00;
+FILLPOLY_P({(236,121),  (188,27),  (141,121),  (236,121)},green);
+LINE_P(G0,249,121,188,121,red);
+LINE_P(G0,188,121,188,17,red);
+LINE_P(G0,188,27,236,121,color1);
+LINE_P(G0,188,90,249,90,color1);
+LINE_P(G0,240,98,242,90,color1);
+LINE_P(G0,242,90,244,98,color1);
+LINE_P(G0,242,90,242,121,color1);
+LINE_P(G0,242,121,244,114,color1);
+LINE_P(G0,240,114,242,121,color1);
+LINE_P(G0,242,121,236,121,color1);
+LINE_P(G0,236,121,236,134,color1);
+LINE_P(G0,228,132,236,130,color1);
+LINE_P(G0,236,130,228,128,color1);
+LINE_P(G0,236,130,141,130,color1);
+LINE_P(G0,141,130,149,128,color1);
+LINE_P(G0,149,132,141,130,color1);
+LINE_P(G0,141,134,141,121,color1);
+LINE_P(G0,141,121,188,27,color1);
+LINE_P(G0,188,27,130,27,color1);
+LINE_P(G0,132,35,134,27,color1);
+LINE_P(G0,134,27,136,35,color1);
+
+LINE_P(G0,134,27,134,121,color1);
+LINE_P(G0,134,121,136,114,color1);
+LINE_P(G0,132,114,134,121,color1);
+LINE_P(G0,130,121,188,121,color1);
+
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  TEXTOUT_P("b:",260,112,4,#000000,300);
+  TEXTOUT_P("h:",260,128,4,#000000,300);
+  TEXTOUT_P("b",182,128,4,#000000,300);
+  TEXTOUT_P("h",135,64,4,#000000,300);
+  TEXTOUT_P("h/3",241,101,2,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+
+//-----------------------------------------------------------------
+itriangulo3()
+BEGIN
+  ndato:=2;
+  inp:=4;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(inercia(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(inercia2(4),8,80,3,#FF0000,111,#00DDFF);
+LOCAL color1:=#0000FF,red:=#FF0000,green:=#00FF00;
+FILLPOLY_P({(245,103),  (134,103),  (213,34),  (244,103)},green);
+LINE_P(G0,255,103,134,103,red);
+LINE_P(G0,134,103,134,17,red);
+LINE_P(G0,134,103,213,34,color1);
+LINE_P(G0,213,34,245,103,color1);
+LINE_P(G0,245,103,246,95,color1);
+LINE_P(G0,246,95,248,103,color1);
+LINE_P(G0,248,103,250,95,color1);
+LINE_P(G0,248,103,248,75,color1);
+LINE_P(G0,248,75,250,82,color1);
+LINE_P(G0,246,82,248,75,color1);
+LINE_P(G0,253,75,192,75,color1);
+LINE_P(G0,192,75,192,18,color1);
+LINE_P(G0,185,25,192,27,color1);
+LINE_P(G0,192,27,185,29,color1);
+LINE_P(G0,192,27,134,27,color1);
+LINE_P(G0,134,27,141,25,color1);
+LINE_P(G0,141,29,134,27,color1);
+LINE_P(G0,213,34,242,34,color1);
+LINE_P(G0,236,42,238,34,color1);
+LINE_P(G0,238,34,240,42,color1);
+LINE_P(G0,238,34,238,103,color1);
+LINE_P(G0,236,95,238,103,color1);
+LINE_P(G0,238,103,240,95,color1);
+LINE_P(G0,240,95,245,103,color1);
+LINE_P(G0,245,103,245,118,color1);
+LINE_P(G0,237,116,245,114,color1);
+LINE_P(G0,245,114,237,112,color1);
+LINE_P(G0,245,114,134,114,color1);
+LINE_P(G0,134,114,141,112,color1);
+LINE_P(G0,141,116,134,114,color1);
+LINE_P(G0,134,118,134,103,color1);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  TEXTOUT_P("b:",260,112,4,#000000,300);
+  TEXTOUT_P("h:",260,128,4,#000000,300);
+  TEXTOUT_P("b",187,116,4,#000000,300);
+  TEXTOUT_P("h",240,60,4,#000000,300);
+  TEXTOUT_P("h/3",250,86,2,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+
+//-------------------------------------------------------------------------------------
+icirculo()
+BEGIN
+  ndato:=1;
+  inp:=5;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(inercia(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(inercia2(5),8,98,3,#FF0000,111,#00DDFF);
+  ARC_P(190,70,55,{#0000FF,#00FF00});
+  ARC_P(190,70,1,#0000FF);
+  LOCAL color1:=#0000FF,red:=#FF0000,green:=#00FF00;
+  LINE_P(190,70,232,35,#0000FF);
+  LINE_P(190,70,250,70,red);
+  LINE_P(190,70,190,10,red);
+  TEXTOUT_P("R",215,50,4,#000000,300);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  TEXTOUT_P("R:",260,112,4,#000000,300);
+END;
+//-------------------------------------------------------------------------------------
+isemicirculo()
+BEGIN
+  ndato:=1;
+  inp:=6;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(inercia(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  LOCAL color1:=#0000FF,red:=#FF0000,green:=#00FF00;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(inercia2(6),8,116,3,#FF0000,111,#00DDFF);
+  ARC_P(190,85,55,π,0,{#0000FF,#00FF00});
+  LINE_P(190,85,190,20,red);
+  LINE_P(190,85,258,85,red);
+LINE_P(G0,246,77,248,84,color1);
+LINE_P(G0,248,84,250,77,color1);
+LINE_P(G0,248,84,248,55,color1);
+LINE_P(G0,248,55,246,62,color1);
+LINE_P(G0,250,62,248,55,color1);
+LINE_P(G0,255,55,188,55,color1);
+LINE_P(G0,152,43,188,84,color1);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  TEXTOUT_P("R:",260,112,4,#000000,300);
+  TEXTOUT_P("R",156,59,4,#000000,300);
+  TEXTOUT_P("4*R/3*π",247,66,2,#000000,300);
+END;
+//-------------------------------------------------------------------------------------
+icuartocirculo()
+BEGIN
+  ndato:=1;
+  inp:=7;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(inercia(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(inercia2(7),8,134,3,#FF0000,111,#00DDFF);
+  LOCAL color1:=#0000FF,red:=#FF0000,green:=#00FF00;
+FILLPOLY_P({(231,100),  (153,100),  (153,22),  (158,22),  (164,23),  (171,24),  (178,26),  (183,28),  (188,30),  (193,33),  (198,37),  (203,40),  (208,45),  (213,50),  (216,54),  (219,59),  (223,65),  (225,70),  (227,75),  (228,81),  (229,86),  (230,92),  (231,96),  (231,100)},green);
+LINE_P(G0,244,100,153,100,red);
+LINE_P(G0,153,100,153,14,red);
+LINE_P(G0,153,22,156,22,color1);
+LINE_P(G0,156,22,158,22,color1);
+LINE_P(G0,158,22,161,22,color1);
+LINE_P(G0,161,22,164,23,color1);
+LINE_P(G0,164,23,169,24,color1);
+LINE_P(G0,169,24,174,25,color1);
+LINE_P(G0,174,25,177,26,color1);
+LINE_P(G0,177,26,182,28,color1);
+LINE_P(G0,182,28,185,29,color1);
+LINE_P(G0,185,29,189,31,color1);
+LINE_P(G0,189,31,193,33,color1);
+LINE_P(G0,193,33,199,38,color1);
+LINE_P(G0,199,38,207,44,color1);
+LINE_P(G0,207,44,213,51,color1);
+LINE_P(G0,213,51,215,53,color1);
+LINE_P(G0,215,53,218,57,color1);
+LINE_P(G0,218,57,220,60,color1);
+LINE_P(G0,220,60,222,64,color1);
+LINE_P(G0,222,64,224,68,color1);
+LINE_P(G0,224,68,225,71,color1);
+LINE_P(G0,225,71,227,77,color1);
+LINE_P(G0,227,77,228,81,color1);
+LINE_P(G0,228,81,230,88,color1);
+LINE_P(G0,230,88,230,93,color1);
+LINE_P(G0,230,93,231,97,color1);
+LINE_P(G0,231,97,231,100,color1);
+LINE_P(G0,186,14,186,69,color1);
+LINE_P(G0,186,69,244,69,color1);
+LINE_P(G0,236,77,238,69,color1);
+LINE_P(G0,238,69,241,77,color1);
+LINE_P(G0,238,69,238,100,color1);
+LINE_P(G0,238,100,236,93,color1);
+LINE_P(G0,241,93,238,100,color1);
+LINE_P(G0,238,100,231,100,color1);
+LINE_P(G0,231,100,231,113,color1);
+LINE_P(G0,223,112,231,109,color1);
+LINE_P(G0,231,109,223,107,color1);
+LINE_P(G0,231,109,153,109,color1);
+LINE_P(G0,153,109,160,112,color1);
+LINE_P(G0,160,107,153,109,color1);
+LINE_P(G0,153,113,153,100,color1);
+LINE_P(G0,153,100,138,100,color1);
+LINE_P(G0,140,93,142,100,color1);
+LINE_P(G0,142,100,144,93,color1);
+LINE_P(G0,142,100,142,22,color1);
+LINE_P(G0,142,22,140,30,color1);
+LINE_P(G0,144,30,142,22,color1);
+LINE_P(G0,138,22,153,22,color1);
+LINE_P(G0,153,18,160,16,color1);
+LINE_P(G0,153,18,160,20,color1);
+LINE_P(G0,153,18,186,18,color1);
+LINE_P(G0,179,16,186,18,color1);
+LINE_P(G0,186,18,179,20,color1);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  TEXTOUT_P("R:",260,112,4,#000000,300);
+  TEXTOUT_P("R",190,111,4,#000000,300);
+  TEXTOUT_P("R",131,50,4,#000000,300);
+  TEXTOUT_P("4*R/3*π",162,9,2,#000000,300);
+  TEXTOUT_P("4*R/3*π",237,81,2,#000000,300);
+END;
+//-------------------------------------------------------------------------------------
+icuartoelipse()
+BEGIN
+  ndato:=2;
+  inp:=8;
+  y0:=26;
+  FOR I FROM 1 TO 10 DO
+    TEXTOUT_P(inercia(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(inercia2(8),8,152,3,#FF0000,111,#00DDFF);
+  LOCAL color1:=#0000FF,red:=#FF0000,green:=#00FF00;
+FILLPOLY_P({(239,91),  (142,91),  (142,31),  (149,31),  (159,32),  (170,34),  (180,36),  (188,38),  (199,42),  (208,47),  (213,50),  (220,55),  (226,61),  (229,65),  (232,69)},green);
+
+LINE_P(G0,251,91,142,91,red);
+LINE_P(G0,142,91,142,17,red);
+LINE_P(G0,149,23,142,21,color1);
+LINE_P(G0,142,21,149,19,color1);
+LINE_P(G0,142,21,176,21,color1);
+LINE_P(G0,176,21,168,19,color1);
+LINE_P(G0,168,23,176,21,color1);
+LINE_P(G0,176,17,176,66,color1);
+LINE_P(G0,176,66,251,66,color1);
+LINE_P(G0,245,73,247,66,color1);
+LINE_P(G0,247,66,249,73,color1);
+LINE_P(G0,247,66,247,91,color1);
+LINE_P(G0,245,83,247,91,color1);
+LINE_P(G0,247,91,249,83,color1);
+LINE_P(G0,239,91,239,89,color1);
+LINE_P(G0,239,89,238,86,color1);
+LINE_P(G0,238,86,238,82,color1);
+LINE_P(G0,238,82,236,78,color1);
+LINE_P(G0,236,78,234,73,color1);
+LINE_P(G0,234,73,232,69,color1);
+LINE_P(G0,232,69,231,67,color1);
+LINE_P(G0,231,67,229,64,color1);
+LINE_P(G0,229,64,227,62,color1);
+LINE_P(G0,227,62,224,59,color1);
+LINE_P(G0,224,59,220,56,color1);
+LINE_P(G0,220,56,217,53,color1);
+LINE_P(G0,217,53,211,49,color1);
+LINE_P(G0,211,49,207,46,color1);
+LINE_P(G0,207,46,201,44,color1);
+LINE_P(G0,201,44,193,40,color1);
+LINE_P(G0,193,40,186,38,color1);
+LINE_P(G0,186,38,180,36,color1);
+LINE_P(G0,180,36,172,34,color1);
+LINE_P(G0,172,34,168,33,color1);
+LINE_P(G0,168,33,164,33,color1);
+LINE_P(G0,164,33,158,32,color1);
+LINE_P(G0,158,32,149,31,color1);
+LINE_P(G0,149,31,145,31,color1);
+LINE_P(G0,145,31,142,31,color1);
+LINE_P(G0,142,31,129,31,color1);
+LINE_P(G0,131,38,133,31,color1);
+LINE_P(G0,133,31,135,38,color1);
+LINE_P(G0,133,31,133,91,color1);
+LINE_P(G0,133,91,135,83,color1);
+LINE_P(G0,131,83,133,91,color1);
+LINE_P(G0,129,91,142,91,color1);
+LINE_P(G0,142,91,142,108,color1);
+LINE_P(G0,142,105,149,103,color1);
+LINE_P(G0,149,107,142,105,color1);
+LINE_P(G0,142,105,239,105,color1);
+LINE_P(G0,239,105,231,103,color1);
+LINE_P(G0,231,107,239,105,color1);
+LINE_P(G0,239,108,239,91,color1);
+
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  TEXTOUT_P("a:",260,112,4,#000000,300);
+  TEXTOUT_P("b:",260,128,4,#000000,300);
+  TEXTOUT_P("a",182,106,4,#000000,300);
+  TEXTOUT_P("b",129,54,4,#000000,300);
+  TEXTOUT_P("4*a/3*π",151,11,2,#000000,300);
+  TEXTOUT_P("4*b/3*π",249,75,2,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+//-------------------------------------------------------------------------------------
+iparabola()
+BEGIN  
+  ndato:=2;
+  inp:=9;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(inercia(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(inercia2(9),8,170,3,#FF0000,111,#00DDFF);
+  LOCAL color1:=#0000FF,red:=#FF0000,green:=#00FF00;
+  FILLPOLY_P({(236,30),  (236,102),  (130,102),  (136,102),  (143,102),  (149,101),  (156,100),  (163,99),  (171,97),  (177,95),  (183,92),  (190,89),  (196,86),  (207,80),  (211,76),  (217,71),  (222,66),  (226,61),  (228,57),  (230,53),  (232,48),  (234,44),  (235,41),  (235,37),  (235,35),  (236,30)},green);
+LINE_P(G0,250,102,130,102,red);
+LINE_P(G0,130,102,130,23,red);
+LINE_P(G0,130,55,138,53,color1);
+LINE_P(G0,130,55,138,57,color1);
+LINE_P(G0,130,55,219,55,color1);
+LINE_P(G0,219,55,211,53,color1);
+LINE_P(G0,211,57,219,55,color1);
+LINE_P(G0,219,52,219,84,color1);
+LINE_P(G0,219,84,245,84,color1);
+LINE_P(G0,244,95,246,102,color1);
+LINE_P(G0,246,102,248,95,color1);
+LINE_P(G0,246,102,246,30,color1);
+LINE_P(G0,246,30,244,38,color1);
+LINE_P(G0,248,38,246,30,color1);
+LINE_P(G0,255,30,236,30,color1);
+LINE_P(G0,236,30,236,115,color1);
+LINE_P(G0,228,113,236,111,color1);
+LINE_P(G0,236,111,228,109,color1);
+LINE_P(G0,236,111,130,111,color1);
+LINE_P(G0,130,111,138,113,color1);
+LINE_P(G0,138,109,130,111,color1);
+LINE_P(G0,130,115,130,102,color1);
+LINE_P(G0,130,102,135,102,color1);
+LINE_P(G0,135,102,142,102,color1);
+LINE_P(G0,142,102,148,101,color1);
+LINE_P(G0,148,101,154,100,color1);
+LINE_P(G0,154,100,161,99,color1);
+LINE_P(G0,161,99,167,98,color1);
+LINE_P(G0,167,98,172,96,color1);
+LINE_P(G0,172,96,178,95,color1);
+LINE_P(G0,178,95,183,93,color1);
+LINE_P(G0,183,93,190,90,color1);
+LINE_P(G0,190,90,195,87,color1);
+LINE_P(G0,195,87,200,85,color1);
+LINE_P(G0,200,85,205,81,color1);
+LINE_P(G0,205,81,208,79,color1);
+LINE_P(G0,208,79,212,76,color1);
+LINE_P(G0,212,76,216,73,color1);
+LINE_P(G0,216,73,219,69,color1);
+LINE_P(G0,219,69,226,60,color1);
+LINE_P(G0,226,60,229,55,color1);
+LINE_P(G0,229,55,231,50,color1);
+LINE_P(G0,231,50,234,45,color1);
+LINE_P(G0,234,45,235,40,color1);
+LINE_P(G0,235,40,235,37,color1);
+LINE_P(G0,235,37,235,35,color1);
+LINE_P(G0,235,35,236,33,color1);
+LINE_P(G0,236,33,236,30,color1);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  TEXTOUT_P("b:",260,112,4,#000000,300);
+  TEXTOUT_P("h:",260,128,4,#000000,300);
+  TEXTOUT_P("b",182,112,4,#000000,300);
+  TEXTOUT_P("h",248,63,4,#000000,300);
+  TEXTOUT_P("3*h/10",235,89,2,#000000,300);
+  TEXTOUT_P("3*b/4",164,43,2,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+//-------------------------------------------------------------------------------------
+imediaparabola()
+BEGIN
+  ndato:=2;
+  inp:=10;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(inercia(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(inercia2(10),8,188,3,#FF0000,111,#00DDFF);
+  LOCAL color1:=#0000FF,red:=#FF0000,green:=#00FF00;
+  FILLPOLY_P({(252,30),  (137,30),  (137,100),  (142,100),  (152,100),  (164,98),  (179,95),  (189,93),  (204,87),  (216,81),  (224,76),  (231,71),  (237,65),  (241,60),(245,55),  (247,51),  (248,48),  (250,43),  (251,40),  (251,37),  (252,34),  (252,30)},green);
+LINE_P(G0,256,100,137,100,red);
+LINE_P(G0,137,100,137,18,red);
+LINE_P(G0,145,25,145,25,color1);
+LINE_P(G0,145,25,137,23,color1);
+LINE_P(G0,137,23,145,21,color1);
+LINE_P(G0,137,23,186,23,color1);
+LINE_P(G0,186,23,179,21,color1);
+LINE_P(G0,179,25,186,23,color1);
+LINE_P(G0,127,30,252,30,color1);
+LINE_P(G0,252,30,251,38,color1);
+LINE_P(G0,251,38,250,44,color1);
+LINE_P(G0,250,44,248,48,color1);
+LINE_P(G0,248,48,245,54,color1);
+LINE_P(G0,245,54,243,57,color1);
+LINE_P(G0,243,57,240,61,color1);
+LINE_P(G0,240,61,236,66,color1);
+LINE_P(G0,236,66,231,71,color1);
+LINE_P(G0,231,71,225,75,color1);
+LINE_P(G0,225,75,220,79,color1);
+LINE_P(G0,220,79,212,83,color1);
+LINE_P(G0,212,83,203,87,color1);
+LINE_P(G0,203,87,192,92,color1);
+LINE_P(G0,192,92,180,95,color1);
+LINE_P(G0,180,95,171,97,color1);
+LINE_P(G0,171,97,163,99,color1);
+LINE_P(G0,163,99,157,99,color1);
+LINE_P(G0,157,99,149,100,color1);
+LINE_P(G0,149,100,137,100,color1);
+LINE_P(G0,137,100,137,116,color1);
+LINE_P(G0,145,114,137,112,color1);
+LINE_P(G0,137,112,145,110,color1);
+LINE_P(G0,137,112,252,112,color1);
+LINE_P(G0,244,110,252,112,color1);
+LINE_P(G0,252,112,244,114,color1);
+LINE_P(G0,252,116,252,30,color1);
+LINE_P(G0,240,93,242,100,color1);
+LINE_P(G0,242,100,244,93,color1);
+LINE_P(G0,242,100,242,59,color1);
+LINE_P(G0,242,59,244,67,color1);
+LINE_P(G0,240,67,242,59,color1);
+LINE_P(G0,251,59,186,59,color1);
+LINE_P(G0,186,59,186,18,color1);
+LINE_P(G0,127,100,137,100,color1);
+LINE_P(G0,128,93,131,100,color1);
+LINE_P(G0,131,100,133,93,color1);
+LINE_P(G0,131,100,131,30,color1);
+LINE_P(G0,128,38,131,30,color1);
+LINE_P(G0,131,30,133,38,color1);
+
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  TEXTOUT_P("b:",260,112,4,#000000,300);
+  TEXTOUT_P("h:",260,128,4,#000000,300);
+  TEXTOUT_P("b",188,114,4,#000000,300);
+  TEXTOUT_P("h",129,58,4,#000000,300);
+  TEXTOUT_P("3*h/5",228,74,2,#000000,300);
+  TEXTOUT_P("3*b/8",150,13,2,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+END;
+//-------------------------------------------------------------------------------------
+isectcircular()
+BEGIN
+  ndato:=2;
+  inp:=11;
+  y0:=26;
+  FOR I FROM 1 TO 11 DO
+    TEXTOUT_P(inercia(I),8,y0,3,#000000,111,#00DDFF);
+    y0:=y0+18;
+  END;
+  RECT_P(126,6,314,150,#FF0000,#FFFFFF); //limpia
+  TEXTOUT_P(inercia2(11),8,204,3,#FF0000,111,#00DDFF);
+  LOCAL color1:=#0000FF,red:=#FF0000,green:=#00FF00;
+  FILLPOLY_P({(135,78),  (227,25),  (230,31),  (233,39),  (236,45),  (238,55),  (240,63),  (240,69),  (241,74),  (241,78),  (241,81),  (240,87),  (240,93),  (239,99),  (237,108),  (234,116),  (231,122),  (229,127),  (227,131),  (135,78)},green);
+LINE_P(G0,254,78,135,78,red);
+LINE_P(G0,135,78,135,13,red);
+LINE_P(G0,227,25,231,34,color1);
+LINE_P(G0,231,34,235,44,color1);
+LINE_P(G0,235,44,237,49,color1);
+LINE_P(G0,237,49,239,57,color1);
+LINE_P(G0,239,57,240,64,color1);
+LINE_P(G0,240,64,240,69,color1);
+LINE_P(G0,240,69,241,75,color1);
+LINE_P(G0,241,75,241,78,color1);
+LINE_P(G0,241,78,241,83,color1);
+LINE_P(G0,241,83,240,94,color1);
+LINE_P(G0,240,94,239,100,color1);
+LINE_P(G0,239,100,238,104,color1);
+LINE_P(G0,238,104,236,109,color1);
+LINE_P(G0,236,109,235,113,color1);
+LINE_P(G0,235,113,233,117,color1);
+LINE_P(G0,233,117,231,123,color1);
+LINE_P(G0,231,123,229,126,color1);
+LINE_P(G0,229,126,228,129,color1);
+LINE_P(G0,228,129,227,131,color1);
+LINE_P(G0,227,131,135,78,color1);
+LINE_P(G0,135,78,227,25,color1);
+LINE_P(G0,227,25,220,14,color1);
+LINE_P(G0,216,22,222,17,color1);
+LINE_P(G0,222,17,214,19,color1);
+LINE_P(G0,222,17,130,70,color1);
+LINE_P(G0,136,64,130,70,color1);
+LINE_P(G0,130,70,138,68,color1);
+LINE_P(G0,128,66,135,78,color1);
+LINE_P(G0,135,78,135,130,color1);
+LINE_P(G0,143,128,135,126,color1);
+LINE_P(G0,135,126,143,124,color1);
+LINE_P(G0,135,126,205,126,color1);
+LINE_P(G0,205,126,197,124,color1);
+LINE_P(G0,197,128,205,126,color1);
+LINE_P(G0,205,130,205,78,color1);
+  TEXTOUT_P("DATOS",260,100,3,#000000,300);
+  RECT_P(274,116,308,130,#FF0000,#DDDDDD);
+  RECT_P(274,132,308,132+14,#FF0000,#DDDDDD);
+  TEXTOUT_P("R:",260,112,4,#000000,300);
+  TEXTOUT_P("θ:",260,128,4,#000000,300);
+  TEXTOUT_P("R",169,27,4,#000000,300);
+  TEXTOUT_P("θ",157,65,3,#000000,300);
+  TEXTOUT_P("θ",157,79,3,#000000,300);
+  TEXTOUT_P("2*R*sen(θ)/3*θ",140,132,2,#000000,300);
+END;
+//-------------------------------------------------------------------------------------
+
+
+
+
+
+baseappname:="form ";
+pggroup:=20;
+pglow:=1;
+pgmax:=5;
+pghigh:=pglow;
+lf:={};
+cleanNum2Str(num,ref)
+BEGIN
+ LOCAL str:=STRING(num);
+ LOCAL i:=INSTRING(str,".");
+ IF i>0 THEN
+  str:=MID(str,1,i-1);
+ END;
+ i:=1+FLOOR(LOG(ref));
+ WHILE DIM(str)<i DO
+  str:="0"+str;
+ END;
+ RETURN str;
+END;
+
+range(mini,maxi)
+BEGIN
+    IF mini≠maxi THEN
+        RETURN cleanNum2Str(mini,pgmax)+"_"+cleanNum2Str(maxi,pgmax);
+    ELSE
+        RETURN cleanNum2Str(mini,pgmax);
+    END;
+END;
+
+OpenFile(pagenum)
+begin
+    LOCAL posit;
+    LOCAL lastpagenum=0;
+    LOCAL pagetot=pgmax;
+    LOCAL sw:=320,sh:=240; // screen
+    LOCAL w,h;
+    LOCAL mx0,my0,mx1,my1,mx,my; // mouse coords
+    LOCAL is,ig,ms; // mouse mode
+    LOCAL x,y,d,ld;
+    LOCAL ss,sf,spu,spd;
+    LOCAL ssu,ssd,ssl,ssr;
+    LOCAL z,zp,zmin,zmax,zold,zw,zh,z0; // zoom
+    LOCAL tk;
+    LOCAL td;
+    LOCAL ts;
+    LOCAL tt;
+    LOCAL i,dsh,dsv,dh,wh;
+// help grob coordinates
+    LOCAL strh3=16,strh2=14,strh1=12,yt=1;
+    LOCAL x0=100, x1=0;
+    LOCAL x5=sw-5-x0-1;
+    LOCAL x2=x1+(x5-x1)*5/9;
+    LOCAL x3=x1+(x2-x1)/4,x4=x2+(x5-x2)/3;
+    IFERR
+     DIMGROB_P(G1,sw,sh); // offscreen grob
+    THEN
+    END;
+    IFERR
+     DIMGROB_P(G3,x5,3+strh3+strh2+5*strh1); // help grob
+    THEN
+    END;
+// render help grob
+    RECT_P(G3,x1,0,x5-1,strh3+strh2+5*strh1+2,0,#FFFFFFh);
+    RECT_P(G3,x1+1,0,x5-2,strh3+strh2,0,#FFFFFFh);
+    TEXTOUT_P("mViewer GX2 1.0",G3,x1+3,0,3);yt:=strh3-strh2;TEXTOUT_P("(TI-Planet.org)",G3,x2,yt,2);yt:=strh3;
+    TEXTOUT_P("http://tiplanet.org/gxprime",G3,x1+3,yt,2,#FFh);yt:=yt+strh2+2;
+    TEXTOUT_P("*/",G3,x1+2,yt,1);TEXTOUT_P("zoom in/out",G3,x3,yt,1);TEXTOUT_P("Home",G3,x2,yt,1);TEXTOUT_P("zoom 1:1",G3,x4,yt,1);yt:=yt+strh1;
+    TEXTOUT_P("+-",G3,x1+2,yt,1);TEXTOUT_P("next/prev page",G3,x3,yt,1);TEXTOUT_P("0",G3,x2,yt,1);TEXTOUT_P("zoom fit",G3,x4,yt,1);yt:=yt+strh1;
+    TEXTOUT_P(CHAR(8853)+CHAR(8855),G3,x1+2,yt,1);TEXTOUT_P("progressive scroll",G3,x3,yt,1);TEXTOUT_P(CHAR(9742),G3,x2,yt,1);TEXTOUT_P("screen scroll",G3,x4,yt,1);yt:=yt+strh1;
+    TEXTOUT_P("Num",G3,x1+2,yt,1);TEXTOUT_P("go to #page",G3,x3,yt,1);TEXTOUT_P("5",G3,x2,yt,1);TEXTOUT_P("center",G3,x4,yt,1);yt:=yt+strh1;
+    TEXTOUT_P("Help",G3,x1+2,yt,1);TEXTOUT_P("hide box",G3,x3,yt,1);TEXTOUT_P("Esc",G3,x2,yt,1);TEXTOUT_P("quit",G3,x4,yt,1);yt:=yt+strh1;
+    REPEAT
+        IF pagenum<0 THEN pagenum:=1; END;
+        IF pagenum>pgmax THEN pagenum:=pgmax; END;
+        IF pagenum≠lastpagenum THEN
+            G2:=AFiles(lf(pagenum-pglow+1));
+            w:=GROBW_P(G2);h:=GROBH_P(G2);
+            mx0:=0;my0:=0;mx1:=0;my1:=0;mx:=0;my:=0; // mouse coords
+            is:=0;ig:=0;ms:=0; // mouse mode
+            x:=0;y:=0;d:=0;ld:=0;
+            ss:=1;sf:=0;spu:=1.01;spd:=1.1;
+            ssu:=1;ssd:=1;ssl:=1;ssr:=1;
+            z:=1;zp:=1.01;zmin:=MIN(MIN(sw/w,sh/h),1);zmax:=4;zold:=1;zw:=w;zh:=h;z0:=0; // zoom
+            tk:={7,2,8,12};
+            td:={0,0,0,0};
+            ts:={1,1,1,1};
+            tt:={0,0,0,0};
+            dsh:=0;dsv:=0;dh:=0;wh=0;
+            lastpagenum:=pagenum;
+        END;
+        tt:={0,0,0,0};
+        dsh:=0;dsv:=0;
+// touch events
+        mx:=MOUSE(0);my:=MOUSE(1);ms:=MOUSE(4);
+        IF ms=2 THEN // drag
+            IF NOT ig THEN ig:=1;mx0:=MOUSE(2);my0:=MOUSE(3); END;
+            IF mx>mx0 THEN tt(1):=tt(1)+(mx-mx0)/z; ELSE tt(3):=tt(3)+(mx0-mx)/z; END;
+            IF my>my0 THEN tt(2):=tt(2)+(my-my0)/z; ELSE tt(4):=tt(4)+(my0-my)/z; END;
+            mx0:=mx;my0:=my;dsh:=1;dsv:=1;
+        ELSE
+            ig:=0;
+        END;
+        IF ms=3 THEN // stretch
+            IF is THEN
+                z:=z0*(((mx-mx1)^2+(my-my1)^2)/((mx1-mx0)^2+(my1-my0)^2))^(1/2);
+                dsh:=1;dsv:=1;
+            ELSE
+                is:=1; mx1:=mx0; my1:=my0; mx0:=mx; my0:=my; z0:=z;
+            END;
+        ELSE
+            is:=0;
+        END;
+// one time key events
+        IF ISKEYDOWN(11) OR ISKEYDOWN(3) OR ISKEYDOWN(45) OR ISKEYDOWN(50) OR ISKEYDOWN(32) OR ISKEYDOWN(37) OR ISKEYDOWN(42) OR ISKEYDOWN(33) OR ISKEYDOWN(43) OR ISKEYDOWN(34) OR ISKEYDOWN(39) OR ISKEYDOWN(44) THEN
+            LOCAL lastpage:=pagenum;
+            IF ISKEYDOWN(3) AND wh THEN dh:=NOT dh; END; // help
+ // navigate pages
+            IF ISKEYDOWN(11) and wh THEN
+                LOCAL nextpage:=pagenum;
+                INPUT(nextpage,"Go to page ...","#","(1-"+cleanNum2Str(pgmax,pgmax)+")",pagenum);
+                IF nextpage<1 THEN nextpage:=1; END;
+                IF nextpage>pgmax THEN nextpage:=pgmax; END;
+                pagenum:=nextpage;
+                WHILE ISKEYDOWN(4) DO END;
+            END;
+            IF pagenum>lastpage OR (ISKEYDOWN(50) and wh and pagenum<pgmax) THEN
+                IF ISKEYDOWN(50) THEN pagenum:=pagenum+1; END;
+                IF pagenum>pghigh THEN
+                    WHILE pghigh+pggroup<pagenum DO pghigh:=pghigh+pggroup; END;
+                    STARTAPP(baseappname+range(pghigh+1,min(pgmax,pghigh+pggroup)));
+                    RETURN;
+                END;
+            END;
+            IF pagenum<lastpage OR (ISKEYDOWN(45) and wh and pagenum>1) THEN
+                IF ISKEYDOWN(45) THEN pagenum:=pagenum-1; END;
+                IF pagenum<pglow THEN
+                    WHILE pglow-pggroup>pagenum DO pglow:=pglow-pggroup; END;
+                    STARTAPP(baseappname+range(pglow-pggroup,pglow-1));
+                    RETURN;
+                END;
+            END;
+// screen scroll
+            IF ISKEYDOWN(32) OR ISKEYDOWN(37) OR ISKEYDOWN(42) THEN tt(1):=sw/z*wh; dsh:=1; END;
+            IF ISKEYDOWN(34) OR ISKEYDOWN(39) OR ISKEYDOWN(44) THEN tt(3):=sw/z*wh; dsh:=1; END;
+            IF ISKEYDOWN(32) OR ISKEYDOWN(33) OR ISKEYDOWN(34) THEN tt(2):=sh/z*wh; dsv:=1; END;
+            IF ISKEYDOWN(42) OR ISKEYDOWN(43) OR ISKEYDOWN(44) THEN tt(4):=sh/z*wh; dsv:=1; END;
+            IF wh THEN wh:=0; END;
+        ELSE
+            wh:=1;
+        END;
+// progressive/continuous key events
+// zoom keys
+        IF ISKEYDOWN(38) THEN
+            x:=(w-sw/z)/2;
+            y:=(h-sh/z)/2;
+        END;
+        IF ISKEYDOWN(40) THEN z:=z*zp; END;
+        IF ISKEYDOWN(35) THEN z:=z/zp; END;
+        IF ISKEYDOWN(5) THEN z:=1; END;
+        IF ISKEYDOWN(47) THEN z:=zmin; END;
+        IF z>zmax THEN z:=zmax; END;
+        IF z<zmin THEN z:=zmin; END;
+        IF z<1 and zold>1 or z>1 and zold<1 THEN z:=1; END;
+        IF z<zold or z>zold THEN zw:=w*z; zh:=h*z; x:=x+sw/2/zold-sw/2/z; y:=y+sh/2/zold-sh/2/z; zold:=z; dsh:=1; dsv:=1; END;
+// scrolling
+        FOR i FROM 1 TO 4 DO
+            IF ISKEYDOWN(tk(i)) THEN
+                IF i MOD 2=1 THEN dsh:=1; ELSE dsv:=1; END;
+                td(i):=1;
+                ts(i):=MAX(ts(i)*spu,1);
+                tt(i):=tt(i)+MAX(ts(i)/z,1);
+            ELSE
+                ts(i):=MAX(ts(i)/spd,1);
+                IF ts(i)>1 THEN
+                    IF i MOD 2=1 THEN dsh:=1; ELSE dsv:=1; END;
+                END;
+            END;
+        END;
+        x:=MAX(MIN(x-tt(1)+tt(3),w-sw/z),0); y:=MAX(MIN(y-tt(2)+tt(4),h-sh/z),0); // repos image correctly
+        BLIT_P(G1,-FP(x)*z,-FP(y)*z,sw+(CEILING(x+sw/z)-(x+sw/z))*z,sh+(CEILING(y+sh/z)-(y+sh/z))*z,G2,FLOOR(x),FLOOR(y),CEILING(x+sw/z),CEILING(y+sh/z)); // disp img
+// clean borders for images smaller than screen
+        IF zw<sw THEN RECT_P(G1,zw+1,0,sw-1,sh-1,#FFFFFFh,#FFFFFFh); END;
+        IF zw>sw and dsh THEN
+            RECT_P(G1,0,sh-1,sw-5,sh-5,0,#FFFFFFh);
+            RECT_P(G1,2+(sw-9)*x/w,sh-3,2+(sw-9)*x/w+(sw-9)*sw/zw,sh-3,0,0);
+        END;
+        IF zh<sh THEN RECT_P(G1,0,zh+1,sw-1,sh-1,#FFFFFFh,#FFFFFFh); END;
+        IF zh>sh and dsv THEN
+            RECT_P(G1,sw-1,0,sw-5,sh-5,0,#FFFFFFh);
+            RECT_P(G1,sw-3,2+(sh-9)*y/h,sw-3,2+(sh-9)*y/h+(sh-9)*sh/h/z,0,0);
+        END;
+        IF(dh) THEN BLIT_P(G1,x0,1,G3); END;
+        BLIT_P(G0,0,0,sw,sh,G1,0,0,sw,sh);
+    UNTIL ISKEYDOWN(4);
+    //MSGBOX("vover?");
+    //DIMGROB_P(G1,0,0);
+    //DIMGROB_P(G3,0,0);
+END;
+
+//----------------------------
+// START FUNCTION
+//----------------------------
+
+formulario()
+begin
+    lf:=SORT(AFiles);
+    pghigh:=pglow+SIZE(lf)-2;
+    OpenFile(pglow);
+    startview(6,1);
+end;
+
+Plot() begin
+    OpenFile(pglow);
+end;
+
+PlotSetup() begin
+    Plot();
+end;

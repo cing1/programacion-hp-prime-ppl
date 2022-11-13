@@ -1,0 +1,933 @@
+#pragma mode( separator(.,;) integer(h32) )
+metodos1p();
+VIEW "metodos1p",START()
+BEGIN
+  startview(6,1);
+  metodos1p();
+END;
+pulsa();
+pulsa2();
+pulsar2();
+pulsaend();
+pulsarend();
+BLOQUE_CALCULO();
+presentacion1();
+presentacion2();
+info();
+loading();
+on:=1;
+EXPORT metodos1p()
+BEGIN
+  IF on==1 THEN
+    loading();
+    on:=0;
+  END;
+  presentacion1();
+  REPEAT
+    L1:=MOUSE;
+    L2:=L1(1);
+    IF SIZE(L2)≠0 THEN
+      pulsa(L2(1),L2(2));
+    END;
+UNTIL ISKEYDOWN(4) END;
+on:=1;
+MSGBOX("MÉTODOS NUMÉRICOS (Parte 1)\n\n            DESARROLLADOR:\n            Mario Cesgo Soliz");
+KILL;
+END;
+
+loading()
+BEGIN
+  LOCAL i;
+  RECT_P();
+  FOR i FROM 1 TO 25 DO
+    TEXTOUT_P(("Cargando... "),112,100,1,#2E64FEh,100,#FFFFFFh);
+    TEXTOUT_P((50+2*i)+("%"),171,100,1,#2E64FEh,100,#FFFFFFh);
+    RECT_P(105,116,206,124,0,#FFFFFFh);
+    RECT_P(106,117,155+2*i,123,#40FF00h);
+    WAIT(0.03);
+  END;
+  WAIT(1);
+END;
+pulsa(x,y)
+BEGIN
+  IF 100<x<220 AND 213<y<230 THEN
+    RECT_P(100,213,220,230,RGB(255,0,0));
+    PIXON_p(100,213,RGB(20,20,50));
+    PIXON_p(220,213,RGB(20,20,50));
+    PIXON_p(100,230,RGB(20,20,50));
+    PIXON_p(220,230,RGB(20,20,50));
+    TEXTOUT_P("continuar  ➫",108,210,5,RGB(0,0,0),200);
+    WAIT(0.2);
+    BLOQUE_CALCULO();
+  END;
+  IF 280<x<314 AND 2<y<15 THEN
+    RECT_P(280,2,314,15,RGB(0,0,0));
+    TEXTOUT_P("✖",291,-5,7,RGB(255,0,0),200);
+    TEXTOUT_P("✖",391,-5,7,RGB(255,0,0),200);
+    WAIT(0.3);
+    //MSGBOX("MÉTODOS NUMÉRICOS (Parte 2)\n\n            DESARROLLADOR:\n            Mario Cesgo Soliz");
+    pulsaend();
+    //KILL;
+  END;
+END;
+
+pulsaend()
+BEGIN
+  LOCAL TOUCH;
+  RECT_P(280,2,314,15,RGB(0,0,0));
+  TEXTOUT_P("✖",291,-5,7,RGB(255,0,0),200);
+  TEXTOUT_P("✖",391,-5,7,RGB(255,0,0),200);
+  RECT_P(0,0,320,240,#000000h,{#000000h,200});
+  RECT_P(60,70,258,170,RGB(0,100,255));
+  RECT_P(65,88,253,165,RGB(255,255,255));
+  RECT_P(235,72,252,85,RGB(255,0,0));
+  RECT_P(110,140,150,155,RGB(255,0,0));
+  RECT_P(175,140,215,155,RGB(255,0,0));
+  PIXON_p(110,140,RGB(255,255,255));
+  PIXON_p(150,155,RGB(255,255,255));
+  PIXON_p(110,155,RGB(255,255,255));
+  PIXON_p(150,140,RGB(255,255,255));
+  PIXON_p(175,140,RGB(255,255,255));
+  PIXON_p(215,155,RGB(255,255,255));
+  PIXON_p(175,155,RGB(255,255,255));
+  PIXON_p(215,140,RGB(255,255,255));
+  TEXTOUT_P("✖",237,65,7,RGB(255,255,255),200);
+  TEXTOUT_P("✖",237,65,7,RGB(255,255,255),200);
+  TEXTOUT_P("Desea salir del programa?",76,108,3,RGB(0,0,0),200);
+  TEXTOUT_P("SI",124,140,3,RGB(0,0,0),200);
+  TEXTOUT_P("NO",185,140,3,RGB(0,0,0),200);
+  WAIT(-1);
+  REPEAT
+    // WAIT(-1);
+    TOUCH:=MOUSE();
+    TOUCH:=B→R(TOUCH(1));
+    IF SIZE(TOUCH) THEN
+      pulsarend(TOUCH(1),TOUCH(2));
+    END;
+  UNTIL ISKEYDOWN(0);
+END;
+pulsarend(xxx,yyy)
+BEGIN
+  IF 110<xxx<150 AND 140<yyy<155 THEN
+    on:=1;
+    RECT_P(110,140,150,155,RGB(0,0,0));
+    PIXON_p(110,140,RGB(255,255,255));
+    PIXON_p(150,155,RGB(255,255,255));
+    PIXON_p(110,155,RGB(255,255,255));
+    PIXON_p(150,140,RGB(255,255,255));
+    TEXTOUT_P("SI",124,140,3,RGB(255,255,255),200);
+    WAIT(0.2);
+    MSGBOX("MÉTODOS NUMÉRICOS (Parte 1)\n\n            DESARROLLADOR:\n            Mario Cesgo Soliz");
+    KILL;
+  END;
+  IF 175<xxx<215 AND 140<yyy<155 THEN
+    RECT_P(175,140,215,155,RGB(0,0,0));
+    PIXON_p(175,140,RGB(255,255,255));
+    PIXON_p(215,155,RGB(255,255,255));
+    PIXON_p(175,155,RGB(255,255,255));
+    PIXON_p(215,140,RGB(255,255,255));
+    TEXTOUT_P("NO",185,140,3,RGB(255,255,255),200);
+    WAIT(0.2);
+    metodos1p();
+  END;
+END;
+
+pulsa2()
+BEGIN
+  LOCAL TOUCH9;
+  REPEAT
+    WAIT(-1);
+    TOUCH9:=MOUSE();
+    TOUCH9:=B→R(TOUCH9(1));
+    IF SIZE(TOUCH9) THEN
+      pulsar2(TOUCH9(1),TOUCH9(2));
+    END;
+  UNTIL ISKEYDOWN(0);
+END;
+
+pulsar2(xx,yy)
+BEGIN
+  IF 287<xx<314 AND 2<yy<15 THEN
+    RECT_P(287,2,314,15,RGB(255,255,255));
+    TEXTOUT_P("✖",294,-5,7,RGB(0,0,0),200);
+    TEXTOUT_P("✖",294,-5,7,RGB(0,0,0),200);
+    WAIT(0.3);
+    RECT();
+    WAIT(.3);
+    metodos1p();
+  END;
+  IF 256<xx<283 AND 0<yy<15 THEN
+    RECT_P(256,2,283,15,RGB(255,255,255));
+    TEXTOUT_P("⇦",260,-6,7,RGB(0,0,0),200);
+    TEXTOUT_P("⇦",261,-5,6,RGB(0,0,0),200);
+    WAIT(0.3);
+    BLOQUE_CALCULO();
+  END;
+END;
+presentacion1()
+BEGIN
+  DIMGROB_P(G7,320,240);
+  RECT(G7);
+  RECT_P(G7,0,0,320,240,RGB(20,20,50));
+  RECT_P(G7,0,0,320,17,RGB(0,50,200));
+  RECT_P(G7,0,235,320,240,RGB(0,50,200));
+  RECT_P(G7,0,0,4,240,RGB(0,50,200));
+  RECT_P(G7,315,0,320,240,RGB(0,60,200));
+  RECT_P(G7,6,8,314,17,RGB(0,60,255));
+  RECT_P(G7,100,213,220,230,RGB(0,255,255));
+  PIXON_p(G7,100,213,RGB(20,20,50));
+  PIXON_p(G7,220,213,RGB(20,20,50));
+  PIXON_p(G7,100,230,RGB(20,20,50));
+  PIXON_p(G7,220,230,RGB(20,20,50));
+  PIXON_p(G7,0,0,RGB(0,0,0));
+  PIXON_p(G7,0,239,RGB(0,0,0));
+  PIXON_p(G7,319,0,RGB(0,0,0));
+  PIXON_p(G7,319,239,RGB(0,0,0));
+  TEXTOUT_P("MÉTODOS NUMÉRICOS (Parte 1)",G7,45,1,3,RGB(0,0,0),300);
+  TEXTOUT_P(CHAR({73,78,71,46,32,67,73,86,73,76}),G7,111,21,7,RGB(0,100,255),300);TEXTOUT_P(CHAR({73,78,71,46,32,67,73,86,73,76}),G7,112,22,7,RGB(0,100,255),300);
+  TEXTOUT_P(CHAR({73,78,71,46,32,67,73,86,73,76}),G7,110,20,7,RGB(255,0,0),300);TEXTOUT_P(CHAR({73,78,71,46,32,67,73,86,73,76}),G7,110,20,7,RGB(255,0,0),300);
+  TEXTOUT_P(CHAR({85,46,83,46,70,46,88,46}),G7,136,45,4,RGB(0,100,255),300);
+  TEXTOUT_P(CHAR({85,46,83,46,70,46,88,46}),G7,135,46,4,RGB(255,0,0),300);
+  TEXTOUT_P(CHAR({77,65,84,45,50,48,53}),G7,115,88,7,#1C1C1Ch,300);
+  TEXTOUT_P(CHAR({77,65,84,45,50,48,53}),G7,115,88,7,#FFFFFFh,300);
+  TEXTOUT_P("MÉTODOS NUMÉRICOS",G7,46,63,7,#FFFFFFh,300);  TEXTOUT_P("MÉTODOS NUMÉRICOS",G7,45,62,7,RGB(0,255,100),300);TEXTOUT_P("MÉTODOS NUMÉRICOS",G7,45,62,7,RGB(255,255,255),300);
+  TEXTOUT_P(CHAR({68,69,83,65,82,82,79,76,76,65,68,79,82,32,58}),G7,50,120,2,RGB(255,0,0),300); 
+  TEXTOUT_P(CHAR({77,65,82,73,79,32,67,69,83,71,79,32,83,79,76,73,90}),G7,160,120,2,RGB(255,255,255),300);
+  TEXTOUT_P("Gmail                       :",G7,50,135,1,RGB(255,0,0),300);  TEXTOUT_P("Gmail                       :",G7,50,135,1,RGB(255,0,0),300);
+  TEXTOUT_P(CHAR({109,97,114,105,111,99,115,56,53,53,64,103,109,97,105,108,46,99,111,109}),G7,160,135,1,RGB(255,255,255),300);
+  TEXTOUT_P(CHAR({83,85,67,82,69,45,66,79,76,73,86,73,65}),G7,118,185,2,#FFFFFFh,300);
+  TEXTOUT_P(CHAR({50,48,49,56}),G7,142,200,2,#888888h,300);
+  TEXTOUT_P(CHAR({83,101,32,114,101,115,101,114,118,97,110,32,100,101,114,101,99,104,111,115,32,100,101,108,32,97,117,116,111,114}),G7,85,160,1,#FFFFFFh,300);
+  TEXTOUT_P("©",G7,230,155,3,#FFFFFFh,300);
+  TEXTOUT_P("------------------",G7,87,168,3,#FFFFFFh,300);
+  TEXTOUT_P("continuar  ➫",G7,108,210,5,#FF0040h,200);
+  RECT_P(G7,280,2,314,15,RGB(255,0,0));
+  TEXTOUT_P("✖",G7,291,-5,7,RGB(255,255,255),200);
+  TEXTOUT_P("✖",G7,391,-5,7,RGB(255,255,255),200);
+  BLIT_P(G0,G7);
+  WAIT(-1);
+END;
+
+BLOQUE_CALCULO()
+BEGIN
+  LOCAL MENU;
+  CHOOSE(MENU,"MÉTODOS NUMÉRICOS 1ºP",
+  "► Método Bisección",
+  "► Método de la Falsa Posición",
+  "► Método de Newton Raphson",
+  "► Método de la Secante",
+  "► Método del Punto fijo",
+  "► Método de Muller",
+  "► Método de Bairstow",
+  "► Descomposicion L U Matrices ",
+  "► Atrás");
+  //////BISECCION///////////////////////////////
+  IF MENU==1 THEN
+    LOCAL Gx,Xini,FUNCf,xf,k,iter:=40;
+    LOCAL calculos,myf,Fx,error_max:=0.000001,FUNCg;
+    LOCAL error,itfn,a_ini,b_ini;
+    LOCAL af,bf,cf,fa,fb,fc;
+    LOCAL fx,n,s,r;
+    LOCAL i,etiq:={},iet;
+    PRINT;
+    INPUT({{FUNCf,[8],{30,50,1}},{a_ini,[0],{30,20,2}},{b_ini,[0],{30,20,3}},{error_max,[0],{30,20,4}}},"Método Biseccion Newton Raphson",{"ƒ(x):","x0:","x1:","error:"},{"Ingrese la f(X) en funcion de X","Escribir valor de x0.","Escribir valor de x1.","Presición"});
+    Fx:=FUNCf;
+    myf:=MAKEMAT(0,iter+1,2);
+    calculos:=MAKEMAT(0,iter,5);
+    myf(1,1):=a_ini;
+    myf(1,2):=b_ini;
+    FOR k FROM 1 TO iter DO
+      cf:=(myf(k,1)+myf(k,2))/2;
+      X:=myf(k,1);
+      fa:=EVAL(Fx);
+      X:=myf(k,2);
+      fb:=EVAL(Fx);
+      X:=cf;
+      fc:=EVAL(Fx);
+      calculos(k,1):=myf(k,1);
+      calculos(k,2):=myf(k,2);
+      calculos(k,3):=cf;
+      calculos(k,4):=fc;
+      IF fa*fc<0 THEN
+        af:=myf(k,1);
+        bf:=cf;
+        ELSE
+        af:=cf;
+        bf:=myf(k,2);
+      END;
+      myf((k+1),1):=af;
+      myf((k+1),2):=bf;
+      IF ABS(fc)<error_max THEN
+        BREAK;
+      END;
+      itfn:=k;
+    END;
+    calculos:=REDIM(calculos,{itfn+1,4});
+    FOR iet FROM 0 TO iter DO
+      etiq(0):=""+STRING(ROUND(iet,0),1);
+    END;
+    EDITMAT(calculos,{"Iteración Biseccion",{"1"},{"x0","x1","raiz = X","ƒ(X)"," "}});
+    print("========= Biseccion newton raphson ========");
+    print("f(x) = "+FUNCf);
+    print("Valor A: "+a_ini);
+    print("Valor B: "+b_ini);
+    print("El método halló la raíz X = "+cf);
+    wait(-1);
+    ELSE
+    //////METODO DE LA FALSA POSICION/////////////////////////
+    IF MENU==2 THEN
+      LOCAL Gx,Xini,FUNCf,xf,k,iter:=40;
+      LOCAL calculos,myf,Fx,error_max:=0.000001,FUNCg;
+      LOCAL error,itfn,a_ini,b_ini;
+      LOCAL af,bf,cf,fa,fb,fc;
+      LOCAL i,etiq:={},iet;
+      PRINT;
+      INPUT({{FUNCf,[8],{30,50,1}},{a_ini,[0],{30,20,2}},{b_ini,[0],{30,20,3}},{error_max,[0],{30,20,4}}},"Método de la falsa posición",{"ƒ(x):","x0:","x1:","error:"},{"Ingrese la f(X) en funcion de X","Escribir valor de x0.","Escribir valor de x1.","Presición"});
+      Fx:=FUNCf;
+      myf:=MAKEMAT(0,iter+1,2);
+      calculos:=MAKEMAT(0,iter,5);
+      myf(1,1):=a_ini;
+      myf(1,2):=b_ini;
+      FOR k FROM 1 TO iter DO
+        X:=myf(k,1);
+        fa:=EVAL(Fx);
+        X:=myf(k,2);
+        fb:=EVAL(Fx);
+        cf:=(fa*myf(k,2)-fb*myf(k,1))/(fa-fb);
+        X:=cf;
+        fc:=EVAL(Fx);
+        calculos(k,1):=myf(k,1);
+        calculos(k,2):=myf(k,2);
+        calculos(k,3):=cf;
+        calculos(k,4):=fc;
+        IF fa*fc<0 THEN
+          af:=myf(k,1);
+          bf:=cf;
+          ELSE
+          af:=cf;
+          bf:=myf(k,2);
+        END;
+        myf((k+1),1):=af;
+        myf((k+1),2):=bf;
+        IF ABS(fc)<error_max THEN
+          BREAK;
+        END;
+        itfn:=k;
+      END;
+      calculos:=REDIM(calculos,{itfn+1,4});
+      FOR iet FROM 0 TO iter DO
+        etiq(0):=""+STRING(ROUND(iet,0),1);
+      END;
+      EDITMAT(calculos,{"Iteración Método de la falsa posición",{"1"},{"a","b","c = Raiz","ƒ(X)"," "}});
+      print("======== Método de la falsa posición ========");
+      print("f(x) = "+FUNCf);
+      print("Criterio de paro: ¦ f(x) ¦ < "+error_max);
+      print("Valor A: "+a_ini);
+      print("Valor B: "+b_ini);
+      print("Extremo Fijo: B");
+      print("El método halló la raíz X = "+cf);
+      wait(-1);
+      ELSE
+      ////METODO DE NEWTON RAPHSON////////////////////////
+      IF MENU==3 THEN
+        LOCAL dFx,Xini,FUNC,xf,Xresult,k,iter:=40;
+        LOCAL calculos,myf,Fx,yff,error_max:=0.000001,DIV;
+        LOCAL error,itfn;
+        PRINT;
+        INPUT({{FUNC,[8],{30,50,1}},{Xini,[0],{30,20,2}},{error_max,[0],{30,20,3}}},"Método de Newton",{"ƒ(x):","x0:","error:"},{"Ingrese la f(X) en funcion de X","Ingrese valor xo inicial o aprox. a la raiz","Presición"});
+        myf:=MAKEMAT(0,iter+1,2);
+        calculos:=MAKEMAT(0,iter,5);
+        myf(1,1):=Xini;
+        FOR k FROM 1 TO iter DO
+          X:=myf(k,1);
+          Fx:=FUNC;
+          dFx:=diff(FUNC,X);
+          DIV:=(Fx)/(dFx);
+          xf:=EVAL(myf(k,1)-DIV);
+          error:=ABS(myf(k,1)-xf);
+          calculos(k,1):=myf(k,1);
+          calculos(k,2):=EVAL(Fx);
+          calculos(k,3):=EVAL(dFx);
+          calculos(k,4):=xf;
+          calculos(k,5):=trunc(error,7);
+          myf((k+1),1):=xf;
+          itfn:=k;
+          IF ABS(EVAL(Fx))<error_max THEN
+            BREAK;
+          END;
+        END;
+        calculos:=REDIM(calculos,{itfn,5});
+        LOCAL i,etiq:={},iet;
+        FOR iet FROM 0 TO iter DO
+          etiq(0):=""+STRING(ROUND(iet,0),1);
+        END;
+        EDITMAT(calculos,{"Iteración Newton Raphson",etiq,{"Xo","ƒ(Xo)","ƒ'(Xo)","raiz=X1","presicion"," "}});
+        print("======== Método de Newton Raphson =======");
+        print("f(x) = "+FUNC);
+        print("Valor inicial Xo = "+Xini);
+        print("El método halló la raíz X = "+xf);
+        WAIT(-1);
+        ELSE
+        //////METODO DE LA SECANTE/////////////////////////
+        IF MENU==4 THEN
+          LOCAL Gx,Xini,FUNCf,xf,k,iter:=40;
+          LOCAL calculos,myf,Fx,error_max:=0.000001,FUNCg;
+          LOCAL error,itfn,a_ini,b_ini;
+          LOCAL af,bf,cf,fa,fb,fc;
+          PRINT;
+          INPUT({{FUNCf,[8],{30,50,1}},{a_ini,[0],{30,20,2}},{b_ini,[0],{30,20,3}},{error_max,[0],{30,20,4}}},"Método de la secante",{"ƒ(x):","x0;","x1:","error:"},{"Ingrese la f(X) en funcion de X","Escribir valor de x0.","Escribir valor de x1.","Presición"});
+          Fx:=FUNCf;
+          myf:=MAKEMAT(0,iter+1,2);
+          calculos:=MAKEMAT(0,iter,5);
+          myf(1,1):=a_ini;
+          myf(1,2):=b_ini;
+          FOR k FROM 1 TO iter DO
+            X:=myf(k,1);
+            fa:=EVAL(Fx);
+            X:=myf(k,2);
+            fb:=EVAL(Fx);
+            cf:=myf(k,2)-(fb*(myf(k,2)-myf(k,1))/(fb-fa));
+            X:=cf;
+            fc:=EVAL(Fx);
+            calculos(k,1):=myf(k,1);
+            calculos(k,2):=myf(k,2);
+            calculos(k,3):=cf;
+            calculos(k,4):=fc;
+            myf((k+1),1):=myf(k,2);
+            myf((k+1),2):=cf;
+            IF ABS(fc)<error_max THEN
+              BREAK;
+            END;
+            itfn:=k;
+          END;
+          calculos:=REDIM(calculos,{itfn+1,4});
+          LOCAL i,etiq:={},iet;
+          FOR iet FROM 0 TO iter DO
+            etiq(0):=""+STRING(ROUND(iet,0),1);
+          END;
+          EDITMAT(calculos,{"Iteración Método de la secante",{"1"},{"a=X(n-1)","b=Xn","raiz=X","ƒ(X)"," "}});
+          print("=========== Método de la secante ==========");
+          print("f(x) = "+FUNCf);
+          print("Valor A: "+a_ini);
+          print("Valor B: "+b_ini);
+          print("El método halló la raíz X = "+cf);
+          wait(-1);
+          ELSE
+          ////// PUNTO FIJO //////
+          IF MENU==5 THEN
+            LOCAL Gx,Xini,FUNCf,xf,k,iter:=40;
+            LOCAL calculos,myf,Fx,error_max:=0.0001,FUNCg;
+            LOCAL error,itfn;
+            PRINT;
+            INPUT({{FUNCf,[8],{30,50,1}},{FUNCg,[8],{30,50,2}},{Xini,[0],{30,20,3}},{error_max,[0],{30,20,4}}},"Método del punto fijo",{"ƒ(x):","g(x):","Xo:","error:"},{"Ingrese la f(X) en funcion de X","Escribir la ecuación f(x)=0 en la forma x=g(x)","Ingrese valor x0 inicial o aprox. a la raiz","Presición."});
+            myf:=MAKEMAT(0,iter+1,2);
+            calculos:=MAKEMAT(0,iter,4);
+            myf(1,1):=Xini;
+            FOR k FROM 1 TO iter DO
+              X:=myf(k,1);
+              Fx:=FUNCf;
+              Gx:=FUNCg;
+              xf:=EVAL(Gx);
+              error:=ABS(myf(k,1)-xf);
+              calculos(k,1):=myf(k,1);
+              calculos(k,2):=EVAL(Fx);
+              calculos(k,3):=xf;
+              calculos(k,4):=trunc(error,7);
+              myf((k+1),1):=xf;
+              itfn:=k;
+              IF ABS(EVAL(Fx))<error_max THEN
+                BREAK;
+              END;
+            END;
+            calculos:=REDIM(calculos,{itfn,4});
+            EDITMAT(calculos,{"Iteración punto fijo",{"1"},{"Xo","ƒ(Xo)","g(Xo)","presicion"," "}});
+            print("=========== Método del punto fijo =========");
+            print("f(x) = "+FUNCf);
+            print("g(x) = "+FUNCg);
+            print("Valor inicial Xo = "+Xini);
+            print("El método halló la raíz X = "+xf);
+            wait(-1);
+          END;
+          
+          ////METODO DE MULLER/////////////////////////
+          IF MENU == 6 THEN
+            PRINT;
+            LOCAL fx,x0,x1,x2,ERROR,error,ans;
+            //x0:=4.5;x1:=5.5;x2:=5;
+            ERROR:=0.00001;
+            LOCAL etiq_col:={"x0","x1","x2","raiz","error (%)","fx0","fx1","fx2","a","b","c",""};
+            INPUT({{fx,[8],{30,50,1}},{x0,[0],{30,20,2}},{x1,[0],{30,20,3}},{x2,[0],{30,20,4}},{ERROR,[0],{30,20,5}}},"ENTRADA DE DATOS",
+            {},{"Intruzca la función","introduzca valor para x0:","Introduzca valor para x1:","Introduzca valor para x2:","Introduzca el error"});
+            LOCAL i,den;
+            LOCAL fx0,fx1,fx2,x3;
+            LOCAL h0,h1,e0,e1,a,b,c,discr;
+            PRINT;
+            ans:=MAKEMAT(0,1,11);
+            i:=1;
+            REPEAT
+              X:=x0;
+              fx0:=EVAL(fx);
+              X:=x1;
+              fx1:=EVAL(fx);
+              X:=x2;
+              fx2:=EVAL(fx);
+              h0:=x1-x0;
+              h1:=x2-x1;
+              e0:=EVAL((fx0-fx1)/(x0-x1));
+              e1:=EVAL((fx2-fx1)/(x2-x1));
+              a:=EVAL((e1-e0)/(h1+h0));
+              b:=EVAL(a*h1+e1);
+              c:=fx2;
+              discr:=√(b^2−(4*a*c));
+              IF abs(b+discr)>abs(b-discr) THEN
+                den:=b+discr;
+                ELSE
+                den:=b-discr;
+              END;
+              x3:=x2+(−2*c)/den;
+              error:=abs(EVAL((x3-x2)/x3))*100;
+              ans(i,1):=x0;
+              ans(i,2):=x1;
+              ans(i,3):=x2;
+              ans(i,4):=x3;
+              ans(i,5):=error;
+              ans(i,6):=fx0;
+              ans(i,7):=fx1;
+              ans(i,8):=fx2;
+              ans(i,9):=a;
+              ans(i,10):=b;
+              ans(i,11):=c;
+              x0:=x1;
+              x1:=x2;
+              x2:=x3;
+              i:=i+1;
+            UNTIL ROUND(error,6)≤ERROR;
+            EDITMAT(ans,{"TABLA DE ITERACCIONES",{"1"},etiq_col});
+            
+          END;
+          ////METODO DE BAISRTOW//////////////
+          IF MENU == 7 THEN
+            PRINT;
+            LOCAL a,b,c,fx,Δr,Δs,n,i;
+            LOCAL r,s,ERROR,solc,sl,raiz,xraiz;
+            LOCAL etiq:={},etiq_col:={},iet,int;
+            LOCAL Er,Es,iter,MANS,fpol,poli;
+            LOCAL j,k,l,fact,it;
+            etiq_col:={"x","x","Δr","Δs","r","s"};
+            //n:=5;
+            //r:=-1;s:=-1;
+            ERROR:=0.000001;
+            INPUT({{n,[0],{30,20,1}},{r,[0],{30,20,2}},{s,[0],{30,20,3}},{ERROR,[0],{30,20,4}}},"ENTRADADA DE DATOS",{},{"Grado del polinomio","Valor de s","Valor de r","Error"});
+            a:=MAKEMAT(0,n+1,1);
+            b:=MAKEMAT(0,n+1,1);
+            MANS:=MAKEMAT(0,50,6);
+            c:=MAKEMAT(0,n+1);
+            //a:=[[1.25],[−3.875],[2.125],[2.75],[−3.5],[1]];
+            solc:=MAKEMAT(0,2,3);
+            sl:=MAKEMAT(0,2,3);
+            xraiz:=MAKEMAT(0,n);
+            
+            FOR iet FROM 0 TO n DO
+              etiq(0):=""+STRING(ROUND(iet,0),1);
+            END;
+            EDITMAT(a,{"VECTOR DE COEFICIENTES",etiq,{"a"," "}});
+            IF CAS.irem(n,2)==0 THEN
+              fpol:=2;
+              ELSE
+              fpol:=1;
+            END;
+            poli:=n;
+            j:=1;
+            iter:=1;
+            IF n>2 THEN
+              REPEAT
+                it:=0;
+                fact:=fact+1;
+                etiq(iter):="fac."+fact;
+                REPEAT
+                  b(n+1,1):=a(n+1,1);
+                  b(n,1):=a(n,1)+r*b(n+1,1);
+                  FOR i FROM n-1 DOWNTO 1 DO
+                    b(i,1):=a(i,1)+r*b(i+1,1)+s*b(i+2,1);
+                  END;
+                  //EDITMAT(b,{"VALORES DE b",etiq,{"b"}});
+                  c(n+1):=b(n+1,1);
+                  c(n):=b(n,1)+r*c(n+1);
+                  FOR i FROM n-1 DOWNTO 1 DO
+                    c(i):=b(i,1)+r*c(i+1)+s*c(i+2);
+                  END;
+                  //EDITMAT(c,{"VALORES DE c",etiq,{"c"}});
+                  solc(1,1):=c(2+1);
+                  solc(1,2):=c(3+1);
+                  solc(1,3):=-b(1+1,1);
+                  solc(2,1):=c(1+1);
+                  solc(2,2):=c(2+1);
+                  solc(2,3):=-b(0+1,1);
+                  //EDITMAT(solc);
+                  sl:=RREF(solc);
+                  Δr:=sl(1,3);
+                  Δs:=sl(2,3);
+                  r:=r+Δr;
+                  s:=s+Δs;
+                  Er:=ABS(Δr/r)*100;
+                  Es:=ABS(Δs/s)*100;
+                  it:=it+1;
+                  iter:=iter+1;
+                  etiq(iter):=""+it;
+                  MANS(iter,3):=Δr;
+                  MANS(iter,4):=Δs;
+                  MANS(iter,5):=r;
+                  MANS(iter,6):=s;
+                UNTIL ROUND(Δr,4)<=0 AND ROUND(Δs,4)==0;
+                iter:=iter+1;
+                etiq(iter):=">>";
+                MANS(iter,3):=Δr;
+                MANS(iter,4):=Δs;
+                MANS(iter,5):=r;
+                MANS(iter,6):=s;
+                MANS(iter,1):=ROUND(approx((r+sqrt(r^2+4*s))/2),8);
+                MANS(iter,2):=ROUND(approx((r-sqrt(r^2+4*s))/2),8);
+                PRINT("Factorización: "+fact);
+                PRINT("r = "+r);
+                PRINT("s = "+s);
+                PRINT("x"+n+" = "+MANS(iter,1));
+                PRINT("x"+(n-1)+" = "+MANS(iter,2));
+                iter:=iter+1;
+                a:=DELROW(b,1);
+                a:=DELROW(a,1);
+                j:=j+1;
+                poli:=poli-2;
+                n:=n-2;
+              UNTIL poli==fpol;
+            END;
+            EDITMAT(MANS,{"TABLA DE ITERACCIONES",etiq,etiq_col});
+            IF CAS.irem(n,2)==0 THEN
+              PRINT("Factorización: "+(fact+1));
+              PRINT("r = "+r);
+              PRINT("s = "+s);
+              PRINT("x"+n+" = "+(r+sqrt(r^2+4*s))/2);
+              PRINT("x"+(n-1)+" = "+(r-sqrt(r^2+4*s))/2);
+              ELSE
+              PRINT("Factorización: "+(fact+1));
+              PRINT("r = "+r);
+              PRINT("s = "+s);
+              PRINT("x"+(n)+" = "+(-a(1,1)/a(2,1)));
+              WAIT();
+            END;
+          END;
+          //L U DE MATRICES//////////////////////////////////////
+          IF MENU==8 THEN
+            LOCAL MENU91;
+            CHOOSE(MENU91,"SELECCIONE UN METODO",
+            "L U     Doolitle",
+            "L U     Crout",
+            "L U     Cholesky");
+            // L U DOOLITLE
+            IF MENU91==1 THEN
+              LOCAL i,m,suma,k,p,u,n;
+              LOCAL r,j,s,memoriaU,memoriaL,producto;
+              LOCAL tm,x,z,b,L,U,A,B;
+              INPUT({{n,[0],{30,20,1}}},"ENTRADA DE DATOS",{"i: "},{"Ingrese la cantidad de filas de la matriz"});
+              LOCAL etiq_col:={},etiq_row:={},etiq;
+              FOR etiq FROM 1 TO n DO
+                etiq_col(etiq):="a"+etiq;
+              END;
+              etiq_col(n+1):="";
+              A:=MAKEMAT(0,n,n);
+              B:=MAKEMAT(0,n);
+              EDITMAT(A,{"MATRIZ A",{"1"},etiq_col});
+              EDITMAT(B);
+              L:=MAKEMAT(0,n,n);
+              U:=MAKEMAT(0,n,n);
+              x:=MAKEMAT(0,n);
+              z:=MAKEMAT(0,n);
+              IF n==n THEN
+                FOR i FROM 1 TO n DO
+                  L(i,i):=1;
+                  suma:=0;
+                  FOR k FROM 1 TO n-1 DO
+                    suma:=suma+(L(i,k)*U(k,i));
+                    //MSGBOX("SUMA  "+suma);
+                  END;
+                  U(i,i):=(A(i,i)-suma);
+                  // EDITMAT(U);
+                  FOR j FROM 1 TO n DO
+                    IF i<j THEN
+                      suma:=0;
+                      FOR k FROM 1 TO n-1 DO
+                        suma:=suma+L(i,k)*U(k,j);
+                      END;
+                      U(i,j):=(A(i,j)-suma); //obtencion de la matriz u
+                      //EDITMAT(U);
+                    END;
+                  END;
+                  FOR j FROM 1 TO n DO
+                    IF j>i THEN
+                      suma:=0;
+                      FOR k FROM 1 TO n-1 DO
+                        suma:=suma+L(j,k)*U(k,i);
+                      END;
+                      L(j,i):=(A(j,i)-suma)/U(i,i); //obtencion de la matriz L
+                      // EDITMAT(L);
+                    END;
+                  END;
+                END;
+                //EDITMAT(L);
+                FOR i FROM 1 TO n DO
+                  suma:=0;
+                  FOR j FROM 1 TO n-1 DO
+                    suma:=suma+L(i,j)*z(j);
+                  END;
+                  z(i):=(B(i)-suma)/L(i,i); //obtencion del vector Z
+                END;
+                FOR i FROM n DOWNTO 1 DO
+                  suma:=0;
+                  FOR j FROM 2 TO n DO
+                    suma:=suma+U(i,j)*x(j);
+                  END;
+                  x(i):=(z(i)-suma)/U(i,i); //solcion, calculos de las variables
+                END;
+              END;
+              MSGBOX("SE MOSTRARÁ LA MATRIZ L");
+              EDITMAT(L);
+              MSGBOX("SE MOSTRARÁ LA MATRIZ U");
+              EDITMAT(U);
+              MSGBOX("SE MOSTRARÁ EL VECTOR Z");
+              EDITMAT(z);
+              MSGBOX("SE MOSTRARÁ EL VECTOR SOLUCIÓN X(n)");
+              EDITMAT(x);
+            END;
+            
+            // L U CROUT
+            IF MENU91==2 THEN
+              LOCAL i,m,suma,k,p,u,n;
+              LOCAL r,j,s,memoriaU,memoriaL,producto;
+              LOCAL tm,x,z,b,L,U,A,B;
+              INPUT({{n,[0],{30,20,1}}},"ENTRADA DE DATOS","i: ","Ingrese la cantidad de filas de la matriz");
+              A:=MAKEMAT(0,n,n);
+              B:=MAKEMAT(0,n);
+              LOCAL etiq_col:={},etiq_row:={},etiq;
+              FOR etiq FROM 1 TO n DO
+                etiq_col(etiq):="a"+etiq;
+              END;
+              etiq_col(n+1):="";
+              EDITMAT(A,{"MATRIZ A",{"1"},etiq_col});
+              EDITMAT(B);
+              L:=MAKEMAT(0,n,n);
+              U:=MAKEMAT(0,n,n);
+              x:=MAKEMAT(0,n);
+              z:=MAKEMAT(0,n);
+              IF n==n THEN
+                FOR i FROM 1 TO n DO
+                  U(i,i):=1;
+                  suma:=0;
+                  FOR k FROM 1 TO n-1 DO
+                    suma:=suma+(L(i,k)*U(k,i));
+                    //MSGBOX("SUMA  "+suma);
+                  END;
+                  L(i,i):=(A(i,i)-suma);
+                  // EDITMAT(L);
+                  FOR j FROM 1 TO n DO
+                    IF j>i THEN
+                      suma:=0;
+                      FOR k FROM 1 TO n-1 DO
+                        suma:=suma+L(j,k)*U(k,i);
+                      END;
+                      L(j,i):=(A(j,i)-suma); //obtencion de la matriz u
+                      //EDITMAT(U);
+                    END;
+                  END;
+                  FOR j FROM 1 TO n DO
+                    IF i<j THEN
+                      suma:=0;
+                      FOR k FROM 1 TO n-1 DO
+                        suma:=suma+L(i,k)*U(k,j);
+                      END;
+                      U(i,j):=(A(i,j)-suma)/L(i,i); //obtencion de la matriz L
+                      // EDITMAT(L);
+                    END;
+                  END;
+                END;
+                //EDITMAT(L);
+                FOR i FROM 1 TO n DO
+                  suma:=0;
+                  FOR j FROM 1 TO n-1 DO
+                    suma:=suma+L(i,j)*z(j);
+                  END;
+                  z(i):=(B(i)-suma)/L(i,i); //obtencion del vector Z
+                END;
+                FOR i FROM n DOWNTO 1 DO
+                  suma:=0;
+                  FOR j FROM 2 TO n DO
+                    suma:=suma+U(i,j)*x(j);
+                  END;
+                  x(i):=(z(i)-suma)/U(i,i); //solcion, calculos de las variables
+                END;
+              END;
+              MSGBOX("SE MOSTRARÁ LA MATRIZ L");
+              EDITMAT(L);
+              MSGBOX("SE MOSTRARÁ LA MATRIZ U");
+              EDITMAT(U);
+              MSGBOX("SE MOSTRARÁ EL VECTOR Z");
+              EDITMAT(z);
+              MSGBOX("SE MOSTRARÁ EL VECTOR SOLUCIÓN X(n)");
+              EDITMAT(x);
+            END;
+            
+            // L U CHOLESKY
+            IF MENU91==3 THEN
+              
+              LOCAL i,m,suma,k,b,p,u,n;
+              LOCAL r,j,s,memoriaU,memoriaL,producto;
+              LOCAL tm,x,z,A,B,L,U;
+              INPUT({{n,[0],{30,20,1}}},"ENTRADA DE DATOS","i: ","Ingrese la cantidad de filas de la matriz");
+              LOCAL etiq_col:={},etiq_row:={},etiq;
+              FOR etiq FROM 1 TO n DO
+                etiq_col(etiq):="a"+etiq;
+              END;
+              etiq_col(n+1):="";
+              A:=MAKEMAT(0,n,n);
+              B:=MAKEMAT(0,n);
+              A:=MAKEMAT(0,n,n);
+              B:=MAKEMAT(0,n);
+              L:=MAKEMAT(0,n,n);
+              x:=MAKEMAT(0,n);
+              z:=MAKEMAT(0,n);
+              b:=MAKEMAT(0,n);
+              EDITMAT(A,{"MATRIZ A",{"1"},etiq_col});
+              EDITMAT(B);
+              IF A==TRN(A) THEN
+                FOR i FROM 1 TO n DO
+                  suma:=0;
+                  FOR k FROM 1 TO n-1 DO
+                    suma:=suma+(L(i,k))^2;
+                    // MSGBOX("SUMA  "+suma);
+                  END;
+                  //MSGBOX("SUMA  "+suma);
+                  L(i,i):=approx(sqrt(A(i,i)-suma));
+                  // EDITMAT(L);
+                  FOR j FROM 1 TO n DO
+                    IF i<j THEN
+                      suma:=0;
+                      FOR k FROM 1 TO n-1 DO
+                        suma:=suma+(L(i,k)*L(j,k));
+                      END;
+                      //MSGBOX("SUMA  "+suma);
+                      L(j,i):=(A(j,i)-suma)/(L(i,i)); //obtencion de la matriz u
+                      //EDITMAT(L);
+                    END;
+                  END;
+                END;
+                //EDITMAT(L);
+                U:=TRN(L);
+                FOR i FROM 1 TO n DO
+                  suma:=0;
+                  FOR j FROM 1 TO n-1 DO
+                    suma:=suma+L(i,j)*z(j);
+                  END;
+                  z(i):=(B(i)-suma)/L(i,i); //obtencion del vector Z
+                END;
+                FOR i FROM n DOWNTO 1 DO
+                  suma:=0;
+                  FOR j FROM 2 TO n DO
+                    suma:=suma+U(i,j)*x(j);
+                  END;
+                  x(i):=(z(i)-suma)/U(i,i); //solcion, calculos de las variables
+                END;
+                MSGBOX("SE MOSTRARÁ LA MATRIZ L");
+                EDITMAT(L);
+                MSGBOX("SE MOSTRARÁ LA MATRIZ U");
+                EDITMAT(U);
+                MSGBOX("SE MOSTRARÁ EL VECTOR Z");
+                EDITMAT(z);
+                MSGBOX("SE MOSTRARÁ EL VECTOR SOLUCIÓN X(n)");
+                EDITMAT(x);
+                ELSE
+                RETURN("La matriz A debe ser simetrica !!!");
+              END;
+            END;
+            
+            //  L U  por jacobi
+            IF MENU91==4 THEN
+              LOCAL i,m,suma,k,p,u,n;
+              LOCAL r,j,s,memoriaU,memoriaL,producto;
+              LOCAL tm,x,z,L,U,A,B;
+              INPUT({{n,[0],{30,20,1}}},"ENTRADA DE DATOS","i: ","Ingrese la cantidad de filas de la matriz");
+              A:=MAKEMAT(0,n,n);
+              B:=MAKEMAT(0,n);
+              EDITMAT(A);
+              EDITMAT(B);
+              L:=MAKEMAT(0,n,n);
+              U:=MAKEMAT(0,n,n);
+              x:=MAKEMAT(0,n);
+              z:=MAKEMAT(0,n);
+              IF n==m THEN
+                FOR i FROM 1 TO n DO
+                  U(i,i):=1;
+                  suma:=0;
+                  FOR k FROM 1 TO n-1 DO
+                    suma:=suma+(L(i,k)*U(k,i));
+                    //MSGBOX("SUMA  "+suma);
+                  END;
+                  L(i,i):=(A(i,i)-suma);
+                  // EDITMAT(L);
+                  FOR j FROM 1 TO n DO
+                    IF j>i THEN
+                      suma:=0;
+                      FOR k FROM 1 TO n-1 DO
+                        suma:=suma+L(j,k)*U(k,i);
+                      END;
+                      L(j,i):=(A(j,i)-suma); //obtencion de la matriz u
+                      //EDITMAT(U);
+                    END;
+                  END;
+                  FOR j FROM 1 TO n DO
+                    IF i<j THEN
+                      suma:=0;
+                      FOR k FROM 1 TO n-1 DO
+                        suma:=suma+L(i,k)*U(k,j);
+                      END;
+                      U(i,j):=(A(i,j)-suma)/L(i,i); //obtencion de la matriz L
+                      // EDITMAT(L);
+                    END;
+                  END;
+                END;
+                //EDITMAT(L);
+                FOR i FROM 1 TO n DO
+                  suma:=0;
+                  FOR j FROM 1 TO n-1 DO
+                    suma:=suma+L(i,j)*z(j);
+                  END;
+                  z(i):=(B(i)-suma)/L(i,i); //obtencion del vector Z
+                END;
+                FOR i FROM n DOWNTO 1 DO
+                  suma:=0;
+                  FOR j FROM 2 TO n DO
+                    suma:=suma+U(i,j)*x(j);
+                  END;
+                  x(i):=(z(i)-suma)/U(i,i); //solcion, calculos de las variables
+                END;
+              END;
+              MSGBOX("SE MOSTRARÁ LA MATRIZ L");
+              EDITMAT(L);
+              MSGBOX("SE MOSTRARÁ LA MATRIZ U");
+              EDITMAT(U);
+              MSGBOX("SE MOSTRARÁ EL VECTOR Z");
+              EDITMAT(z);
+              MSGBOX("SE MOSTRARÁ EL VECTOR SOLUCIÓN X(n)");
+              EDITMAT(x);
+            END;
+            
+          END;
+          ///////AUTOR//////////////////////
+          IF MENU==9 THEN
+             RECT; WAIT(.3);
+             metodos1p();
+          END;
+        END;
+      END;
+    END;
+  END;
+  BLOQUE_CALCULO();
+END;
+

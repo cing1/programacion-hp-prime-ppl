@@ -1,0 +1,153 @@
+#pragma mode( separator(.,;) integer(h32) )
+geom();
+VIEW "AR_POL",START()
+BEGIN
+startview(6,1);
+geom();
+END;
+
+grid;
+grilla();
+EXPORT geom()
+BEGIN
+  LOCAL tou;
+  LOCAL ini,toque,toque2,rep,I:=1;
+  LOCAL coor:={},j:=1,d,s,r,l,k,area;
+  LOCAL coor2:={},dis,cdis:={},e:=1,di:={};
+  grid:=20+grid;
+  LOCAL col:=#00FF00;
+  grilla();
+  REPEAT
+    WAIT(-1);
+    toque:=MOUSE();
+    toque:=B→R(toque(1));
+    IF SIZE(toque) THEN // AND toque(5)<>2
+      toque(1):=ROUND((toque(1)/10),0)*10;
+      toque(2):=ROUND((toque(2)/10),0)*10;
+      coor2(j):=toque(1)/grid;
+      coor2(j+1):=toque(2)/grid;
+      coor(j):=toque(1);
+      coor(j+1):=toque(2);
+      j:=j+2;
+      IF rep > 0 THEN
+        IF (ini(1)-10)<toque(1)<(ini(1)+10) AND (ini(2)-10)<toque(2)<(ini(2)+10) THEN
+          LINE_P(toque2(1),toque2(2),ini(1),ini(2),#000000);
+          //TEXTOUT_P(""+(I+1),toque2(1)+(toque(1)-toque2(1))/2,toque2(2)-4+(toque(2)-toque2(2))/2,2,#000000);
+          ARC_P(ini(1),ini(2),8,#0000FF);
+          WAIT(.3);
+          ARC_P(ini(1),ini(2),8,#FF0000);
+          rep:=-1;
+          coor2:=SUPPRESS(coor2,j-2,j-1);
+          coor:=SUPPRESS(coor,j-2,j-1);
+          d:=ROUND((sqrt((toque(1)-toque2(1))^2+(toque(2)-toque2(2))^2))/grid,2);
+          di(I):=d;
+          di(I+1):=d;
+          dis:=d+dis;
+          TEXTOUT_P(""+d,toque2(1)-3+(toque(1)-toque2(1))/2,toque2(2)-4+(toque(2)-toque2(2))/2,2,#000000);
+          cdis(e):=toque2(1)-3+(toque(1)-toque2(1))/2;
+          cdis(e+1):=toque2(2)-4+(toque(2)-toque2(2))/2;
+          //MSGBOX(GETPIX_P(ini(1)+3,ini(2)+3));
+          IF GETPIX_P(ini(1)+3,ini(2)+3)==#00FF00h THEN
+            col:=#009999;
+          END;
+          FILLPOLY_P({20,0,120,0,120,17,80,17,80,28,20,28},#FFFFFF);
+          FILLPOLY_P(coor,col);
+          FOR l FROM 0 TO 320 STEP grid DO
+            LINE_P(l,0,l,240,#DDDDDD);
+            TEXTOUT_P(""+l/grid,l,232,1,#999999);
+          END;
+          FOR l FROM 0 TO 240 STEP grid DO
+            LINE_P(0,l,320,l,#DDDDDD);
+            TEXTOUT_P(""+(240-l)/grid,0,l,1,#999999);
+          END;
+          FOR l FROM 0 TO 320 STEP grid DO
+            FOR k FROM 0 TO 240 STEP grid DO
+              PIXON_P(l,k,#999999);
+            END;
+          END;
+          coor2(j-2):=coor2(1);     coor2(j-1):=coor2(2);
+          FOR l FROM 1 TO e+1 STEP 2 DO
+            TEXTOUT_P(""+di(l),cdis(l),cdis(l+1),2,#000000);
+            //LINE_P(coor(l),coor(l+1),coor(l+2),coor(l+3),#0);
+            ARC_P(coor(l),coor(l+1),2,#FF0000);
+            ARC_P(coor(l),coor(l+1),1,#FF0000);
+          END;
+          FOR l FROM 1 TO j-3 STEP 2 DO
+            s:=coor2(l)*coor2(l+3)+s;
+            r:=-coor2(l+1)*coor2(l+2)+r;
+          END;
+          area:=ABS(ROUND(((s+r)/2),3));
+          TEXTOUT_P("PERÍMETRO = "+dis,0,2,2,#FF0000,300,#00FFFF);
+          TEXTOUT_P("AREA = "+area,0,17,2,#FF0000,300,#00FFFF);
+          WAIT(.3);
+          TEXTOUT_P("PERÍMETRO = "+dis,0,2,2,#000000,300,#FFFF00);
+          TEXTOUT_P("AREA = "+area,0,17,2,#000000,300,#FFFF00);
+          j:=1;
+          I:=1;
+          e:=1;
+          r:=0;
+          s:=0;
+          area:=0;
+          dis:=0;
+          d:=0;
+          col:=#00FF00;
+          ELSE
+          d:=ROUND((sqrt((toque(1)-toque2(1))^2+(toque(2)-toque2(2))^2))/grid,2);
+          dis:=d+dis;
+          di(I):=d;
+          di(I+1):=d;
+          I:=I+2;
+          LINE_P(toque2(1),toque2(2),toque(1),toque(2),#000000);
+          ARC_P(toque(1),toque(2),2,#0000FF);
+          ARC_P(toque(1),toque(2),1,#0000FF);
+          IF toque(5)<>2 THEN
+            TEXTOUT_P(""+d,toque2(1)-3+(toque(1)-toque2(1))/2,toque2(2)-4+(toque(2)-toque2(2))/2,2,#000000);
+            cdis(e):=toque2(1)-3+(toque(1)-toque2(1))/2;
+            cdis(e+1):=toque2(2)-4+(toque(2)-toque2(2))/2;
+            e:=e+2;
+          END;
+          // TEXTOUT_P(""+I,toque2(1)-3+(toque(1)-toque2(1))/2,toque2(2)-4+(toque(2)-toque2(2))/2,2,#000000,300,#FFFFFF);
+        END;
+        ELSE
+        ini:=toque;
+        ARC_P(toque(1),toque(2),8,#FF0000);
+      END;
+      rep:=rep+1;
+      
+      toque2:=toque;
+    END;
+    IF ISKEYDOWN(0) THEN
+      grid:=0;
+      MSGBOX("       AR_POL\n\nDESARROLLADOR:\nMario Cesgo Soliz");
+      KILL;
+    END;
+    IF ISKEYDOWN(50) THEN
+      grid:=10;
+    END;
+  UNTIL ISKEYDOWN(4);
+  grid:=-grid+20;
+  WAIT(-1);
+  geom(); 
+END;
+grilla()
+BEGIN
+  LOCAL l,k;
+  RECT();
+  FOR l FROM 0 TO 320 STEP grid DO
+    LINE_P(l,0,l,240,#DDDDDD);
+    TEXTOUT_P(""+l/grid,l,232,1,#999999);
+  END;
+  FOR l FROM 0 TO 240 STEP grid DO
+    LINE_P(0,l,320,l,#DDDDDD);
+    TEXTOUT_P(""+(240-l)/grid,0,l,1,#999999);
+  END;
+  FOR l FROM 0 TO 320 STEP grid DO
+    FOR k FROM 0 TO 240 STEP grid DO
+      PIXON_P(l,k,#999999);
+    END;
+  END;
+  TEXTOUT_P("✗",10,230,2,#FF0000);
+  TEXTOUT_P(CHAR({66,121,58,32,77,97,114,105,111,32,67,101,115,103,111,32,83,111,108,105,122}),120,2,1,#888888);
+  // WAIT(-1);
+  //paint();
+END;

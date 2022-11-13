@@ -1,0 +1,1562 @@
+#pragma mode( separator(.,;) integer(h32) )
+metodos2p();
+VIEW "metodos2p",START()
+BEGIN
+startview(6,1);
+metodos2p();
+END;
+
+pulsa();
+pulsa2();
+pulsar2();
+pulsaend();
+pulsarend();
+BLOQUE_CALCULO();
+presentacion1();
+presentacion2();
+info();
+loading();
+EXPORT on:=1;
+EXPORT metodos2p()
+BEGIN
+  IF on==1 THEN
+  loading();
+  on:=0;
+  END;
+  presentacion1();
+  REPEAT
+    L1:=MOUSE;
+    L2:=L1(1);
+    IF SIZE(L2)≠0 THEN
+      pulsa(L2(1),L2(2));
+    END;
+UNTIL ISKEYDOWN(4) END;
+on:=1;
+MSGBOX("MÉTODOS NUMÉRICOS (Parte 2)\n\n            DESARROLLADOR:\n            Mario Cesgo Soliz");
+KILL;
+END;
+loading()
+BEGIN 
+  LOCAL i;
+  RECT_P(); 
+  FOR i FROM 1 TO 25 DO
+    TEXTOUT_P(("Cargando... "),112,100,1,#2E64FEh,100,#FFFFFFh);
+    TEXTOUT_P((50+2*i)+("%"),171,100,1,#2E64FEh,100,#FFFFFFh);
+    RECT_P(105,116,206,124,0,#FFFFFFh);
+    RECT_P(106,117,155+2*i,123,#40FF00h);
+    WAIT(0.03);
+  END;
+  WAIT(1);
+
+END;
+pulsa(x,y)
+BEGIN
+  IF 100<x<220 AND 213<y<230 THEN
+    RECT_P(100,213,220,230,RGB(255,0,0));
+    PIXON_p(100,213,RGB(20,20,50));
+    PIXON_p(220,213,RGB(20,20,50));
+    PIXON_p(100,230,RGB(20,20,50));
+    PIXON_p(220,230,RGB(20,20,50));
+    TEXTOUT_P("continuar  ➫",108,210,5,RGB(0,0,0),200);
+    WAIT(0.2);
+    BLOQUE_CALCULO();
+  END;
+  IF 280<x<314 AND 2<y<15 THEN
+  RECT_P(280,2,314,15,RGB(0,0,0));
+  TEXTOUT_P("✖",291,-5,7,RGB(255,0,0),200);
+  TEXTOUT_P("✖",391,-5,7,RGB(255,0,0),200);
+    WAIT(0.3);
+    //MSGBOX("DESARROLLADOR: Mario Cesgo Soliz\n METODOS NUMÉRICOS (2º Parte)");
+    pulsaend();
+    //KILL;
+  END;
+END;
+
+pulsaend()
+BEGIN
+  LOCAL TOUCH;
+  RECT_P(280,2,314,15,RGB(0,0,0));
+  TEXTOUT_P("✖",291,-5,7,RGB(255,0,0),200);
+  TEXTOUT_P("✖",391,-5,7,RGB(255,0,0),200);
+  RECT_P(0,0,320,240,#000000h,{#000000h,200});
+  RECT_P(60,70,258,170,RGB(0,100,255));
+  RECT_P(65,88,253,165,RGB(255,255,255));
+  RECT_P(235,72,252,85,RGB(255,0,0));
+  RECT_P(110,140,150,155,RGB(255,0,0));
+  RECT_P(175,140,215,155,RGB(255,0,0));
+  PIXON_p(110,140,RGB(255,255,255));
+  PIXON_p(150,155,RGB(255,255,255));
+  PIXON_p(110,155,RGB(255,255,255));
+  PIXON_p(150,140,RGB(255,255,255));
+  PIXON_p(175,140,RGB(255,255,255));
+  PIXON_p(215,155,RGB(255,255,255));
+  PIXON_p(175,155,RGB(255,255,255));
+  PIXON_p(215,140,RGB(255,255,255));
+  TEXTOUT_P("✖",237,65,7,RGB(255,255,255),200);
+  TEXTOUT_P("✖",237,65,7,RGB(255,255,255),200);
+  TEXTOUT_P("Desea salir del programa?",76,108,3,RGB(0,0,0),200);
+  TEXTOUT_P("SI",124,140,3,RGB(0,0,0),200);
+  TEXTOUT_P("NO",185,140,3,RGB(0,0,0),200);
+  WAIT(-1);
+  REPEAT
+    // WAIT(-1);
+    TOUCH:=MOUSE();
+    TOUCH:=B→R(TOUCH(1));
+    IF SIZE(TOUCH) THEN
+      pulsarend(TOUCH(1),TOUCH(2));
+    END;
+  UNTIL ISKEYDOWN(0);
+END;
+pulsarend(xxx,yyy)
+BEGIN
+  IF 110<xxx<150 AND 140<yyy<155 THEN
+    on:=1;
+    RECT_P(110,140,150,155,RGB(0,0,0));
+    PIXON_p(110,140,RGB(255,255,255));
+    PIXON_p(150,155,RGB(255,255,255));
+    PIXON_p(110,155,RGB(255,255,255));
+    PIXON_p(150,140,RGB(255,255,255));
+    TEXTOUT_P("SI",124,140,3,RGB(255,255,255),200);
+    WAIT(0.2);
+    MSGBOX("MÉTODOS NUMÉRICOS (Parte 2)\n\n            DESARROLLADOR:\n            Mario Cesgo Soliz");
+    KILL;
+  END;
+  IF 175<xxx<215 AND 140<yyy<155 THEN
+    RECT_P(175,140,215,155,RGB(0,0,0));
+    PIXON_p(175,140,RGB(255,255,255));
+    PIXON_p(215,155,RGB(255,255,255));
+    PIXON_p(175,155,RGB(255,255,255));
+    PIXON_p(215,140,RGB(255,255,255));
+    TEXTOUT_P("NO",185,140,3,RGB(255,255,255),200);
+    WAIT(0.2);
+    metodos2p();
+  END;
+END;
+
+pulsa2()
+BEGIN
+  LOCAL TOUCH9;
+  REPEAT
+    WAIT(-1);
+    TOUCH9:=MOUSE();
+    TOUCH9:=B→R(TOUCH9(1));
+    IF SIZE(TOUCH9) THEN
+      pulsar2(TOUCH9(1),TOUCH9(2));
+    END;
+  UNTIL ISKEYDOWN(0);
+END;
+
+pulsar2(xx,yy)
+BEGIN  
+  IF 287<xx<314 AND 2<yy<15 THEN
+    RECT_P(287,2,314,15,RGB(255,255,255));
+    TEXTOUT_P("✖",294,-5,7,RGB(0,0,0),200);
+    TEXTOUT_P("✖",294,-5,7,RGB(0,0,0),200);
+    RECT();
+    WAIT(.3);
+    metodos2p();
+  END;
+  IF 256<xx<283 AND 0<yy<15 THEN
+    RECT_P(256,2,283,15,RGB(255,255,255));
+    TEXTOUT_P("⇦",260,-6,7,RGB(0,0,0),200);
+    TEXTOUT_P("⇦",261,-5,6,RGB(0,0,0),200);   
+    WAIT(0.3);
+    BLOQUE_CALCULO();
+  END;
+END;
+presentacion1()
+BEGIN
+  DIMGROB_P(G7,320,240);
+  RECT(G7);
+  RECT_P(G7,0,0,320,240,RGB(20,20,50));
+  RECT_P(G7,0,0,320,17,RGB(0,50,200));
+  RECT_P(G7,0,235,320,240,RGB(0,50,200));
+  RECT_P(G7,0,0,4,240,RGB(0,50,200));
+  RECT_P(G7,315,0,320,240,RGB(0,60,200));
+  RECT_P(G7,6,8,314,17,RGB(0,60,255));
+  RECT_P(G7,100,213,220,230,RGB(0,255,255));
+  PIXON_p(G7,100,213,RGB(20,20,50));
+  PIXON_p(G7,220,213,RGB(20,20,50));
+  PIXON_p(G7,100,230,RGB(20,20,50));
+  PIXON_p(G7,220,230,RGB(20,20,50));
+  PIXON_p(G7,0,0,RGB(0,0,0));
+  PIXON_p(G7,0,239,RGB(0,0,0));
+  PIXON_p(G7,319,0,RGB(0,0,0));
+  PIXON_p(G7,319,239,RGB(0,0,0));
+  TEXTOUT_P("MÉTODOS NUMÉRICOS (Parte 2)",G7,45,1,3,RGB(0,0,0),300);
+  TEXTOUT_P(CHAR({73,78,71,46,32,67,73,86,73,76}),G7,111,21,7,RGB(0,100,255),300);TEXTOUT_P(CHAR({73,78,71,46,32,67,73,86,73,76}),G7,112,22,7,RGB(0,100,255),300);
+  TEXTOUT_P(CHAR({73,78,71,46,32,67,73,86,73,76}),G7,110,20,7,RGB(255,0,0),300);TEXTOUT_P(CHAR({73,78,71,46,32,67,73,86,73,76}),G7,110,20,7,RGB(255,0,0),300);
+  TEXTOUT_P(CHAR({85,46,83,46,70,46,88,46}),G7,136,45,4,RGB(0,100,255),300);
+  TEXTOUT_P(CHAR({85,46,83,46,70,46,88,46}),G7,135,46,4,RGB(255,0,0),300);
+  TEXTOUT_P(CHAR({77,65,84,45,50,48,53}),G7,115,88,7,#1C1C1Ch,300);
+  TEXTOUT_P(CHAR({77,65,84,45,50,48,53}),G7,115,88,7,#FFFFFFh,300);
+  TEXTOUT_P("MÉTODOS NUMÉRICOS",G7,46,63,7,#FFFFFFh,300);  TEXTOUT_P("MÉTODOS NUMÉRICOS",G7,45,62,7,RGB(0,255,100),300);TEXTOUT_P("MÉTODOS NUMÉRICOS",G7,45,62,7,RGB(255,255,255),300);
+  TEXTOUT_P(CHAR({68,69,83,65,82,82,79,76,76,65,68,79,82,32,58}),G7,50,120,2,RGB(255,0,0),300); 
+  TEXTOUT_P(CHAR({77,65,82,73,79,32,67,69,83,71,79,32,83,79,76,73,90}),G7,160,120,2,RGB(255,255,255),300);
+  TEXTOUT_P("Gmail                       :",G7,50,135,1,RGB(255,0,0),300);  TEXTOUT_P("Gmail                       :",G7,50,135,1,RGB(255,0,0),300);
+  TEXTOUT_P(CHAR({109,97,114,105,111,99,115,56,53,53,64,103,109,97,105,108,46,99,111,109}),G7,160,135,1,RGB(255,255,255),300);
+  TEXTOUT_P(CHAR({83,85,67,82,69,45,66,79,76,73,86,73,65}),G7,118,185,2,#FFFFFFh,300);
+  TEXTOUT_P(CHAR({50,48,49,56}),G7,142,200,2,#888888h,300);
+  TEXTOUT_P(CHAR({83,101,32,114,101,115,101,114,118,97,110,32,100,101,114,101,99,104,111,115,32,100,101,108,32,97,117,116,111,114}),G7,85,160,1,#FFFFFFh,300);
+  TEXTOUT_P("©",G7,230,155,3,#FFFFFFh,300);
+  TEXTOUT_P("------------------",G7,87,168,3,#FFFFFFh,300);
+  TEXTOUT_P("continuar  ➫",G7,108,210,5,#FF0040h,200);
+  RECT_P(G7,280,2,314,15,RGB(255,0,0));
+  TEXTOUT_P("✖",G7,291,-5,7,RGB(255,255,255),200);
+  TEXTOUT_P("✖",G7,391,-5,7,RGB(255,255,255),200);
+  BLIT_P(G0,G7);
+  WAIT(-1);
+END;
+
+BLOQUE_CALCULO()
+BEGIN
+  LOCAL MENU;
+    CHOOSE(MENU,"-- MÉTODOS_MUNERICOS_2ºP --",
+    "► Solución de ecuaciones lineales",
+    "► Solución de ecuaciones no lineales",
+    "► Regresiones",
+    "► Interpolaciones",
+    "► Interpolaciones Splines",
+    "► Integraciones numéricas",
+    "► Diferenciación ",
+    "► Ecuaciones diferenciales",
+    "► Atrás");
+    /////////SOLUCIONES DE ECUACIONES LINEALES//////////////
+    IF MENU == 1 THEN
+      LOCAL A,B,x,j;
+      INPUT({{x,[0],{30,20,1}}},"SOLUCION DE ECUACIONES LINEALES","xn: ","Introduzca la cantidad de variables");
+      A:=MAKEMAT(0,x,x+1);
+      LOCAL i,etiq:={};
+      FOR i FROM 1 TO x DO
+        etiq(i):="a"+i;
+      END;
+      etiq(x+1):="b";
+      etiq(x+2):="";
+      LOCAL etiq_row:={};
+      FOR i FROM 1 TO x DO
+        etiq_row(i):=""+i;
+      END;
+      etiq_row(x+1):="";
+      EDITMAT(A,{"MATRIZ DE COEFICIENTES",etiq_row,etiq});
+      B:=RREF(A);
+      PRINT();
+      PRINT("==== SOLUCIÓN DE ECUACIONES LINEALES ====");
+      PRINT("LA MATRIZ AUMENTADA  ES:");
+      PRINT(A);
+      PRINT("LA SOLUCIÓN DEL SISTEMA DE ECUACIONES ES:");
+      FOR j FROM 1 TO x DO
+        PRINT("a"+(j)+" = "+B(j,x+1));
+      END;
+      WAIT();
+    END; 
+    //========ECUACONES NO LINEALES NEWTON RAPSON==========
+    IF MENU ==2 THEN
+      LOCAL jcb,x0,y0,ec1,ec2,i,iter;
+      LOCAL dx1,dy1,dx2,dy2;
+      LOCAL fu,fv,tab,xi,yi;
+      INPUT({{ec1,[8],{30,50,1}},{ec2,[8],{30,50,2}},{x0,[0],{30,20,3}},{y0,[0],{30,20,4}}},"NEWTON RAPSON",{"f(x,y): ","g(x,y): ","x0: ","y0: "},{"Ingrese la ecuación 1","Ingrese la ecuación 2","Ingrese x0","Ingrese y0"});
+      tab:=MAKEMAT(0,100,9);
+      iter:=1;
+      REPEAT
+        X:=x0;
+        Y:=y0;
+        fu:=EVAL(ec1);
+        fv:=EVAL(ec2);
+        dx1:=CAS.diff(ec1,X);
+        dx1:=EVAL(dx1);
+        dy1:=CAS.diff(ec1,Y);
+        dy1:=EVAL(dy1);
+        dx2:=CAS.diff(ec2,X);
+        dx2:=EVAL(dx2);
+        dy2:=CAS.diff(ec2,Y);
+        dy2:=EVAL(dy2);
+        jcb:=(dy2*dx1)-(dy1*dx2);
+        xi:=x0-((fu*dy2-fv*dy1)/jcb);
+        yi:=y0-((fv*dx1-fu*dx2)/jcb);
+        //tab(iter,1):=iter;
+        tab(iter,1):=x0;
+        tab(iter,2):=y0;
+        tab(iter,3):=fu;
+        tab(iter,4):=fv;
+        tab(iter,5):=dx1;
+        tab(iter,6):=dy1;
+        tab(iter,7):=dx2;
+        tab(iter,8):=dy2;
+        tab(iter,9):=jcb;
+        x0:=xi;
+        y0:=yi;
+        iter:=iter+1;
+        //MSGBOX(iter);
+        //MSGBOX("fu:="+fu);
+        // MSGBOX("FV:="+fv);
+      UNTIL ROUND(fu,6)==0 AND ROUND(fv,6)==0;
+      //MSGBOX(iter);
+      LOCAL i,etiq:={},iet;
+      FOR iet FROM 0 TO 50 DO
+        etiq(0):=""+STRING(ROUND(iet,0),1);
+      END;
+      MSGBOX("LA MATRIZ JACOBIANA \nSE MOSTRARA DE LA SIGUIENTE FORMA:\n           |ɚu/ɚx  ɚu/ɚy| \n J:=     |ɚv/ɚx  ɚv/ɚy|  ");
+      
+      EDITMAT(tab,{"ITERACCIONES",etiq,{"xi","yi","fu","fv","ɚu/ɚx","ɚu/ɚy","ɚv/ɚx","ɚv/ɚy","jacb"}});
+      WAIT();
+    END;
+    //==============REGRESIONES====================
+    IF MENU == 3 THEN
+      LOCAL MENU2;
+      
+      CHOOSE(MENU2,"REGRESIONES",
+      " Regresón Lineal",
+      " Regresión Polinómica",
+      " Regresión Múltiple",
+      " Regresión General");
+      ///////////////////REGRESION LINEAL///////////////
+      IF MENU2 == 1 THEN
+        LOCAL xy,i,ms,k,l,a0,a1,xeval;
+        INPUT({{i,[0],{30,20,1}},{xeval,[0],{30,20,2}}},"ENTRADA DE DATOS",{"i: ","x_eval: "},{"Intruduzca la cantidad de puntos","Valor a evaluar"});
+        xy:=MAKEMAT(0,i,2);
+        ms:=MAKEMAT(0,i+1,5);
+        EDITMAT(xy,{"ENTRADA DE DATOS",{"1"},{"X","Y",""}});
+        FOR k FROM 1 TO i DO
+          FOR l FROM 1 TO 2 DO
+            ms(k,l):=xy(k,l);
+          END;
+        END;
+        FOR k FROM 1 TO i DO
+          ms(k,3):=(xy(k,1))^2;
+          ms(k,4):=xy(k,1)*xy(k,2);
+          ms(k,5):=(xy(k,2))^2;
+        END;
+        FOR k FROM 1 TO 5 DO
+          FOR l FROM 1 TO i DO
+            ms(i+1,k):=ms(l,k)+ms(i+1,k);
+          END;
+        END;
+        LOCAL abc_,etiq_col:={},etiq_fil:={};
+        FOR abc_ FROM 1 TO i DO
+          etiq_fil(abc_):=""+abc_;
+        END;
+        etiq_fil(i+1):="Σ==";
+        etiq_fil(i+2):="";
+        EDITMAT(ms,{"TABLA DE CALCULOS",etiq_fil,{"X","Y","X^2","X*Y","Y^2",""}});
+        a1:=((i*ms(i+1,4))-(ms(i+1,1)*ms(i+1,2)))/((i*ms(i+1,3))-(ms(i+1,1))^2);
+        a0:=(ms(i+1,2)/i)-a1*(ms(i+1,1)/i);
+        PRINT();
+        PRINT("============== RESULTADOS ==============");
+        PRINT("n:="+i);
+        PRINT("Σ(X):="+ms(i+1,1));
+        PRINT("Σ(Y):="+ms(i+1,2));
+        PRINT("Σ(X^2):="+ms(i+1,3));
+        PRINT("Σ(X*Y):="+ms(i+1,4));
+        PRINT("Σ(Y^2):="+ms(i+1,5));
+        PRINT("a0:=="+a0);
+        PRINT("a1:=="+a1);
+        PRINT("Y("+xeval+"):  "+a0+"  "+a1+"*x");
+        PRINT("Y("+xeval+"):="+(a0+a1*xeval));
+        WAIT();
+      END;
+      
+      ///////////////////REGRESION POLINOMICA///////////////
+      IF MENU2 == 2 THEN
+        LOCAL CALC,n,i,X_Y,j,k,l;
+        LOCAL xn,yxn,mz,my,ma,evaluar;
+        LOCAL n_eval,x_eval,x_evals,etiq_eval:={},polinomio:="";
+        INPUT({{i,[0],{30,20,1}},{n,[0],{30,20,2}},{evaluar,0,{30,20,3}}},"ENTRADA DE DATOS",{"i: ","n: ","Evaluar ? "},{"Ingrese la cantidad de datos que quiere ajustar","Grado de polinomio a ajustar","Quiere evaluar algun valor?"});
+        IF evaluar==1 THEN
+          INPUT({{n_eval,[0],{30,20,1}}},"Cant. de valores a evaluar","n_eval: ","Cuántos valores quiere evaluar?");
+        END;
+        X_Y:=MAKEMAT(0,i,2);
+        yxn:=MAKEMAT(0,i+1,n);
+        mz:=MAKEMAT(0,n+1,n+1);
+        my:=MAKEMAT(0,n+1);
+        EDITMAT(X_Y,{"X_Y",{"1"},{"X","Y",""}});
+        IF evaluar==1 THEN
+          FOR k FROM 1 TO n_eval DO
+            etiq_eval(k):="x"+k;
+          END;
+          etiq_eval(n_eval+1):="";
+          x_eval:=MAKEMAT(0,n_eval,1);
+          x_evals:=MAKEMAT(0,n_eval,1);
+          EDITMAT(x_eval,{"VALORES A   EVALUAR",etiq_eval,{"",""}});
+        END;
+        xn:=MAKEMAT(0,i+1,2*n);
+        FOR k from 1 to 2*n DO
+          FOR l FROM 1 TO i DO
+            xn(l,k):=(X_Y(l,1))^(k);
+          END;
+        END;
+        FOR k from 1 to 2*n DO
+          FOR l FROM 1 TO i DO
+            xn(i+1,k):=xn(l,k)+xn(i+1,k);
+          END;
+        END;
+        LOCAL etiq_row:={},etiq_col:={};
+        FOR k FROM 1 TO i DO
+          etiq_row(k):=""+k;
+        END;
+        etiq_row(i+1):="Σ:=";
+        etiq_row(i+2):="";
+        etiq_col(1):="X";
+        FOR k FROM 2 TO 2*n DO
+          etiq_col(k):="X^"+(k);
+        END;
+        etiq_col((2*n)+1):="";
+        EDITMAT(xn,{"TABLA DE CALCULOS DE X^n",etiq_row,etiq_col});
+        FOR k FROM 1 TO n DO
+          FOR l FROM 1 TO i DO
+            yxn(l,k):=X_Y(l,2)*xn(l,k);
+          END;
+        END;
+        FOR k FROM 1 TO n DO
+          FOR l FROM 1 TO i DO
+            yxn(i+1,k):=yxn(l,k)+yxn(i+1,k);
+          END;
+        END;
+        
+        LOCAL etiq_row:={},etiq_col:={};
+        FOR k FROM 1 TO i DO
+          etiq_row(k):=""+k;
+        END;
+        etiq_row(i+1):="Σ:=";
+        etiq_row(i+2):="";
+        FOR k FROM 1 TO n DO
+          etiq_col(k):="X^"+(k)+"*Y";
+        END;
+        etiq_col(n+1):="";
+        EDITMAT(yxn,{"TABLA DE CALCULOS DE X^n*Y",etiq_row,etiq_col});
+        FOR k FROM 1 TO n+1 DO
+          FOR l FROM 2 TO n+1 DO
+            mz(k,l):=xn(i+1,l-1);
+          END;
+        END;
+        mz(1,1):=i;
+        FOR l FROM 2 TO n+1 DO
+          mz(l,n+1):=xn(i+1,l+(n-1));
+        END;
+        FOR k FROM 1 TO n DO
+          FOR l FROM 1 TO n DO
+            mz(k+1,l):=mz(k,l+1);
+          END;
+        END;
+        EDITMAT(mz);
+        FOR k FROM 1 TO n+1 DO
+          FOR l FROM 2 TO n+1 DO
+            my(l):=yxn(i+1,l-1);
+          END;
+        END;
+        FOR l FROM 1 TO i DO
+          my(1):=X_Y(l,2)+my(1);
+        END;
+        ADDCOL(mz,my,n+2);
+        EDITMAT(my);
+        EDITMAT(mz);
+        ma:=RREF(mz);
+        EDITMAT(ma);
+        polinomio:=""+ROUND(ma(1,n+2),6);
+          FOR k FROM 1 TO n DO
+            polinomio:=polinomio+"  "+ROUND(ma(k+1,n+2),6)+"*X^"+k;
+          END;
+        IF evaluar == 1 THEN
+        FOR l FROM 1 TO n_eval DO
+          x_evals(l,1):=ma(1,n+2);
+          FOR k FROM 1 TO n DO
+            x_evals(l,1):=(x_evals(l,1)+ma(k+1,n+2)*(x_eval(l,1)^k));
+          END;
+        END;
+        END;
+        //EDITMAT(x_evals);
+        PRINT();
+        PRINT("============== RESULTADOS ==============");
+        FOR l FROM 1 TO n+1 DO
+          PRINT("a("+(l-1)+") = "+ma(l,n+2));
+        END;
+        PRINT(" ");
+        PRINT("Polinomio:  "+polinomio);
+        IF evaluar == 1 THEN
+        FOR l FROM 1 TO n_eval DO
+          PRINT("Y("+x_eval(l,1)+") = "+x_evals(l,1));
+        END;
+        END;
+        WAIT();
+      END;
+      ////////REGRESION MULTIPLE///////////
+      IF MENU2 == 3 THEN
+        MSGBOX("ESTE PROGRAMA AUN ESTA EL DESARROLLO USE REGRESION GENERAL");
+
+      END;
+      ////////REGRESON GENERAL/////////
+      IF MENU2 == 4 THEN
+        LOCAL MENU21;
+        LOCAL xa,fx,nn,x,y;
+        LOCAL Z,a,Y,i,ad,VZY,SLV;
+        LOCAL XY,j,k,n,Xn,ZZ,ZY,xnn;
+        CHOOSE(MENU21,"SELECCIONE UN METODODO",
+        " Regresión Polinómica",
+        " Regresión Múltiple");
+        /// GENERAL POLINOMICA
+        IF MENU21 == 1 THEN
+          LOCAL m;
+          INPUT({{i,[0],{50,20,1}},{n,[0],{50,20,2}},{x,[0],{50,20,3}}},"ENTRADAD DE DATOS",{"n_datos: ","Grado del polinomio: ","para  x =  "},{"Ingrese la cantidad de datos","Ingrese el grado de polinomio","Ingrese valor a interpolar"});
+          Y:=MAKEMAT(0,i,1);
+          XY:=MAKEMAT(0,i,2);
+          EDITMAT(XY,{"DATOS",{"1"},{"X","Y"}});
+          SLV:=MAKEMAT(0,n+1,n+1);
+          Z:=MAKEMAT(1,i,n+1);
+          nn:=n;
+          ad:=n+1;
+          m:=1;
+          FOR j FROM 2 TO n+1 DO
+            FOR k FROM 1 TO i DO
+              Z(k,j):=(XY(k,1))^m;
+              Y(k,1):=XY(k,2);
+            END;
+            m:=m+1;
+          END;
+          MSGBOX("se mostrara la matriz: Z");
+          EDITMAT(Z);
+          MSGBOX("se mostrara la matriz: Y");
+          EDITMAT(Y);
+          ZZ:=TRN(Z)*Z;
+          ZY:=TRN(Z)*Y;
+          MSGBOX("se mostrara la matriz: Z^T*Z");
+          EDITMAT(ZZ);
+          MSGBOX("se mostrara la matriz1: Z^T*Y");
+          EDITMAT(ZY);
+          VZY:=MAKEMAT(0,ad);
+          FOR k FROM 1 TO ad DO
+            VZY(k):=ZY(k,1);
+          END;
+          ZZ:=ADDCOL(ZZ,VZY,ad+1);
+          MSGBOX("Se mostrara la matriz aumentada del sistema");
+          EDITMAT(ZZ);
+          SLV:=RREF(ZZ);
+          EDITMAT(SLV);
+          PRINT();
+          PRINT("============== RESULTADOS ==============");
+          FOR k FROM 1 TO Xn DO
+            PRINT("Para   x:=="+x);
+          END;
+          PRINT("");
+          FOR k FROM 0 TO ad-1 DO
+            PRINT("a("+k+")="+SLV(k+1,ad+1))
+          END;
+          fx:=0;
+          fx:=SLV(1,ad+1);
+          FOR k FROM 1 TO n DO
+            fx:=fx+SLV(k+1,ad+1)*(x)^(k);
+          END;
+          PRINT("Para   x:="+x+"     Y:= "+fx);
+          WAIT();
+        END;
+        //GENERAL MULTIPLE
+        IF MENU21 == 2 THEN
+          INPUT({{i,[0],{50,20,1}},{Xn,[0],{50,20,2}}},"ENTRADA DE DATOS",{"n_datos: ","n_variables indep. : "},{"Ingrese la cantidad de datos","Ingrese la cantidad de variables independientes"});
+          Y:=MAKEMAT(0,i,1);
+          xa:=2;
+          XY:=MAKEMAT(0,i,Xn+1);
+          Z:=MAKEMAT(1,i,Xn+1);
+          xnn:=MAKEMAT(0,Xn);
+          ad:=Xn+1;
+          nn:=Xn;
+          LOCAL abc_,etiq_col:={},etiq_fil:={},etiq2_fil:={};
+          etiq_col(1):="Y";
+          FOR abc_ FROM 1 TO Xn DO
+            etiq_col(abc_+1):="x"+abc_;
+            etiq2_fil(abc_):="x"+abc_;
+          END;
+          etiq2_fil(Xn+1):=" ";
+          etiq_col(Xn+2):=" ";
+          FOR abc_ FROM 1 TO i DO
+            etiq_fil(abc_):=""+abc_;
+          END;
+          etiq_fil(i+1):=" ";
+          EDITMAT(XY,{"variables dependentes",etiq_fil,etiq_col});
+          EDITMAT(xnn,{"valores a evaluar",etiq2_fil,{" "}});
+          FOR j FROM 1 TO Xn DO
+            FOR k FROM 1 TO i DO
+              Z(k,j+1):=XY(k,j+1);
+              Y(k,1):=XY(k,1);
+            END;
+          END;
+          MSGBOX("se mostrará la matriz1: Z");
+          EDITMAT(Z);
+          MSGBOX("se mostrará la matriz: Y");
+          EDITMAT(Y);
+          ZZ:=TRN(Z)*Z;
+          ZY:=TRN(Z)*Y;
+          MSGBOX("se mostrará la matriz: Z^T*Z");
+          EDITMAT(ZZ);
+          MSGBOX("se mostrará la matriz1: Z^T*Y");
+          EDITMAT(ZY);
+          VZY:=MAKEMAT(0,ad);
+          FOR k FROM 1 TO ad DO
+            VZY(k):=ZY(k,1);
+          END;
+          ZZ:=ADDCOL(ZZ,VZY,ad+1);
+          MSGBOX("Se mostrará la matriz aumentada del sistema");
+          EDITMAT(ZZ);
+          SLV:=RREF(ZZ);
+          EDITMAT(SLV);
+          PRINT();
+          PRINT("============== RESULTADOS ==============");
+          FOR k FROM 1 TO Xn DO
+            PRINT("Para   x"+k+"=="+xnn(k));
+          END;
+          PRINT("");
+          FOR k FROM 0 TO ad-1 DO
+            PRINT("a("+k+")="+SLV(k+1,ad+1))
+          END;
+          PRINT("y:= a0 + a1*x1 + a2*x2 +... an*xn");
+          y:=SLV(1,ad+1);
+          FOR k FROM 1 TO Xn DO
+            y:=y+(xnn(k)*SLV(k+1,ad+1));
+          END;
+          PRINT("y:=="+y);
+          WAIT();
+        END;
+      END;
+      
+    END;
+    //============== INTERPOLACIONES  ===================
+    IF MENU == 4 THEN
+      LOCAL MENU3;
+      CHOOSE(MENU3,"INTERPOLACIOENES",
+      " Interpolación lineal",
+      " Interpolación cuadrática",
+      " Interp. Met. Lagrange");
+      ///////INTERPOLACION LINEAL////
+      IF MENU3 == 1 THEN
+        LOCAL x1,x2,x3,y1,y2,y3,x;
+        LOCAL y;
+        INPUT({
+        {x1,[0],{15,30,1}},
+        {y1,[0],{55,30,1}},
+        {x2,[0],{15,30,2}},
+        {y2,[0],{55,30,2}},
+        {x,[0],{15,30,3}}
+        },"INTERPOLACION LINEAL",{"x1:","y1:","x2:","y2:","Para x:"},{"Valor para x1","Valor para y1","Valor para x2","Vaor para y2","Què valor de 'x' quiere interpolar?"});
+        y:=(((y2-y1)/(x2-x1))*(x-x1))+y1;
+        PRINT();
+        PRINT("============== RESULTADOS ==============");
+        PRINT("Para x:= "+x+"   ====>  y:= "+y);
+        WAIT();
+      END;
+      
+      /////////INTERPOLACION CUADRATICA///////////
+      IF MENU3 == 2 THEN
+        LOCAL x0,x1,x2,fx0,fx1,fx2,fx;
+        LOCAL b0,b1,b2,a0,a1,a2;
+        LOCAL x;
+        INPUT({
+        {x0,[0],{15,30,1}},
+        {fx0,[0],{55,30,1}},
+        {x1,[0],{15,30,2}},
+        {fx1,[0],{55,30,2}},
+        {x2,[0],{15,30,3}},
+        {fx2,[0],{55,30,3}},
+        {x,[0],{30,30,4}}
+        },"INTERPOLACION CUADRATICA",{"x1: ","y1: ","x2: ","y2: ","x3: ","y3: ","x: "},{"Ingrese valor para x1","Ingrese valor para y2","Ingrese valor para x2","Ingrese valor para y2","Ingrese valor para x3","Ingrese valor para y3","Qué valor de 'x' quiere intepolar?"});
+        b0:=fx0;
+        b1:=(fx1-fx0)/(x1-x0);
+        b2:=(((fx2-fx1)/(x2-x1))-b1)/(x2-x0);
+        a0:=b0-(b1*x0)+(b2*x0*x1);
+        a1:=b1-(b2*x0)-(b2*x1);
+        a2:=b2;
+        fx:=a0+(a1*x)+(a2*x^2);
+        PRINT();
+        PRINT("==== RESULTADOS PARA INTERPOLACION CUADRATICA ====");
+        PRINT("b0 = "+b0);
+        PRINT("b1 = "+b1);
+        PRINT("b2 = "+b2);
+        PRINT("a0 = "+a0);
+        PRINT("a1 = "+a1);
+        PRINT("a2 = "+a2);
+        PRINT("f(x) = "+a0+" + "+a1+"x "+a2+"x^2");
+        PRINT("f("+x+") = "+fx);
+        WAIT();
+      END;
+      ////INTERPOLACION DE METODO DE LAGRANGE //////////////
+      IF MENU3 == 3 THEN
+        LOCAL A,B,pol,i,sympol,fx;
+        LOCAL xev,x;
+        INPUT({{i,[0],{30,20,1}},{xev,[0],{30,20,2}}},"INTERPOLACION DE LAGRANGE",{"n_datos: ","para   x = "},{"cuantos datos quiere ingrasar","Valor a evaluar."});
+        A:=MAKEMAT(0,i,2);
+        EDITMAT(A,{"ENTRADA DE DATOS Lagrange",{"1"},{"X","Y"}});
+        B:=TRN(A);
+        pol:=lagrange(B);
+        sympol:=CAS.simplify(pol);
+        x:=xev;
+        fx:=EVAL(sympol);
+        PRINT();
+        PRINT("============== RESULTADOS ==============");
+        PRINT("el polinomio de lagrange es: "+sympol);
+        PRINT("f("+xev+") = "+fx);
+        WAIT();
+      END;
+      
+    END;
+    //=================== INTERPOLACIONES SPLINES===================
+    IF MENU == 5 THEN
+      LOCAL MENU4;
+      CHOOSE(MENU4,"INTERPOLACION SPLINES",
+      "Spline Cuadrática",
+      "Spline Cúbica");
+      ///////////// SPLINE CUADRATICA //////////////////
+      IF MENU4 == 1 THEN
+        LOCAL inmat,mat,n,i,a,b,c;
+        LOCAL fx,MAT,xeval,y;
+        LOCAL k,A,r,s,j;
+        LOCAL mxy,crit1,rn,ik,in,fi,ij;
+        LOCAL crx,cry,crxi,cryi,cryn,crxn,nn;
+        LOCAL crit3;
+        //n:=4;
+        //xeval:=5;
+        INPUT({{n,[0],{20,20,1}},{xeval,[0],{20,20,2}}},"ENTRADA DE DATOS",{"n_datos: ","para  x = "},{"Ingrese la cantidad de datos","Ingrese el valor a evaluar"});
+        nn:=n-1;
+        MAT:=MAKEMAT(0,3*nn,3*nn+1);
+        mxy:=MAKEMAT(0,n,2);
+        //mxy:=[[3,2.5],[4.5,1],[7,2.5],[9,0.5]];
+        EDITMAT(mxy,{"DATOS",{"1"},{"X","Y",""}});
+        crit1:=MAKEMAT(0,n-2,3);
+        crit3:=MAKEMAT(0,2,3);
+        b:=MAKEMAT(0,n);
+        c:=MAKEMAT(0,n);
+        // criterio 1 (2*n-2) ec.
+        fi:=2*n-2;
+        i:=1;
+        ik:=1;
+        j:=1;
+        ij:=2;
+        FOR ik FROM 1 TO (2*nn-2)/2 DO
+          MAT(i,j):=mxy(ij,1)^2;
+          MAT(i,j+1):=mxy(ij,1);
+          MAT(i,j+2):=1;
+          MAT(i,3*nn+1):=mxy(ij,2);
+          MAT(i+1,j+3):=mxy(ij,1)^2;
+          MAT(i+1,j+4):=mxy(ij,1);
+          MAT(i+1,j+5):=1;
+          MAT(i+1,3*nn+1):=mxy(ij,2);
+          j:=j+3;
+          i:=i+2;
+          ij:=ij+1;
+        END;
+        // EDITMAT(MAT);
+        // criterio (2) ec.
+        MAT(2*nn-1,1):=(mxy(1,1))^2;
+        MAT(2*nn-1,2):=(mxy(1,1));
+        MAT(2*nn-1,3):=1;
+        MAT(2*nn-1,3*nn+1):=mxy(1,2);
+        MAT(2*nn,3*nn-2):=(mxy(n,1))^2;
+        MAT(2*nn,3*nn-1):=(mxy(n ,1));
+        MAT(2*nn,3*nn):=1;
+        MAT(2*nn,3*nn+1):=mxy(n,2);
+        // criterio 3 (n-1) ec.;
+        i:=2*nn+1;
+        j:=1;
+        ij:=2;
+        FOR ik FROM 1 TO nn-1 DO
+          MAT(i,j):=mxy(ij,1)*2;
+          MAT(i,j+1):=1;
+          MAT(i,j+3):=-mxy(ij,1)*2;
+          MAT(i,j+4):=-1;
+          j:=j+3;
+          i:=i+1;
+          ij:=ij+1;
+        END;
+        MAT:=DELCOL(MAT,1);
+        MAT:=DELROW(MAT,3*nn);
+        ij:=1;
+        LOCAL etiq:={};
+        FOR i FROM 1 TO 3*nn/3 DO
+          etiq(ij):="a"+i;
+          etiq(ij+1):="b"+i;
+          etiq(ij+2):="c"+i;
+          ij:=ij+3;
+        END;
+        EDITMAT(MAT);
+        MAT:=RREF(MAT);
+        EDITMAT(MAT);
+        PRINT();
+        PRINT("=============== RESULTADOS =============");
+        PRINT(etiq(1)+" = 0");
+        FOR i FROM 2 TO nn*3 DO
+          PRINT(etiq(i)+" = "+MAT(i-1,3*nn));
+        END;
+        PRINT(" ");
+        j:=1;
+        FOR i FROM 1 TO nn DO
+          IF mxy(i,1)<xeval<mxy(i+1,1) THEN
+            PRINT("y = "+MAT(j,3*nn)+"*x^2  "+MAT(j+1,3*nn)+"*x  "+MAT(j+2,3*nn));
+            y:=MAT(j,3*nn)*(xeval^2)+MAT(j+1,3*nn)*(xeval)+MAT(j+2,3*nn);
+          END;
+          j:=j+2;
+        END;
+        PRINT("y("+xeval+") = "+y);
+        PRINT("Presione 'On' para ver mas resultados");
+        WAIT();        
+      END;
+      
+      //////// SPLINE CUBICO //////////
+      IF MENU4 == 2 THEN
+        LOCAL n,i,a,b,c,xeval,ec;
+        LOCAL fx,MAT;
+        LOCAL k,A,r,s,j,y;
+        LOCAL mxy,crit1,rn,ik,in,fi,ij;
+        LOCAL crx,cry,crxi,cryi,cryn,crxn,nn;
+        LOCAL crit3;
+        //n:=6;
+        //xeval:=2.5;
+        INPUT({{n,[0],{20,20,1}},{xeval,[0],{20,20,2}}},"ENTRADA DE DATOS",{"n_datos: ","x_eval: "},{"Ingrese la cantidad de datos","Ingrese el valor a evaluar"});
+        nn:=n-1;
+        MAT:=MAKEMAT(0,4*nn,4*nn+1);
+        mxy:=MAKEMAT(0,n,2);
+        //mxy:=[[1,9],[2,22],[3,16],[7,20],[9,25],[10,27]];
+        EDITMAT(mxy,{"DATOS",{"1"},{"X","Y",""}});
+        crit1:=MAKEMAT(0,n-2,3);
+        crit3:=MAKEMAT(0,2,3);
+        b:=MAKEMAT(0,n);
+        c:=MAKEMAT(0,n);
+        // criterio 1 (2*n-2) ec.
+        fi:=2*n-2;
+        i:=1;
+        ik:=1;
+        j:=1;
+        ij:=2;
+        FOR ik FROM 1 TO (2*nn-2)/2 DO
+          MAT(i,j):=mxy(ij,1)^3;
+          MAT(i,j+1):=mxy(ij,1)^2;
+          MAT(i,j+2):=mxy(ij,1);
+          MAT(i,j+3):=1;
+          MAT(i,4*nn+1):=mxy(ij,2);
+          MAT(i+1,j+4):=mxy(ij,1)^3;
+          MAT(i+1,j+5):=mxy(ij,1)^2;
+          MAT(i+1,j+6):=mxy(ij,1);
+          MAT(i+1,j+7):=1;
+          MAT(i+1,4*nn+1):=mxy(ij,2);
+          j:=j+4;
+          i:=i+2;
+          ij:=ij+1;
+        END;
+        // criterio (2) ec.
+        MAT(2*nn-1,1):=(mxy(1,1))^3;
+        MAT(2*nn-1,2):=(mxy(1,1))^2;
+        MAT(2*nn-1,3):=(mxy(1,1));
+        MAT(2*nn-1,4):=1;
+        MAT(2*nn-1,4*nn+1):=mxy(1,2);
+        MAT(2*nn,4*nn-3):=(mxy(n,1))^3;
+        MAT(2*nn,4*nn-2):=(mxy(n,1))^2;
+        MAT(2*nn,4*nn-1):=(mxy(n ,1));
+        MAT(2*nn,4*nn):=1;
+        MAT(2*nn,4*nn+1):=mxy(n,2);
+        // criterio 3 (n-1) ec.;
+        i:=2*nn+1;
+        j:=1;
+        ij:=2;
+        FOR ik FROM 1 TO nn-1 DO
+          MAT(i,j):=3*(mxy(ij,1)^2);
+          MAT(i,j+1):=mxy(ij,1)*2;
+          MAT(i,j+2):=1;
+          MAT(i,j+4):=-3*(mxy(ij,1)^2);
+          MAT(i,j+5):=-mxy(ij,1)*2;
+          MAT(i,j+6):=-1;
+          j:=j+4;
+          i:=i+1;
+          ij:=ij+1;
+        END;
+        // criterio 3 (n-1) ec.;
+        i:=(2*nn+1)+(nn-1);
+        j:=1;
+        ij:=2;
+        FOR ik FROM 1 TO nn-1 DO
+          MAT(i,j):=6*mxy(ij,1);
+          MAT(i,j+1):=2;
+          MAT(i,j+4):=-6*mxy(ij,1);
+          MAT(i,j+5):=-2;
+          j:=j+4;
+          i:=i+1;
+          ij:=ij+1;
+        END;
+        EDITMAT(MAT);
+        MAT(4*nn-1,1):=6*mxy(1,1);
+        MAT(4*nn-1,2):=2;
+        MAT(4*nn,4*nn-3):=6*mxy(n,1);
+        MAT(4*nn,4*nn-2):=2;
+        MAT:=RREF(MAT);
+        EDITMAT(MAT);
+        ij:=1;
+        LOCAL etiq:={};
+        FOR i FROM 1 TO 4*nn/4 DO
+          etiq(ij):="a"+i;
+          etiq(ij+1):="b"+i;
+          etiq(ij+2):="c"+i;
+          etiq(ij+3):="d"+i;
+          ij:=ij+4;
+        END;
+        PRINT();
+        PRINT("=============== RESULTADOS =============");
+        FOR i FROM 1 TO nn*4 DO
+          PRINT(etiq(i)+" = "+MAT(i,4*nn+1));
+        END;
+        PRINT(" ");
+        j:=1;
+        FOR i FROM 1 TO nn DO
+          IF mxy(i,1)<xeval<mxy(i+1,1) THEN
+            PRINT("y = "+MAT(j,4*nn+1)+"*x^3 "+MAT(j+1,4*nn+1)+"*x^2 "+MAT(j+2,4*nn+1)+"*x "+MAT(j+3,4*nn+1));
+            y:=MAT(j,4*nn+1)*(xeval^3)+MAT(j+1,4*nn+1)*(xeval^2)+MAT(j+2,4*nn+1)*(xeval)+MAT(j+3,4*nn+1);
+          END;
+          j:=j+4;
+        END;
+        PRINT("y("+xeval+") = "+y);
+        PRINT("Presione 'On' para ver mas resultados");
+        //BREAK(1);
+        WAIT();       
+      END;
+      
+    END;
+    ///============ INTEGRACIONES NUMERICAS ===================
+    IF MENU == 6 THEN
+      LOCAL MENU5;
+      CHOOSE(MENU5,"INTEGRACIONES",
+      "Método de los trapecios",
+      "Método de los trapecios múltiple",
+      "Método de Simpson 1/3",
+      "Método de Simpson 3/8",
+      "Cuadratura de Gauss",
+      "Integracion de Romberg");
+      
+      ///////METODO DE LOS TRAPECIOS/////////
+      IF MENU5 == 1 THEN
+        LOCAL fx,x0,x1,Ah,n,cont1,cont2;
+        LOCAL fx0,fx1,fxr,fxrt;
+        INPUT({{fx,[8],{30,50,1}},{x0,[0],{30,20,2}},{x1,[0],{30,20,3}}},"ENTRADA DE DATOS",{"f(x): ","a: ","b: "},{"Ingrese la funcion a integrar","Limite inferior","Limte superior"});
+        Ah:=(x1-x0)/2;
+        X:=x0+Ah;
+        X:=x0;
+        fx0:=EVAL(fx);
+        X:=x1;
+        fx1:=EVAL(fx);
+        fxrt:=Ah*(fx0+fx1);
+        PRINT();
+        PRINT("==== RESULTADOS PARA MET. TRAPECIOS ====");
+        PRINT("∫(fx)dx = "+fxrt);
+        WAIT;
+      END;
+      
+      ///////METODO DE LOS TRAPECIOS MULTIPLE/////////
+      IF MENU5 == 2 THEN
+        LOCAL fx,x0,x1,Ah,n,cont1,cont2;
+        LOCAL fx0,fx1,fxr,fxrt;
+        INPUT({{fx,[8],{30,50,1}},{x0,[0],{30,20,2}},{x1,[0],{30,20,3}},{n,[0],{30,20,4}}},"ENTRADA DE DATOS",{"f(x): ","a: ","b: ","n: "},{"Ingrese la funcion a integrar","Limite inferior","Limte superior","Numero de segmentos (debe ser par)"});
+        Ah:=(x1-x0)/n;
+        X:=x0+Ah;
+        REPEAT
+          fxr:=EVAL(fx)+fxr;
+          X:=X+Ah;
+        UNTIL CAS.ROUND(X,6)==x1;
+        X:=x0;
+        fx0:=EVAL(fx);
+        X:=x1;
+        fx1:=EVAL(fx);
+        fxrt:=Ah*(fx0+2*fxr+fx1)/2;
+        PRINT();
+        PRINT("==== RESULTADOS PARA MET. TRAPECIOS ====");
+        PRINT("∫(fx)dx = "+fxrt);
+        WAIT;
+      END;
+      ////////METODO DE SIMPSON 1/3 //////////
+      IF MENU5 == 3 THEN
+        LOCAL xa,xb,fx,Ah,n;
+        LOCAL par,fxa,fxb,impar,fxrt;
+        LOCAL i,n;
+        INPUT({{fx,[8],{30,50,1}},{xa,[0],{30,20,2}},{xb,[0],{30,20,3}},{n,[0],{30,20,4}}},"ENTRADA DE DATOS",{"f(x): ","a: ","b: ","n: "},{"Ingrese la funcion a integrar","Limite inferior","Limte superior","Numero de segmentos (debe ser par)"});
+        Ah:=(xb-xa)/n;
+        X:=xa+Ah;
+        REPEAT
+          par:=EVAL(fx)+par;
+          X:=X+2*Ah;
+        UNTIL X==xb+Ah;
+        X:=xa+2*Ah;
+        REPEAT
+          impar:=EVAL(fx)+impar;
+          X:=X+2*Ah;
+        UNTIL X == xb;
+        X:=xa;
+        fxa:=EVAL(fx);
+        X:=xb;
+        fxb:=EVAL(fx);
+        fxrt:=Ah*(fxa+4*par+2*impar+fxb)/3;
+        PRINT();
+        PRINT("");
+        PRINT("== RESULTADOS PARA METODO DE SIMPSON ===");
+        PRINT("");
+        PRINT("∫( "+fx+" )dx  "+xa+" to "+xb);
+        PRINT("∫(fx)dx = "+fxrt);
+        WAIT();
+      END;
+      ///////METODO DE SIMPSON 3/8 //////////
+      IF MENU5 == 4 THEN
+        LOCAL xa,xb,fx,Ah,n;
+        LOCAL par,fxa,fxb,impar,fxrt;
+        LOCAL i,n,ms,summ3,sumnm3,mult3;
+        INPUT({{fx,[8],{30,50,1}},{xa,[0],{30,20,2}},{xb,[0],{30,20,3}},{n,[0],{30,20,4}}},"ENTRADA DE DATOS",{"f(x): ","a: ","b: ","n: "},{"Ingrese la funcion a integrar","Limite inferior","Limte superior","Ingrese el numero de segmentos"});
+        ms:=MAKEMAT(0,n+1,3);
+        Ah:=(xb-xa)/n;
+        ms(1,1):=xa;
+        X:=ms(1,1);
+        ms(1,2):=EVAL(fx);
+        FOR i FROM 2 TO n+1 DO
+          ms(i,1):=ms(i-1,1)+Ah;
+          X:=ms(i,1);
+          ms(i,2):=EVAL(fx);
+        END;
+        FOR i FROM 2 TO n DO
+          mult3:=(i-1)MOD(3);
+          IF mult3 == 0 THEN
+            summ3:=ms(i,2)+summ3;
+            ELSE
+            sumnm3:=ms(i,2)+sumnm3;
+          END;
+        END;
+        LOCAL etiq:={},iet,vl2,t;
+        FOR iet FROM 0 TO n+1 DO
+          etiq(0):=""+STRING(ROUND(iet,0),1);
+        END;
+        //EDITMAT(ms,{"TABLA DE ITERACCIONES",etiq,{"X","Y","SUM"}});
+        X:=xa+Ah;
+        X:=xa;
+        fxa:=EVAL(fx);
+        X:=xb;
+        fxb:=EVAL(fx);
+        fxrt:=(3*Ah*(fxa+2*summ3+3*sumnm3+fxb))/8;
+        PRINT();
+        PRINT("===== RESULTADOS PARA SIMPSON 3/8 ======");
+        PRINT("Σ multiplos de 3:="+summ3);
+        PRINT("Σ no multiplos de 3:="+sumnm3);
+        PRINT("∫(fx)dx = "+fxrt);
+        WAIT();
+      END;
+      //========CUADRATURA DE GAUSS================
+      IF MENU5 == 5 THEN
+        MSGBOX("PROGRAMA EN DESARROLLO");
+        LOCAL fx,a,b,xd,inte,f1,f2;
+        LOCAL x,dx,dxt,xt,text;
+        // fx:=CAS(CAS("fx"));
+        //MSGBOX("ingrese la funcion con X entre parentesis ej. (X)^2+2(X)");
+        //INPUT({{fx,[-1]},a,b});
+      END;
+      //////////INTEGRACION DE ROMBERG////////////
+      //----------FORMULARIO-------------!
+      // I == (4/3)*I(h1)-(1/3)*I(h2)    !
+      // donde h1 == (b-a)/n             !
+      //       h2 ==h1/2                 !
+      //---------------------------------!
+      IF MENU5 == 6 THEN
+        //MSGBOX("seleccione el metodo con el que quiere integrar");
+        LOCAL MENU51;
+        CHOOSE (MENU51,"INTEGRACION DE ROMBERG",
+        "Por trapecios",
+        "Por simpson 1/3",
+        "Por simpson 3/8");
+        ///////METODO DE LOS TRAPECIOS MULTIPLE/////////
+        IF MENU51 == 1 THEN
+          LOCAL fx,n,cont1,cont2;
+          LOCAL fa,fb,fxr,fxr2,fxrt;
+          LOCAL h1,h2,Ih1,Ih2,a,b,IR;
+          INPUT({{fx,[8],{30,50,1}},{a,[0],{30,20,2}},{b,[0],{30,20,3}},{n,[0],{30,20,4}}},"ENTRADA DE DATOS",{"f(x): ","a: ","b: ","n: "},{"Ingrese la funcion a integrar","Limite inferior","Limte superior","Numero de segmentos (debe ser par)"});
+          h1:=(b-a)/n;
+          //primera àrte
+          X:=a+h1;
+          REPEAT
+            fxr:=EVAL(fx)+fxr;
+            X:=X+h1;
+          UNTIL CAS.ROUND(X,6)==b;
+          X:=a;
+          fa:=EVAL(fx);
+          X:=b;
+          fb:=EVAL(fx);
+          Ih1:=h1*(fa+2*fxr+fb)/2;
+          //segunda parte
+          h2:=h1/2;
+          X:=a+h2;
+          REPEAT
+            fxr2:=EVAL(fx)+fxr2;
+            X:=X+h2;
+          UNTIL CAS.ROUND(X,6)==b;
+          Ih2:=h2*(fa+2*fxr2+fb)/2;
+          IR:= (4/3)*Ih2-(1/3)*Ih1;
+          PRINT();
+          PRINT("== RESULTADOS PARA MÉTODO DE ROMBERG ===");
+          PRINT("∫("+fx+")dx   desde x="+a+"   hasta x="+b);
+          PRINT("I:= (4/3)*I(h2)-(1/3)*I(h1)");
+          PRINT("h1:= "+h1);
+          PRINT("Ih1:= "+Ih1);
+          PRINT("h2:= "+h2);
+          PRINT("Ih2:= "+Ih2);
+          PRINT("I:= (4/3)*"+Ih2+"-(1/3)*"+Ih1);
+          PRINT("I:= "+(4/3)*Ih2+"-"+(1/3)*Ih1);
+          PRINT("I:= "+IR);
+          WAIT();
+        END;
+        ////////METODO DE SIMPSON 1/3 //////////
+        IF MENU51 == 2 THEN
+          LOCAL a,b,fx,h1,h2,Ih1,Ih2,n;
+          LOCAL par,fa,fb,impar,fxrt;
+          LOCAL IR,i,n;
+          INPUT({{fx,[8],{30,50,1}},{a,[0],{30,20,2}},{b,[0],{30,20,3}},{n,[0],{30,20,4}}},"ENTRADA DE DATOS",{"f(x): ","a: ","b: ","n: "},{"Ingrese la funcion a integrar","Limite inferior","Limte superior","Numero de segmentos (debe ser par)"});
+          h1:=(b-a)/n;
+          //primera parte
+          X:=a+h1;
+          REPEAT
+            par:=EVAL(fx)+par;
+            X:=X+2*h1;
+          UNTIL X==b+h1;
+          X:=a+2*h1;
+          REPEAT
+            impar:=EVAL(fx)+impar;
+            X:=X+2*h1;
+          UNTIL X == b;
+          X:=a;
+          fa:=EVAL(fx);
+          X:=b;
+          fb:=EVAL(fx);
+          Ih1:=h1*(fa+4*par+2*impar+fb)/3;
+          //segunda parte
+          h2:=h1/2;
+          X:=a+h2;
+          par:=0;
+          impar:=0;
+          REPEAT
+            par:=EVAL(fx)+par;
+            X:=X+2*h2;
+          UNTIL X==b+h2;
+          X:=a+2*h2;
+          REPEAT
+            impar:=EVAL(fx)+impar;
+            X:=X+2*h2;
+          UNTIL X == b;
+          X:=a;
+          fa:=EVAL(fx);
+          X:=b;
+          fb:=EVAL(fx);
+          Ih2:=h2*(fa+4*par+2*impar+fb)/3;
+          IR:= (4/3)*Ih2-(1/3)*Ih1;
+          PRINT();
+          PRINT("== RESULTADOS PARA MÉTODO DE ROMBERG ===");
+          PRINT("∫("+fx+")dx   desde x="+a+"   hasta x="+b);
+          PRINT("I:= (4/3)*I(h2)-(1/3)*I(h1)");
+          PRINT("h1:= "+h1);
+          PRINT("Ih1:= "+Ih1);
+          PRINT("h2:= "+h2);
+          PRINT("Ih2:= "+Ih2);
+          PRINT("I:= (4/3)*"+Ih2+"-(1/3)*"+Ih1);
+          PRINT("I:= "+(4/3)*Ih2+"-"+(1/3)*Ih1);
+          PRINT("I:= "+IR);
+          WAIT();
+        END;
+        ///////POR METODO DE SIMPSON 3/8 //////////
+        IF MENU51 == 3 THEN
+          LOCAL xa,xb,fx,Ah,n;
+          LOCAL par,fxa,fxb,impar,fxrt;
+          LOCAL i,n,ms,summ3,sumnm3,mult3;
+          LOCAL h1,h2,Ih1,Ih2,IR;
+          INPUT({{fx,[8],{30,50,1}},{xa,[0],{30,20,2}},{xb,[0],{30,20,3}},{n,[0],{30,20,4}}},"ENTRADA DE DATOS",{"f(x): ","a: ","b: ","n: "},{"Ingrese la funcion a integrar","Limite inferior","Limte superior","Ingrese el numero de segmentos"});
+          ms:=MAKEMAT(0,n+1,3);
+          // primera parte
+          h1:=(xb-xa)/n;
+          ms(1,1):=xa;
+          X:=ms(1,1);
+          ms(1,2):=EVAL(fx);
+          FOR i FROM 2 TO n+1 DO
+            ms(i,1):=ms(i-1,1)+h1;
+            X:=ms(i,1);
+            ms(i,2):=EVAL(fx);
+          END;
+          FOR i FROM 2 TO n DO
+            mult3:=(i-1)MOD(3);
+            IF mult3 == 0 THEN
+              summ3:=ms(i,2)+summ3;
+              ELSE
+              sumnm3:=ms(i,2)+sumnm3;
+            END;
+          END;
+          LOCAL etiq:={},iet,vl2,t;
+          FOR iet FROM 0 TO n+1 DO
+            etiq(0):=""+STRING(ROUND(iet,0),1);
+          END;
+          //EDITMAT(ms,{"TABLA DE ITERACIONES",etiq,{"X","Y","SUM"}});
+          X:=xa+h1;
+          X:=xa;
+          fxa:=EVAL(fx);
+          X:=xb;
+          fxb:=EVAL(fx);
+          Ih1:=(3*Ah*(fxa+2*summ3+3*sumnm3+fxb))/8;
+          //segunda parte
+          h2:=h1/2;
+          ms(1,1):=xa;
+          X:=ms(1,1);
+          ms(1,2):=EVAL(fx);
+          FOR i FROM 2 TO n+1 DO
+            ms(i,1):=ms(i-1,1)+h2;
+            X:=ms(i,1);
+            ms(i,2):=EVAL(fx);
+          END;
+          FOR i FROM 2 TO n DO
+            mult3:=(i-1)MOD(3);
+            IF mult3 == 0 THEN
+              summ3:=ms(i,2)+summ3;
+              ELSE
+              sumnm3:=ms(i,2)+sumnm3;
+            END;
+          END;
+          LOCAL etiq:={},iet,vl2,t;
+          FOR iet FROM 0 TO n+1 DO
+            etiq(0):=""+STRING(ROUND(iet,0),1);
+          END;
+          //EDITMAT(ms,{"TABLA DE ITERACIONES",etiq,{"X","Y","SUM"}});
+          X:=xa+h2;
+          X:=xa;
+          fxa:=EVAL(fx);
+          X:=xb;
+          fxb:=EVAL(fx);
+          Ih2:=(3*Ah*(fxa+2*summ3+3*sumnm3+fxb))/8;
+          IR:= (4/3)*Ih2-(1/3)*Ih1;
+          PRINT();
+          PRINT("== RESULTADOS PARA MÉTODO DE ROMBERG ===");
+          PRINT("∫("+fx+")dx   desde x="+xa+"   hasta x="+xb);
+          PRINT("I:= (4/3)*I(h2)-(1/3)*I(h1)");
+          PRINT("h1:= "+h1);
+          PRINT("Ih1:= "+Ih1);
+          PRINT("h2:= "+h2);
+          PRINT("Ih2:= "+Ih2);
+          PRINT("I:= (4/3)*"+Ih2+"-(1/3)*"+Ih1);
+          PRINT("I:= "+(4/3)*Ih2+"-"+(1/3)*Ih1);
+          PRINT("I:= "+IR);
+          WAIT();
+        END;
+      END;
+      
+    END;
+    //========DIFERENCIACIÓN ==========================
+    ///////EXTRAPOLACION DE RICHARSON//////////
+    IF MENU ==7 THEN
+      LOCAL MENU71;
+      CHOOSE(MENU71,"EXTRAPOLACION DE RICHARSON","Con formula de alta presicion 1","Con formula de alta presicion 2");
+      //Con formulas de alta presicion 1
+      IF MENU71 == 1 THEN
+        LOCAL fx,h,x0,x1,x3,h2,D1,D2;
+        LOCAL fx1,fx2,x2,d1x1,d1x0,d2x1;
+        INPUT({{fx,[8],{30,50,1}},{x0,[0],{30,20,2}},{h,[0],{30,20,3}}},"ENTRADA DE DATOS",{"fx: ","x0: ","h: "},{"Ingrese la funcion.","valor para x0.","valor para h."});
+        h2:=h/2;
+        x1:=x0+h2;
+        x2:=x1+h2;
+        x3:=x2+h;
+        X:=x1;
+        d1x1:=EVAL(fx);
+        X:=x0;
+        d1x0:=EVAL(fx);
+        X:=x2;
+        d2x1:=EVAL(fx);
+        D2:=(d1x1-d1x0)/(h2);
+        D1:=(d2x1-d1x0)/(h);
+        D:=(4/3)*D2-(1/3)*D1;
+        PRINT();
+        PRINT("=== RESULTADOS PARA LA EXTAPOLACION ====");
+        PRINT("========  DE RICHARSON SON:  ===========");
+        PRINT("D(h2):=="+D2);
+        PRINT("D(h1):=="+D1);
+        PRINT("D:==    "+D);
+        WAIT(-1);
+      END;
+      //Con formulas de alta presicion 2
+      IF MENU71 == 2 THEN
+        LOCAL fx,h,x0,x3,x2,x1,h2;
+        LOCAL D2,D1,d1x2,d1x1,d1x0;
+        LOCAL d2x2,d2x1,d2x0;
+        INPUT({{fx,[8],{30,50,1}},{x0,[0],{30,20,2}},{h,[0],{30,20,3}}},"ENTRADA DE DATOS",{"fx: ","x0: ","h: "},{"Ingrese la funcion.","valor para x0.","valor para h."});
+        h2:=h/2;
+        x1:=x0+h2;
+        x2:=x1+h2;
+        x3:=x2+h;
+        X:=x2;
+        d1x2:=EVAL(fx);
+        X:=x1;
+        d1x1:=EVAL(fx);
+        X:=x0;
+        d1x0:=EVAL(fx);
+        D1:=(-d1x2+(4*d1x1)-(3*d1x0))/(2*h2);
+        X:=x3;
+        d2x2:=EVAL(fx);
+        D2:=(-d2x2+(4*d1x2)-(3*d1x0))/(2*h);
+        D:=(4/3)*D1-(1/3)*D2;
+        PRINT();
+        PRINT("=== RESULTADOS PARA LA EXTAPOLACION ====");
+        PRINT("========  DE RICHARSON SON:  ===========");
+        PRINT("D(h2):=="+D1);
+        PRINT("D(h1):=="+D2);
+        PRINT("D == 4/3*D(h2)-1/3*D(h1)");
+        PRINT("D:==    "+D);
+        WAIT();
+      END;
+      
+    END;
+    //============ECUACIONES DIFERENCIALES=============
+    IF MENU == 8 THEN
+      LOCAL MENU6;
+      CHOOSE(MENU6,"ECUACIOENES DIFERENCIALES",
+      "Metodo de Euler",
+      "Metodo de Runge Kutta-1",
+      "Metodo de Runge Kutta-2",
+      "Metodo de Runge Kutta-3",
+      "Metodo de Runge Kutta-4",
+      "Sistemas EDO",
+      "Metdo de Heum sin principio");
+      /////////METODO DE EULER////////
+      IF MENU6 == 1 THEN
+        LOCAL fxy,h,rfxy,yi,xi,vyi,n,j;
+        LOCAL yeu,glob,loc,x0,y0,xn,yvr;
+        LOCAL i,etiq:={},iet;
+        INPUT({{fxy,[8],{30,50,1}},{x0,[0],{30,20,2}},{y0,[0],{30,20,3}},{xn,[0],{30,20,4}},{h,[0],{30,20,5}}},"ENTRADAD DE DATOS",{"f(x,y): ","x0: ","y0: ","xn: ","h: "},{"Ingrese la funcion y'","Valor para x0","Valor para y0","Valor para xn","Valor para h"});
+        n:=(xn-x0)/h;
+        xi:=MAKEMAT(0,n+1);
+        yi:=MAKEMAT(0,n+1);
+        yvr:=MAKEMAT(0,n+1);
+        yeu:=MAKEMAT(0,n+1);
+        glob:=MAKEMAT(0,n+1);
+        loc:=MAKEMAT(0,n+1);
+        rfxy:=MAKEMAT(0,n+1,5);
+        xi(1):=x0;
+        X:=xi(1);
+        yi(1):=y0;
+        Y:=yi(1);
+        yvr(1):=EVAL(fxy);
+        yeu(1):=yvr(1);
+        FOR i FROM 2 TO n+1 DO
+          xi(i):=xi(i-1)+h;
+          X:=xi(i);
+          yi(i):=yi(i-1)+(yeu(i-1)*h);
+          Y:=yi(i);
+          yeu(i):=EVAL(fxy);
+        END;
+        FOR j FROM 1 TO n+1 DO
+          rfxy(j,1):=xi(j);
+          rfxy(j,2):=yi(j);
+          rfxy(j,3):=yeu(j);
+        END;
+        FOR iet FROM 0 TO n DO
+          etiq(0):=""+STRING(ROUND(iet,0),1);
+        END;
+        EDITMAT(rfxy,{"TABLA DE ITERACIONES DE EULER",etiq,{"xi","yi","y'(euler)","E global","E local"}});
+        WAIT();
+      END;
+      ////METODO DE RK-1//////
+      IF MENU6 == 2 THEN
+        LOCAL i,j,h,n,MATSOLV;
+        LOCAL vfxy,fxy,y0,x0,xn;
+        LOCAL vk1,vk2,vyi,vxi,vxn;
+        INPUT({{fxy,[8],{30,50,1}},{x0,[0],{30,20,2}},{y0,[0],{30,20,3}},{xn,[0],{30,20,4}},{h,[0],{30,20,5}}},"ENTRADA DE DATOS",{"f(x,y): ","x0: ","y0: ","xn: ","h: "},{"Introduzca la funcion  y' ","Introducir valor para x0","Introducir valor para y0","Introducir valor para xn","Introducir valor para h"});
+        n:=(xn-x0)/h;
+        MATSOLV:=MAKEMAT(0,n+1,3);
+        MATSOLV(1,1):=x0; X:=MATSOLV(1,1);
+        MATSOLV(1,2):=y0; Y:=MATSOLV(1,1);
+        MATSOLV(1,3):=EVAL(fxy);
+        FOR i FROM 2 TO n+1 DO
+          MATSOLV(i,1):=MATSOLV(i-1,1)+h;  //xn
+          MATSOLV(i,2):=MATSOLV(i-1,2)+(h*MATSOLV(i-1,3));  //yn
+          X:=MATSOLV(i,1);
+          Y:=MATSOLV(i,2);
+          MATSOLV(i,3):=EVAL(fxy);  //fxy
+        END;
+        LOCAL etiq_row:={},iter;
+        FOR i FROM 0 TO n DO
+          etiq_row(i+1):=""+i;
+        END;
+        etiq_row(n+2):="";
+        EDITMAT(MATSOLV,{"TABLA DE ITERACIONES RK-1",etiq_row,{"xn","yn","f(x,y)"}});
+        WAIT();
+      END;
+      
+      /////METODO DE RK-2///////////
+      IF MENU6 == 3 THEN
+        LOCAL i,j,h,n,rfxy;
+        LOCAL vfxy,fxy,y0,x0,xn;
+        LOCAL vk1,vk2,vyi,vxi,vxn;
+        INPUT({{fxy,[8],{30,50,1}},{x0,[0],{30,20,2}},{y0,[0],{30,20,3}},{xn,[0],{30,20,4}},{h,[0],{30,20,5}}},"ENTRADA DE DATOS",{"f(x,y): ","x0: ","y0: ","xn: ","h: "},{"Introduzca la funcion  y' ","Introducir valor para x0","Introducir valor para y0","Introducir valor para xn","Introducir valor para h"});
+        n:=(xn-x0)/h;
+        vyi:=MAKEMAT(0,n+1);
+        vxi:=MAKEMAT(0,n+1);
+        vfxy:=MAKEMAT(0,n+1);
+        vxn:=MAKEMAT(0,n+1);
+        vk1:=MAKEMAT(0,n+1);
+        vk2:=MAKEMAT(0,n+1);
+        rfxy:=MAKEMAT(0,n+1,5);
+        X:=x0;
+        Y:=y0;
+        vfxy(1):=EVAL(fxy);
+        vk1(1):=vfxy(1);
+        X:=x0+h;
+        Y:=y0+(vk1(1)*h);
+        vk2(1):=EVAL(fxy);
+        FOR i FROM 2 TO n+1 DO
+          vxi(i):=vxi(i-1)+h;
+          X:=vxi(i);
+          vyi(i):=vyi(i-1)+((vk1(i-1)/2)+(vk2(i-1))/2)*h;
+          Y:=vyi(i);
+          vfxy(i):=EVAL(fxy);
+          vk1(i):=vfxy(i);
+          X:=vxi(i)+h;
+          Y:=vyi(i)+(vk1(i)*h);
+          vk2(i):=EVAL(fxy);
+        END;
+        FOR j FROM 1 TO n+1 DO
+          rfxy(j,1):=vxi(j);
+          rfxy(j,2):=vyi(j);
+          rfxy(j,3):=vfxy(j);
+          rfxy(j,4):=vk1(j);
+          rfxy(j,5):=vk2(j);
+        END;
+        LOCAL etiq_row:={};
+        FOR i FROM 0 TO n DO
+          etiq_row(i+1):=""+i;
+        END;
+        etiq_row(n+2):="";
+        EDITMAT(rfxy,{"TABLA DE ITERACIONES RK-2",etiq_row,{"xn","yn","f(x,y)","k1","k2"}});
+        
+      END;
+      ////////////RK-3/////////////
+      IF MENU6 == 4 THEN
+        LOCAL i,j,k,h,xi,yi,iet,etiq:={};
+        LOCAL fxy,y,x0,y0,n,xn;
+        LOCAL vk1,vk2,vk3,vfxy,pr;
+        INPUT({{fxy,[8],{30,50,1}},{x0,[0],{30,20,2}},{y0,[0],{30,20,3}},{xn,[0],{30,20,4}},{h,[0],{30,20,5}}},"ENTRADA DE DATOS",{"f(x,y): ","x0: ","y0: ","xn: ","h: "},{"Introduzca la funcion  y' ","Introducir valor para x0","Introducir valor para y0","Introducir valor para xn","Introducir valor para h"});
+        PRINT();
+        n:=(xn-x0)/h;
+        xi:=MAKEMAT(0,n+1);
+        yi:=MAKEMAT(0,n+1);
+        vk1:=MAKEMAT(0,n+1);
+        vk2:=MAKEMAT(0,n+1);
+        vk3:=MAKEMAT(0,n+1);
+        vfxy:=MAKEMAT(0,n+1);
+        xi(1):=x0;
+        X:=xi(1);
+        yi(1):=y0;
+        Y:=yi(1);
+        vfxy(1):=EVAL(fxy);
+        vk1(1):=vfxy(1);
+        X:=xi(1)+h/2;
+        Y:=yi(1)+(h*vk1(1))/2;
+        vk2(1):=EVAL(fxy);
+        X:=xi(1)+h;
+        Y:=yi(1)-vk1(1)*h+2*vk2(1)*h;
+        vk3(1):=EVAL(fxy);
+        FOR i FROM 2 TO n+1 DO
+          xi(i):=x0+h*(i-1);
+          X:=xi(i);
+          yi(i):=yi(i-1)+h*(vk1(i-1)+4*vk2(i-1)+vk3(i-1))/6;
+          Y:=yi(i);
+          vfxy(i):=EVAL(fxy);
+          vk1(i):=vfxy(i);
+          X:=xi(i)+h/2;
+          Y:=yi(i)+(h*vk1(i))/2;
+          vk2(i):=EVAL(fxy);
+          X:=xi(i)+h;
+          Y:=yi(i)-vk1(i)*h+2*vk2(i)*h;
+          vk3(i):=EVAL(fxy);
+        END;
+        pr:=MAKEMAT(0,n+1,6);
+        FOR k FROM 1 TO n+1 DO
+          pr(k,1):=xi(k);
+          pr(k,2):=yi(k);
+          pr(k,3):=vfxy(k);
+          pr(k,4):=vk1(k);
+          pr(k,5):=vk2(k);
+          pr(k,6):=vk3(k);
+        END;
+        FOR iet FROM 0 TO n+1 DO
+          etiq(0):=""+STRING(ROUND(iet,0),1);
+        END;
+        EDITMAT(pr,{"TABLA DE ITERACIONES RK-3",etiq,{"xn","yn","f(x,y)","k1","k2","k3"}});
+      END;
+      /////METODO DE RK4//////////
+      IF MENU6 == 5 THEN
+        LOCAL i,j,k,h,xi,yi,iet,etiq:={};
+        LOCAL fxy,y,x0,y0,n,xn;
+        LOCAL vk1,vk2,vk3,vk4,vfxy,pr;
+        INPUT({{fxy,[8],{30,50,1}},{x0,[0],{30,20,2}},{y0,[0],{30,20,3}},{xn,[0],{30,20,4}},{h,[0],{30,20,5}}},"ENTRADA DE DATOS",{"f(x,y): ","x0: ","y0: ","xn: ","h: "},{"Introduzca la funcion  y' ","Introducir valor para x0","Introducir valor para y0","Introducir valor para xn","Introducir valor para h"});
+        PRINT();
+        n:=(xn-x0)/h;
+        xi:=MAKEMAT(0,n+1);
+        yi:=MAKEMAT(0,n+1);
+        vk1:=MAKEMAT(0,n+1);
+        vk2:=MAKEMAT(0,n+1);
+        vk3:=MAKEMAT(0,n+1);
+        vk4:=MAKEMAT(0,n+1);
+        vfxy:=MAKEMAT(0,n+1);
+        xi(1):=x0;
+        X:=xi(1);
+        yi(1):=y0;
+        Y:=yi(1);
+        vfxy(1):=EVAL(fxy);
+        vk1(1):=vfxy(1);
+        X:=xi(1)+h/2;
+        Y:=yi(1)+(h*vk1(1))/2;
+        vk2(1):=EVAL(fxy);
+        X:=xi(1)+h/2;
+        Y:=yi(1)+(vk2(1)*h)/2;
+        vk3(1):=EVAL(fxy);
+        X:=xi(1)+h;
+        Y:=yi(1)+vk3(1)*h;
+        vk4(1):=EVAL(fxy);
+        FOR i FROM 2 TO n+1 DO
+          xi(i):=x0+h*(i-1);
+          X:=xi(i);
+          yi(i):=yi(i-1)+h*(vk1(i-1)+2*vk2(i-1)+2*vk3(i-1)+vk4(i-1))/6;
+          Y:=yi(i);
+          vfxy(i):=EVAL(fxy);
+          vk1(i):=vfxy(i);
+          X:=xi(i)+h/2;
+          Y:=yi(i)+(h*vk1(i))/2;
+          vk2(i):=EVAL(fxy);
+          X:=xi(i)+h/2;
+          Y:=yi(i)+(vk2(i)*h)/2;
+          vk3(i):=EVAL(fxy);
+          X:=xi(i)+h;
+          Y:=yi(i)+vk3(i)*h;
+          vk4(i):=EVAL(fxy);
+        END;
+        pr:=MAKEMAT(0,n+1,7);
+        FOR k FROM 1 TO n+1 DO
+          pr(k,1):=xi(k);
+          pr(k,2):=yi(k);
+          pr(k,3):=vfxy(k);
+          pr(k,4):=vk1(k);
+          pr(k,5):=vk2(k);
+          pr(k,6):=vk3(k);
+          pr(k,7):=vk4(k);
+        END;
+        FOR iet FROM 0 TO n+1 DO
+          etiq(0):=""+STRING(ROUND(iet,0),1);
+        END;
+        EDITMAT(pr,{"TABLA DE ITERACIONES RK-4",etiq,{"xn","yn","f(x,y)","k1","k2","k3","k4"}});
+      END;
+      /// SISTEMAS EDO /////
+      IF MENU6==6 THEN
+        LOCAL MENU61;
+        MSGBOX("UTILICE LOS METODOS ANTERIORES EJECUTANDO PARA CADA ECUACION");
+        CHOOSE(MENU61,"MEDIANTE EL METODO:",
+        "Metodo de Euler",
+        "Metodo de RK-2",
+        "Metodo de RK-3",
+        "Metdo de RK-4");
+        IF MENU61 == 1THEN
+          LOCAL fx1,fx2,fx3,fx4,fx5,fx6;
+          LOCAL SIS_EDO,y,h;
+        END;
+      END;
+      ///METODOD DE HEUN SIN PRNCIPIO //////////      
+    END;
+    IF MENU==9 THEN
+      RECT;
+      WAIT(.3);
+      metodos2p();
+    END;
+BLOQUE_CALCULO()
+END;

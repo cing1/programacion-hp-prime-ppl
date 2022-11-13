@@ -1,0 +1,465 @@
+#pragma mode( separator(.,;) integer(h32) )
+interpolacion1();
+VIEW "INTERPOLATE" START()
+BEGIN
+startview(6,1);
+interpolacion1();
+END;
+
+clic();
+tecla();
+calculos();
+text;
+a,b,c,d;
+inputb;
+code;
+inf01,despg,desp;
+xb,yb,xb2,yb2,colorb,colpx,color1;
+cm,cmn,dh,esc,f,int;
+mov();
+x1lU;
+u5hD;
+G0X1,G0Y1,G0X2,G0Y2;
+FACTOR;
+EXPORT interpolacion1()
+BEGIN
+  cm:=2348.8;
+  cmn:=2342.91;
+  dh:=12;
+  esc:=100;
+  G0X1:=25;G0Y1:=38;G0X2:=141;G0Y2:=137;
+  2▶AAngle;
+  RECT_P(0,0,320,240,#000000);
+  DIMGROB(G1,320,240);
+  DIMGROB(G2,320,240);
+  DIMGROB(G2,320,240);
+  RECT_P(G1,0,0,320,240,#000000);
+  FILLPOLY_P(G1,{(319,15),  (319,224),  (318,230),  (315,235),  (310,238),  (304,239),  (15,239),  (9,238),  (4,235),  (1,230),  (0,224),  (0,15),  (1,9),  (4,4),  (9,1),  (15,0),  (304,0),  (310,1),  (315,4),  (317,9)},#FFDD66);
+  FILLPOLY_P(G1,{(314,44),  (315,215),  (295,235),  (25,235),  (5,215),  (5,44),  (25,24),  (295,24),  (314,44)},#FFFFFF);
+  2▶AAngle;
+  ARC_P(G1,299,38,15,0,360,{#FFFFFF,#FFFFFF});
+  ARC_P(G1,300,220,15,0,360,{#FFFFFF,#FFFFFF});
+  ARC_P(G1,20,220,15,0,360,{#FFFFFF,#FFFFFF});
+  ARC_P(G1,20,39,15,0,360,{#FFFFFF,#FFFFFF});
+  1▶AAngle;
+  FILLPOLY_P(G1,{(17,137),  (134,138),  (137,139),  (140,141),  (141,145),  (142,148),  (142,223),  (141,227),  (140,229),  (138,231),  (135,232),  (132,233),  (16,233),  (11,231),  (9,228),  (8,225),  (7,223),  (7,148),  (8,144),  (11,140),  (13,139),  (15,137)},#00FF00);
+  ARC_P(G1,175,215,20,0,2*π,{#00FF00,#00FF00});ARC_P(G1,290,215,20,0,2*π,{#00FFFF,#00FFFF});
+  TEXTOUT_P("C. MAYOR",G1,10,150,2,#000000);
+  TEXTOUT_P("C. MENOR",G1,10,170,2,#000000);
+  TEXTOUT_P("D. HORIZ.",G1,10,190,2,#000000);
+  TEXTOUT_P("ESCALA",G1,10,210,2,#000000);
+  TEXTOUT_P("CALC.",G1,158,210,3,#FF0000);TEXTOUT_P("CALC.",G1,158,210,3,#FF0000);
+  LOCAL xb,yb,xb2,yb2,colorb,colpx,color1;
+  xb:=70;yb:=147;colorb:=#FFFF00;colpx:=#00FF00;
+  xb2:=65;yb2:=16;
+  FOR I FROM 1 TO 4 DO
+    RECT_P(G1,xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(G1,xb,yb,colpx);PIXON_P(G1,xb+xb2,yb+yb2,colpx);PIXON_P(G1,xb,yb+yb2,colpx);PIXON_P(G1,xb+xb2,yb,colpx);
+    yb:=yb+20;
+  END;
+  xb:=281;yb:=205;colorb:=#0000FF;colpx:=#00FFFF;
+  xb2:=18;yb2:=3;
+  FOR I FROM 1 TO 3 DO
+    RECT_P(G1,xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(G1,xb,yb,colpx);PIXON_P(G1,xb+xb2,yb+yb2,colpx);PIXON_P(G1,xb,yb+yb2,colpx);PIXON_P(G1,xb+xb2,yb,colpx);
+    yb:=yb+8;
+  END;
+  FOR I FROM 1 TO 3 DO
+    TEXTOUT_P("INTERPOLACIÓN DE CURVAS DE NIVEL",G1,25,3+I,4,RGB(0,150+20*I,200+11*I),350);
+  END;
+  TEXTOUT_P("INTERPOLACIÓN DE CURVAS DE NIVEL",G1,25,3,4,#0000FF,350);
+  TEXTOUT_P("INTERPOLACIÓN DE CURVAS DE NIVEL",G1,25,3,4,#0000FF,350);
+  FOR I  FROM 1 TO 60 DO
+    RECT_P(0,0,320,240,{#000000,I});
+    WAIT(.003);
+    BLIT_P(G0,G1);
+  END;
+  clic();
+END;
+clic()
+BEGIN
+  FACTOR:=1;
+  G0X1:=10;G0Y1:=38;G0X2:=141;G0Y2:=137;
+  DIMGROB_P(G5,300,500,RGB(250,250,250)); RECT_P();
+  LOCAL GRAFICA:=G5;
+  TEXTOUT_P("RESUMEN DE CÁLCULOS",G5,10,1,3,#FF0000);
+  LOCAL FACTOR:=1;
+  RECT_P(G5,5,20,205,35,#00FFFF);
+  TEXTOUT_P("COTA",G5,10,23,2,#0000FF);
+  TEXTOUT_P("DIST.(m)↓",G5,90,23,2,#0000FF);
+  TEXTOUT_P("DIST.(cm)↓",G5,150,23,2,#0000FF);
+  TEXTOUT_P("DIST: Es la distancia",G5,208,40,1,#FF0000);
+  TEXTOUT_P("horizontal",G5,210,40+15,1,#FF0000);
+  TEXTOUT_P("acumulada desde",G5,210,40+30,1,#FF0000);
+  TEXTOUT_P("la cota menor",G5,210,40+45,1,#FF0000);
+  TEXTOUT_P("a cada curva de ",G5,210,40+60,1,#FF0000);
+  TEXTOUT_P("nivel.",G5,210,40+75,1,#FF0000);
+  LINE_P(G5,5,35,5,200,#0000FF);
+  LINE_P(G5,85,35,85,200,#0000FF);
+  LINE_P(G5,145,35,145,200,#0000FF);
+  LINE_P(G5,205,35,205,200,#0000FF);
+  BLIT_P(G1,G0X1,G0Y1,G0X2*FACTOR,G0Y2*FACTOR,G5,0,0,(G0X2-G0X1),(G0Y2-G0Y1));
+  1▶AAngle;
+  LOCAL toque,des2;
+  REPEAT
+    IF cm<>0 AND cmn<>0 AND dh<>0 THEN
+      xb:=70;yb:=147;colorb:=#FFFF00;colpx:=#00FF00;
+      xb2:=65;yb2:=16;
+      FOR I FROM 1 TO 4 DO
+        RECT_P(G1,xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(G1,xb,yb,colpx);PIXON_P(G1,xb+xb2,yb+yb2,colpx);PIXON_P(G1,xb,yb+yb2,colpx);PIXON_P(G1,xb+xb2,yb,colpx);
+        yb:=yb+20;
+      END;
+      TEXTOUT_P(""+cm,G1,70,147,3,#0000FF,70);
+      TEXTOUT_P(""+cmn,G1,70,147+20,3,#0000FF,70);
+      TEXTOUT_P(""+dh,G1,70,147+40,3,#0000FF,70);
+      TEXTOUT_P("1 : "+esc,G1,70,147+60,3,#0000FF,70);
+    END;
+    toque:=MOUSE();
+    toque:=B→R(toque(1));
+    IF SIZE(toque) THEN
+      IF toque(5)<>2 THEN
+        FOR I FROM 2 TO 10 DO
+          ARC_P(toque(1),toque(2),I+3,0,2*π,#FF0000);
+          ARC_P(toque(1),toque(2),I-1,0,2*π,{#FF0000,#FFFF00});
+          ARC_P(toque(1),toque(2),5,0,2*π,#FF0000);
+          ARC_P(toque(1),toque(2),0,0,2*π,#FF0000);
+          WAIT(.01);
+        END;
+      END; I:=10;
+      IF toque(5)==2 THEN
+        ARC_P(toque(1),toque(2),I-1,0,2*π,#FF0000);
+        ARC_P(toque(1),toque(2),I-2,0,2*π,{#FF0000,#FF0000});
+        WAIT(.01);
+      END;
+      IF 270<toque(1)<309 AND 193<toque(2)<234 THEN
+        despg:=despg+1;
+        IF despg==1 THEN
+          desp:=1;
+          FOR I FROM 214 DOWNTO 146 DO //UP
+            ARC_P(G1,290,I,25,0,2*π,{#00FFFF,#00FFFF});
+            ARC_P(G0,290,I,25,0,2*π,{#00FFFF,#00FFFF});
+            WAIT(0.005);
+          END;
+          despg:=-1; des2:=1;
+          ARC_P(G1,290,215,25,0,2*π,{#0000FF,#00FFFF});
+          LOCAL xb,yb,xb2,yb2,colorb,colpx,color1;
+          xb:=281;yb:=205;colorb:=#0000FF;colpx:=#00FFFF;
+          xb2:=18;yb2:=3;
+          FOR I FROM 1 TO 3 DO
+            RECT_P(G1,xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(G1,xb,yb,colpx);PIXON_P(G1,xb+xb2,yb+yb2,colpx);PIXON_P(G1,xb,yb+yb2,colpx);PIXON_P(G1,xb+xb2,yb,colpx);
+            yb:=yb+8;
+          END;
+          
+          TEXTOUT_P("INF.",G1,275,145,4,#000000);TEXTOUT_P("INF.",G1,275,145,4,#000000);
+          TEXTOUT_P("SALIR",G1,270,170,4,#000000);TEXTOUT_P("SALIR",G1,270,170,4,#000000);
+          ELSE
+          desp:=0;
+          FOR I FROM 146 TO 214 DO //DOWN
+            des2:=0;
+            ARC_P(G1,290,I-2,25,0,2*π,{#FFFFFF,#FFFFFF});
+            ARC_P(G0,290,I-2,25,0,2*π,{#FFFFFF,#FFFFFF});
+            ARC_P(G0,290,I+1,25,0,2*π,{#00FFFF,#00FFFF});
+            FILLPOLY_P(G0,{(266,214),  (269,224),  (276,232),  (286,234),  (291,234),  (301,232),  (308,225),  (311,214),  (311,I+1),  (308,I-10+1),  (301,I-10-7+1),  (291,I-10-7-3+1),  (286,I-10-7-3+1),  (276,I-10-7+1),  (269,I-10+1),  (266,I+1)},#00FFFF);
+            WAIT(0.005);
+          END;
+          
+          ARC_P(G1,290,215,25,0,2*π,{#FFFFFF,#FFFFFF});
+          ARC_P(G1,290,215,20,0,2*π,{#00FFFF,#00FFFF});
+          LOCAL xb,yb,xb2,yb2,colorb,colpx,color1;
+          xb:=281;yb:=205;colorb:=#0000FF;colpx:=#00FFFF;
+          xb2:=18;yb2:=3;
+          FOR I FROM 1 TO 3 DO
+            RECT_P(G1,xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(G1,xb,yb,colpx);PIXON_P(G1,xb+xb2,yb+yb2,colpx);PIXON_P(G1,xb,yb+yb2,colpx);PIXON_P(G1,xb+xb2,yb,colpx);
+            yb:=yb+8;
+          END;
+          FILLPOLY_P(G1,{200,240,300,240,315,236,200,236},#FFDD66);
+          despg:=0;
+        END;
+      END;
+      //INF SALIR
+      IF 268<toque(1)<314 AND 147<toque(2)<164 THEN
+        IF des2 == 1 THEN
+          inf01:=inf01+1;
+          BLIT_P(G0,G1);
+          TEXTOUT_P("INF.",G0,275,145,4,#FF0000);TEXTOUT_P("INF.",G1,275,145,4,#FF0000);
+          WAIT(.3);
+          
+          TEXTOUT_P("INF.",G0,275,145,4,#FF0000);TEXTOUT_P("INF.",G1,275,145,4,#000000);
+          FOR I FROM 250 DOWNTO 50 DO
+            RECT_P(I,(0.5)*I+35,268,169,#0000FF,{#000000,100});
+            WAIT(.001);
+          END;
+          xb:=230;yb:=143;colorb:=#BBBBBB;colpx:=#555555;
+          FOR I FROM 1 TO 3 DO
+            TEXTOUT_P("INTERPOLATE",90,70+I,7,#FFFFFF);
+          END;
+          TEXTOUT_P("V1.0",230,83,2,#FFFFFF);
+          TEXTOUT_P("DESARROLLADOR:",55,105,2,#FFFFFF);    TEXTOUT_P("Mario Cesgo Soliz",160,105,2,#FFFFFF);
+          TEXTOUT_P("G-MAIL:",55,120,2,#FFFFFF);    TEXTOUT_P("mariocs855@gmail.com",125,120,2,#FFFFFF);
+          TEXTOUT_P("SUCRE-BOLIVIA",115,140,2,#AAAAAA);
+          inf01:=inf01-1;
+          WAIT();
+          FOR I FROM 50 TO 250  DO
+            RECT_P(I,(0.5)*I+35,268,169,#0000FF,{#000000,100});
+            WAIT(.001);
+            BLIT_P(G0,G1);
+          END;
+        END;
+      END;
+      //SALIR
+      IF 268<toque(1)<314 AND 170<toque(2)<189 THEN
+        desp:=0;
+        IF des2 == 1 THEN
+          BLIT_P(G0,G1);
+          TEXTOUT_P("SALIR",G0,270,170,4,#FF0000);TEXTOUT_P("SALIR",G1,270,170,4,#FF0000);
+          WAIT(.3);
+          TEXTOUT_P("SALIR",G1,270,170,4,#FF0000);TEXTOUT_P("SALIR",G1,270,170,4,#000000);
+          
+          FOR I  FROM 1 TO 80 DO
+            RECT_P(0,0,320,240,{#000000,255-I});
+            WAIT(.01);
+          END;
+          RETURN;
+        END;
+      END;
+      IF 70<toque(1)<137 AND 147<toque(2)<164 THEN
+        BLIT_P(G0,G1);
+        xb:=70;yb:=147;colorb:=#00FFFF;colpx:=#00FF00;
+        xb2:=65;yb2:=16;
+        RECT_P(G0,xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(G0,xb,yb,colpx);PIXON_P(G0,xb+xb2,yb+yb2,colpx);PIXON_P(G0,xb,yb+yb2,colpx);PIXON_P(G1,xb+xb2,yb,colpx);
+        inputb:=1;
+        tecla();
+      END;
+      IF 70<toque(1)<137 AND 147+20<toque(2)<164+20 THEN
+        BLIT_P(G0,G1);
+        xb:=70;yb:=147+20;colorb:=#00FFFF;colpx:=#00FF00;
+        xb2:=65;yb2:=16;
+        RECT_P(G0,xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(G0,xb,yb,colpx);PIXON_P(G0,xb+xb2,yb+yb2,colpx);PIXON_P(G0,xb,yb+yb2,colpx);PIXON_P(G1,xb+xb2,yb,colpx);
+        inputb:=2;
+        tecla();
+      END;
+      IF 70<toque(1)<137 AND 147+40<toque(2)<164+40 THEN
+        BLIT_P(G0,G1);
+        xb:=70;yb:=147+40;colorb:=#00FFFF;colpx:=#00FF00;
+        xb2:=65;yb2:=16;
+        RECT_P(G0,xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(G0,xb,yb,colpx);PIXON_P(G0,xb+xb2,yb+yb2,colpx);PIXON_P(G0,xb,yb+yb2,colpx);PIXON_P(G1,xb+xb2,yb,colpx);
+        inputb:=3;
+        tecla();
+      END;
+      IF 70<toque(1)<137 AND 147+60<toque(2)<164+60 THEN
+        BLIT_P(G0,G1);
+        xb:=70;yb:=147+60;colorb:=#00FFFF;colpx:=#00FF00;
+        xb2:=65;yb2:=16;
+        RECT_P(G0,xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(G0,xb,yb,colpx);PIXON_P(G0,xb+xb2,yb+yb2,colpx);PIXON_P(G0,xb,yb+yb2,colpx);PIXON_P(G1,xb+xb2,yb,colpx);
+        TEXTOUT_P("1 : ",G0,70,147+60,3,#0000FF,70);
+        inputb:=4;
+        tecla();
+      END;
+      // CALCULAR
+      IF 155<toque(1)<195 AND 195<toque(2)<235 THEN
+        BLIT_P(G0,G1);
+        ARC_P(G0,175,215,20,0,2*π,{#00FF00,#0000FF});
+        TEXTOUT_P("CALC.",G0,158,210,3,#FF0000);TEXTOUT_P("CALC.",G0,158,210,3,#FF0000);
+        WAIT(.1);
+        calculos();
+        BLIT_P(G0,G1);
+      END;
+      IF  G0X1<=toque(1)<=G0X2 AND G0Y1<=toque(2)<=G0Y2 THEN
+        
+        G:=G+(toque(4)-toque(1))/10;  //movimiento vertical
+        P:=P+(toque(3)-toque(1))/10;  //movimento horizontal
+        IF 0 <=P <= 200 THEN
+          IF 0 <=G <= 200 THEN
+            BLIT_P(G1,G0X1,G0Y1,G0X2*FACTOR,G0Y2*FACTOR,G5,0+P,0+G,(G0X2-G0X1)+P,(G0Y2-G0Y1)+G);
+            ELSE G:=0;
+            BLIT_P(G1,G0X1,G0Y1,G0X2*FACTOR,G0Y2*FACTOR,G5,0+P,0+G,(G0X2-G0X1)+P,(G0Y2-G0Y1)+G);
+          END;
+          ELSE  IF 0 <=G <= 500
+            THEN P:=0;
+            BLIT_P(G1,G0X1,G0Y1,G0X2*FACTOR,G0Y2*FACTOR,G5,0+P,0+G,(G0X2-G0X1)+P,(G0Y2-G0Y1)+G);
+            ELSE P:=0;
+            G:=0;
+            BLIT_P(G1,G0X1,G0Y1,G0X2*FACTOR,G0Y2*FACTOR,G5,0+P,0+G,(G0X2-G0X1)+P,(G0Y2-G0Y1)+G);
+          END;
+        END;
+      END;
+      
+    END;
+    BLIT_P(G0,G1);
+  UNTIL ISKEYDOWN(4);
+  desp:=0;
+  FOR I  FROM 1 TO 80 DO
+    RECT_P(0,0,320,240,{#000000,255-I});
+    WAIT(.01);
+  END;
+END;
+tecla()
+BEGIN
+  
+  text:="";
+  REPEAT
+    code:=WAIT();
+    IF TYPE(code)==0 THEN
+      CASE
+        IF code==47 THEN code:=0 END;
+        IF code==42 THEN code:=1 END;
+        IF code==43 THEN code:=2 END;
+        IF code==44 THEN code:=3 END;
+        IF code==37 THEN code:=4 END;
+        IF code==38 THEN code:=5 END;
+        IF code==39 THEN code:=6 END;
+        IF code==32 THEN code:=7 END;
+        IF code==33 THEN code:=8 END;
+        IF code==34 THEN code:=9 END;
+        IF code==48 THEN code:= "." END;
+        IF code==35 THEN code:= "/" END;
+        IF code==40 THEN code:= "*" END;
+        IF code==45 THEN code:= "-" END;
+        IF code==50 THEN code:= "+" END;
+        IF code==19 THEN
+          IF SIZE(text)==1 THEN text:=""; code:="";
+            ELSE
+            text:=LEFT(text,SIZE(text)-1); code:="";
+          END;
+        END;
+        DEFAULT
+        code:="";
+      END;
+      text:=text+code;
+    END;
+    IF inputb==1 THEN
+      xb:=70;yb:=147;colorb:=#00FFFF;colpx:=#00FF00;
+      xb2:=65;yb2:=16;
+      //FOR I FROM 1 TO 4 DO
+      xb:=70;yb:=147;colorb:=#FFFF00;colpx:=#00FF00;
+      RECT_P(G1,xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(G0,xb,yb,colpx);PIXON_P(G0,xb+xb2,yb+yb2,colpx);PIXON_P(G0,xb,yb+yb2,colpx);PIXON_P(G1,xb+xb2,yb,colpx);
+      xb:=70;yb:=147;colorb:=#00FFFF;colpx:=#00FF00;
+      RECT_P(G0,xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(G0,xb,yb,colpx);PIXON_P(G0,xb+xb2,yb+yb2,colpx);PIXON_P(G0,xb,yb+yb2,colpx);PIXON_P(G1,xb+xb2,yb,colpx);
+      yb:=yb+20;
+      //END;
+      TEXTOUT_P(text,G0,70,147,3,#0000FF,70);
+      TEXTOUT_P(text,G1,70,147,3,#0000FF,70);
+      cm:=EVAL(CAS(CAS(text)));
+    END;
+    IF inputb==2 THEN
+      xb:=70;yb:=147+20;colorb:=#00FFFF;colpx:=#00FF00;
+      xb2:=65;yb2:=16;
+      xb:=70;yb:=147+20;colorb:=#FFFF00;colpx:=#00FF00;
+      RECT_P(G1,xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(G0,xb,yb,colpx);PIXON_P(G0,xb+xb2,yb+yb2,colpx);PIXON_P(G0,xb,yb+yb2,colpx);PIXON_P(G1,xb+xb2,yb,colpx);
+      xb:=70;yb:=147+20;colorb:=#00FFFF;colpx:=#00FF00;
+      RECT_P(G0,xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(G0,xb,yb,colpx);PIXON_P(G0,xb+xb2,yb+yb2,colpx);PIXON_P(G0,xb,yb+yb2,colpx);PIXON_P(G1,xb+xb2,yb,colpx);
+      yb:=yb+20;
+      TEXTOUT_P(text,G0,70,147+20,3,#0000FF,70);
+      TEXTOUT_P(text,G1,70,147+20,3,#0000FF,70);
+      cmn:=EVAL(CAS(CAS(text)));
+    END;
+    IF inputb==3 THEN
+      xb:=70;yb:=147+40;colorb:=#FFFF00;colpx:=#00FF00;
+      xb2:=65;yb2:=16;
+      RECT_P(G1,xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(G0,xb,yb,colpx);PIXON_P(G0,xb+xb2,yb+yb2,colpx);PIXON_P(G0,xb,yb+yb2,colpx);PIXON_P(G1,xb+xb2,yb,colpx);
+      xb:=70;yb:=147+40;colorb:=#00FFFF;colpx:=#00FF00;
+      RECT_P(G0,xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(G0,xb,yb,colpx);PIXON_P(G0,xb+xb2,yb+yb2,colpx);PIXON_P(G0,xb,yb+yb2,colpx);PIXON_P(G1,xb+xb2,yb,colpx);
+      TEXTOUT_P(text,G0,70,147+40,3,#0000FF,70);
+      TEXTOUT_P(text,G1,70,147+40,3,#0000FF,70);
+      dh:=EVAL(CAS(CAS(text)));
+    END;
+    IF inputb==4 THEN
+      xb:=70;yb:=147+60;colorb:=#FFFF00;colpx:=#00FF00;
+      xb2:=65;yb2:=16;
+      RECT_P(G1,xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(G0,xb,yb,colpx);PIXON_P(G0,xb+xb2,yb+yb2,colpx);PIXON_P(G0,xb,yb+yb2,colpx);PIXON_P(G1,xb+xb2,yb,colpx);
+      xb:=70;yb:=147+60;colorb:=#00FFFF;colpx:=#00FF00;
+      RECT_P(G0,xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(G0,xb,yb,colpx);PIXON_P(G0,xb+xb2,yb+yb2,colpx);PIXON_P(G0,xb,yb+yb2,colpx);PIXON_P(G1,xb+xb2,yb,colpx);
+      TEXTOUT_P(text,G0,90,147+60,3,#0000FF,70);
+      TEXTOUT_P(text,G1,90,147+60,3,#0000FF,70);
+      TEXTOUT_P("1 : ",G1,70,147+60,3,#0000FF,70);
+      TEXTOUT_P("1 : ",G0,70,147+60,3,#0000FF,70);
+      esc:=EVAL(CAS(CAS(text)));
+    END;
+UNTIL ISKEYDOWN(30) END;
+END;
+calculos()
+BEGIN
+  LOCAL cot_mayor,cot_menor,d_h,d_x,y_intp,x_intp;
+  LOCAL i,n_intp,mat_ans;
+  IF cm<>0 AND cmn<>0 AND dh<>0 AND dh<>0 THEN
+    RECT_P(G1,147,25,290,190,#FFFFFF);
+    n_intp:=IP(cm)-IP(cmn);
+    y_intp:=MAKEMAT(0,n_intp);
+    x_intp:=MAKEMAT(0,n_intp);
+    mat_ans:=MAKEMAT(0,n_intp,3);
+    y_intp(1):=IP(cmn)+1;
+    FOR i FROM 2 TO n_intp DO
+      y_intp(i):=y_intp(i-1)+1;
+    END;
+    FOR i FROM 1 TO n_intp DO
+      x_intp(i):=ROUND(((y_intp(i)-cmn)*dh)/(cm-cmn),2);
+    END;
+    FOR i FROM 1 TO n_intp DO
+      mat_ans(i,1):=y_intp(i);
+      mat_ans(i,2):=x_intp(i);
+      mat_ans(i,3):=(mat_ans(i,2)*100)/esc;
+    END;
+    K:=35;
+    RECT_P(G5,5,35,205,300,#EEEEEE);
+    FOR I FROM 1 TO n_intp DO
+      LINE_P(G5,5,K,205,K,#0000FF);
+      TEXTOUT_P(""+mat_ans(I,1),G5,10,K,3,#000000);
+      TEXTOUT_P(""+mat_ans(I,2),G5,95,K,3,#000000);
+      TEXTOUT_P(""+ROUND(mat_ans(I,3),2),G5,160,K,3,#000000);
+      K:=K+15;
+    END;
+    LINE_P(G5,5,35,5,200,#0000FF);
+    LINE_P(G5,85,35,85,200,#0000FF);
+    LINE_P(G5,145,35,145,200,#0000FF);
+    LINE_P(G5,205,35,205,200,#0000FF);
+    BLIT_P(G1,G0X1,G0Y1,G0X2*FACTOR,G0Y2*FACTOR,G5,0,0,(G0X2-G0X1),(G0Y2-G0Y1));
+    2▶AAngle;
+    ARC_P(G1,205,52,2,0,360,#000000); ARC_P(G1,205,180,2,0,360,#000000);
+    TEXTOUT_P(""+cm,G1,205,52,1,#FF0000,50);
+    TEXTOUT_P(""+cmn,G1,205,180,1,#FF0000,50);
+    1▶AAngle;
+    LINE_P(G1,205,52,205,180,#000000);
+    
+    
+    f:=sqrt((205-205)^2+(180-52)^2)/dh;
+    FOR  K FROM 1 TO 10 DO
+      FOR  I FROM ROUND(cmn,0) TO ROUND(cm,0) DO
+        int:=((I-cmn)*dh)/(cm-cmn);
+        //TEXTOUT_P(""+int,G1,220,150-int*f-20,1,#000000,50);
+        LINE_P(G1,180,180-int*f,220,180-int*f,#000000);
+        LINE_P(G1,160,180-int*f+7,180,180-int*f,#000000);
+        LINE_P(G1,150,180-int*f+5,160,180-int*f+7,#000000);
+        LINE_P(G1,220,180-int*f,280,180-int*f+15,#000000);
+        TEXTOUT_P(""+I,G1,220,180-int*f-3,1,#000000,50,#FFFFFF);
+      END;
+    END;
+    LINE_P(G1,188,105,188,110,#0000FF);
+    LINE_P(G1,188,105,186,110,#0000FF);
+    LINE_P(G1,189,110,188,105,#0000FF);
+    LINE_P(G1,188,110,188,138,#0000FF);
+    LINE_P(G1,188,180,188,105,#0000FF);
+    LINE_P(G1,203,180,179,180,#0000FF);
+    LINE_P(G1,204,180,172,180,#0000FF);
+    TEXTOUT_P("d",G1,175,150,3,#0000FF);
+    TEXTOUT_P(""+dh,G1,205,110,3,#FF0000);
+    IF despg==-1 THEN
+      FOR I FROM 214 DOWNTO 146 DO //UP
+        ARC_P(G1,290,I,25,0,2*π,{#00FFFF,#00FFFF});
+        ARC_P(G0,290,I,25,0,2*π,{#00FFFF,#00FFFF});
+        //WAIT(0.005);
+      END;
+      ARC_P(G1,290,215,25,0,2*π,{#0000FF,#00FFFF});
+      LOCAL xb,yb,xb2,yb2,colorb,colpx,color1;
+      xb:=281;yb:=205;colorb:=#0000FF;colpx:=#00FFFF;
+      xb2:=18;yb2:=3;
+      FOR I FROM 1 TO 3 DO
+        RECT_P(G1,xb,yb,xb+xb2,yb+yb2,colorb);PIXON_P(G1,xb,yb,colpx);PIXON_P(G1,xb+xb2,yb+yb2,colpx);PIXON_P(G1,xb,yb+yb2,colpx);PIXON_P(G1,xb+xb2,yb,colpx);
+        yb:=yb+8;
+      END;
+      TEXTOUT_P("INF.",G1,275,145,4,#000000);TEXTOUT_P("INF.",G1,275,145,4,#000000);
+      TEXTOUT_P("SALIR",G1,270,170,4,#000000);TEXTOUT_P("SALIR",G1,270,170,4,#000000);
+    END;
+    BLIT_P(G0,G1);
+    ELSE
+    TEXTOUT_P("INGRESE TODOS LOS DATOS !",G0,40,70,5,#FFFFFF,300,#000000);
+    WAIT(.3);
+  END;
+END;
